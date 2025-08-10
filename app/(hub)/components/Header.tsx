@@ -1,4 +1,4 @@
-import { NavBar } from './NavBar'
+import { NavBar } from '../sections/navigation/components/NavBar'
 
 interface HeaderProps {
   children?: React.ReactNode
