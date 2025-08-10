@@ -1,4 +1,4 @@
-import { brandContent } from '@/content/brand'
+import { BRAND } from '@/content/brand'
 import { PhotoContent } from '@/rengifo/types/content'
 import { formatPath } from '@/utils/format'
 
@@ -8,7 +8,7 @@ export const photosContent: PhotoContent = {
   subTitle: 'Imaginario Barrial',
   utilityImages: {
     bg: {
-      src: formatPath(`${brandContent.paths.rengifo}/fondo1.2.webp`),
+      src: formatPath(`${BRAND.paths.rengifo}/fondo1.2.webp`),
       width: 1366,
       height: 1300,
       alt: 'Fondo de la sección de fotos',
@@ -20,7 +20,7 @@ export const photosContent: PhotoContent = {
       title: 'Archivo',
       subTitle: 'Fotográfico',
       bg: {
-        src: formatPath(`${brandContent.paths.rengifo}/images/archivo.jpg`),
+        src: formatPath(`${BRAND.paths.rengifo}/images/archivo.jpg`),
         width: 600,
         height: 748,
         alt: 'Fotografía de archivo del barrio Rengifo',
@@ -32,7 +32,7 @@ export const photosContent: PhotoContent = {
       title: 'Fotografías',
       subTitle: 'Actividades',
       bg: {
-        src: formatPath(`${brandContent.paths.rengifo}/images/actividades.jpg`),
+        src: formatPath(`${BRAND.paths.rengifo}/images/actividades.jpg`),
         width: 800,
         height: 1067,
         alt: 'Fotografía de actividades comunitarias en el barrio Rengifo',
@@ -44,7 +44,7 @@ export const photosContent: PhotoContent = {
       title: 'Fotografías',
       subTitle: 'Aéreas',
       bg: {
-        src: formatPath(`${brandContent.paths.rengifo}/images/aereas.jpg`),
+        src: formatPath(`${BRAND.paths.rengifo}/images/aereas.jpg`),
         width: 442,
         height: 444,
         alt: 'Fotografía aérea del barrio Rengifo',
@@ -57,7 +57,7 @@ export const photosContent: PhotoContent = {
       subTitle: 'Exterior',
       href: '',
       bg: {
-        src: formatPath(`${brandContent.paths.rengifo}/images/exterior.jpg`),
+        src: formatPath(`${BRAND.paths.rengifo}/images/exterior.jpg`),
         width: 900,
         height: 600,
         alt: 'Recorrido 3D exterior del barrio Rengifo',
@@ -71,7 +71,7 @@ export const photosContent: PhotoContent = {
       subTitle: 'Interior',
       href: '',
       bg: {
-        src: formatPath(`${brandContent.paths.rengifo}/images/interior.jpg`),
+        src: formatPath(`${BRAND.paths.rengifo}/images/interior.jpg`),
         width: 899,
         height: 696,
         alt: 'Recorrido 3D interior del barrio Rengifo',
@@ -86,7 +86,7 @@ export const photosContent: PhotoContent = {
       images: [
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/2 Mariana Ochoa.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/2 Mariana Ochoa.jpg`
           ),
           name: 'Imagen cedida por Mariana Ochoa',
           alt: 'Fotografía de Mariana Ochoa',
@@ -95,7 +95,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/3 Mariana Ochoa.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/3 Mariana Ochoa.jpg`
           ),
           name: 'Imagen cedida por Mariana Ochoa',
           alt: 'Fotografía de Mariana Ochoa',
@@ -104,7 +104,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/4 Patricia.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/4 Patricia.jpg`
           ),
           name: 'Imagen cedida por Patricia',
           alt: 'Fotografía de Patricia',
@@ -113,7 +113,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/6 Patricia.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/6 Patricia.jpg`
           ),
           name: 'Imagen cedida por Patricia',
           alt: 'Fotografía de Patricia',
@@ -122,7 +122,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/15 Patricia (reverso foto 4).jpg`
+            `${BRAND.paths.rengifo}/images/archivo/15 Patricia (reverso foto 4).jpg`
           ),
           name: 'Imagen cedida por Patricia (reverso foto 4)',
           alt: 'Fotografía reverso de Patricia',
@@ -131,7 +131,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/20 Jaqueline Ayala.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/20 Jaqueline Ayala.jpg`
           ),
           name: 'Imagen cedida por Jaqueline Ayala',
           alt: 'Fotografía de Jaqueline Ayala',
@@ -140,7 +140,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/22 Jaqueline Ayala.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/22 Jaqueline Ayala.jpg`
           ),
           name: 'Imagen cedida por Jaqueline Ayala',
           alt: 'Fotografía de Jaqueline Ayala',
@@ -149,7 +149,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/27 Iván Barraza.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/27 Iván Barraza.jpg`
           ),
           name: 'Imagen cedida por Iván Barraza',
           alt: 'Fotografía de Iván Barraza',
@@ -158,7 +158,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/30 Iván Barraza.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/30 Iván Barraza.jpg`
           ),
           name: 'Imagen cedida por Iván Barraza',
           alt: 'Fotografía de Iván Barraza',
@@ -167,7 +167,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/32 Iván Barraza.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/32 Iván Barraza.jpg`
           ),
           name: 'Imagen cedida por Iván Barraza',
           alt: 'Fotografía de Iván Barraza',
@@ -176,7 +176,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/43 Andrea Jorquera.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/43 Andrea Jorquera.jpg`
           ),
           name: 'Imagen cedida por Andrea Jorquera',
           alt: 'Fotografía de Andrea Jorquera',
@@ -185,7 +185,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/45 Andrea Jorquera.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/45 Andrea Jorquera.jpg`
           ),
           name: 'Imagen cedida por Andrea Jorquera',
           alt: 'Fotografía de Andrea Jorquera',
@@ -194,7 +194,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/archivo/46 Andrea Jorquera.jpg`
+            `${BRAND.paths.rengifo}/images/archivo/46 Andrea Jorquera.jpg`
           ),
           name: 'Imagen cedida por Andrea Jorquera',
           alt: 'Fotografía de Andrea Jorquera',
@@ -209,7 +209,7 @@ export const photosContent: PhotoContent = {
       images: [
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-01.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-01.jpg`
           ),
           name: 'Actividad Comunitaria 01',
           alt: 'Fotografía de la actividad comunitaria 01',
@@ -218,7 +218,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-02.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-02.jpg`
           ),
           name: 'Actividad Comunitaria 02',
           alt: 'Fotografía de la actividad comunitaria 02',
@@ -227,7 +227,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-03.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-03.jpg`
           ),
           name: 'Actividad Comunitaria 03',
           alt: 'Fotografía de la actividad comunitaria 03',
@@ -236,7 +236,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-04.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-04.jpg`
           ),
           name: 'Actividad Comunitaria 04',
           alt: 'Fotografía de la actividad comunitaria 04',
@@ -245,7 +245,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-05.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-05.jpg`
           ),
           name: 'Actividad Comunitaria 05',
           alt: 'Fotografía de la actividad comunitaria 05',
@@ -254,7 +254,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-06.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-06.jpg`
           ),
           name: 'Actividad Comunitaria 06',
           alt: 'Fotografía de la actividad comunitaria 06',
@@ -263,7 +263,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-07.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-07.jpg`
           ),
           name: 'Actividad Comunitaria 07',
           alt: 'Fotografía de la actividad comunitaria 07',
@@ -272,7 +272,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-08.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-08.jpg`
           ),
           name: 'Actividad Comunitaria 08',
           alt: 'Fotografía de la actividad comunitaria 08',
@@ -281,7 +281,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-09.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-09.jpg`
           ),
           name: 'Actividad Comunitaria 09',
           alt: 'Fotografía de la actividad comunitaria 09',
@@ -290,7 +290,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-10.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-10.jpg`
           ),
           name: 'Actividad Comunitaria 10',
           alt: 'Fotografía de la actividad comunitaria 10',
@@ -299,7 +299,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-11.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-11.jpg`
           ),
           name: 'Actividad Comunitaria 11',
           alt: 'Fotografía de la actividad comunitaria 11',
@@ -308,7 +308,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-12.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-12.jpg`
           ),
           name: 'Actividad Comunitaria 12',
           alt: 'Fotografía de la actividad comunitaria 12',
@@ -317,7 +317,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-13.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-13.jpg`
           ),
           name: 'Actividad Comunitaria 13',
           alt: 'Fotografía de la actividad comunitaria 13',
@@ -326,7 +326,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-14.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-14.jpg`
           ),
           name: 'Actividad Comunitaria 14',
           alt: 'Fotografía de la actividad comunitaria 14',
@@ -335,7 +335,7 @@ export const photosContent: PhotoContent = {
         },
         {
           src: formatPath(
-            `${brandContent.paths.rengifo}/images/actividades/ACT-15.jpg`
+            `${BRAND.paths.rengifo}/images/actividades/ACT-15.jpg`
           ),
           name: 'Actividad Comunitaria 15',
           alt: 'Fotografía de la actividad comunitaria 15',
@@ -349,126 +349,98 @@ export const photosContent: PhotoContent = {
       id: 'aerials',
       images: [
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-01.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-01.jpg`),
           name: 'Vista Aérea 01',
           alt: 'Fotografía aérea número 01',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-02.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-02.jpg`),
           name: 'Vista Aérea 02',
           alt: 'Fotografía aérea número 02',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-03.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-03.jpg`),
           name: 'Vista Aérea 03',
           alt: 'Fotografía aérea número 03',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-04.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-04.jpg`),
           name: 'Vista Aérea 04',
           alt: 'Fotografía aérea número 04',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-05.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-05.jpg`),
           name: 'Vista Aérea 05',
           alt: 'Fotografía aérea número 05',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-06.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-06.jpg`),
           name: 'Vista Aérea 06',
           alt: 'Fotografía aérea número 06',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-07.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-07.jpg`),
           name: 'Vista Aérea 07',
           alt: 'Fotografía aérea número 07',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-08.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-08.jpg`),
           name: 'Vista Aérea 08',
           alt: 'Fotografía aérea número 08',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-09.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-09.jpg`),
           name: 'Vista Aérea 09',
           alt: 'Fotografía aérea número 09',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-10.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-10.jpg`),
           name: 'Vista Aérea 10',
           alt: 'Fotografía aérea número 10',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-11.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-11.jpg`),
           name: 'Vista Aérea 11',
           alt: 'Fotografía aérea número 11',
           width: 1080,
           height: 608,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-12.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-12.jpg`),
           name: 'Vista Aérea 12',
           alt: 'Fotografía aérea número 12',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-13.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-13.jpg`),
           name: 'Vista Aérea 13',
           alt: 'Fotografía aérea número 13',
           width: 1080,
           height: 607,
         },
         {
-          src: formatPath(
-            `${brandContent.paths.rengifo}/images/aereas/DRON-14.jpg`
-          ),
+          src: formatPath(`${BRAND.paths.rengifo}/images/aereas/DRON-14.jpg`),
           name: 'Vista Aérea 14',
           alt: 'Fotografía aérea número 14',
           width: 1080,

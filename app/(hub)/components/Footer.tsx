@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { brandContent } from '@/content/brand'
+import { BRAND } from '@/content/brand'
 import { Instagram, Mail } from 'lucide-react'
 
 export const Footer = () => {
@@ -9,7 +9,7 @@ export const Footer = () => {
       <nav className='flex items-center justify-center gap-2'>
         {/* Instagram */}
         <Link
-          href={brandContent.social.instagram}
+          href={BRAND.social.instagram}
           target='_blank'
           rel='noopener noreferrer'
         >
@@ -17,7 +17,7 @@ export const Footer = () => {
         </Link>
 
         {/* Mail */}
-        <Link href={`mailto:${brandContent.contact_email}`}>
+        <Link href={`mailto:${BRAND.contact_email}`}>
           <Mail size={22} strokeWidth={1.5} />
         </Link>
       </nav>

@@ -1,6 +1,6 @@
 import { TeamContent } from '@/types/core'
 
-export const teamContent: TeamContent = {
+export const CORE_TEAM: TeamContent = {
   members: [
     {
       name: 'Alejandro Orellana McBride',

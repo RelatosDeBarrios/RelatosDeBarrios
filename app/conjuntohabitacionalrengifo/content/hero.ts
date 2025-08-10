@@ -1,5 +1,5 @@
 import { HeroContent } from '@/rengifo/types/content'
-import { brandContent } from '@/content/brand'
+import { BRAND } from '@/content/brand'
 import { formatPath } from '@/utils/format'
 
 export const heroContent: HeroContent = {
@@ -8,7 +8,7 @@ export const heroContent: HeroContent = {
   subTitle: 'Rengifo',
   utilityImages: {
     bg: {
-      src: formatPath(brandContent.paths.rengifo + '/headerCasas.webp'),
+      src: formatPath(BRAND.paths.rengifo + '/headerCasas.webp'),
       alt: 'Casas del Conjunto Habitacional Rengifo',
       width: 1440,
       height: 653,
@@ -18,9 +18,7 @@ export const heroContent: HeroContent = {
     {
       id: 'libro',
       label: 'Ver Libro',
-      href: formatPath(
-        `${brandContent.paths.rengifo}/Libro_RelatosDeBarrios.pdf`
-      ), // Path in public folder
+      href: formatPath(`${BRAND.paths.rengifo}/Libro_RelatosDeBarrios.pdf`), // Path in public folder
     },
     {
       id: 'documental',
@@ -29,7 +27,7 @@ export const heroContent: HeroContent = {
     },
   ],
   video: {
-    src: formatPath(brandContent.paths.rengifo + '/videos/teaser.mp4'), // Path in public folder
+    src: formatPath(BRAND.paths.rengifo + '/videos/teaser.mp4'), // Path in public folder
     autoplay: true,
     loop: true,
     muted: true,

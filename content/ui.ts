@@ -4,7 +4,7 @@ import type { UIContent } from '@/types/ui'
  * User interface text strings and labels
  * Contains all user-facing text content for consistent UX across apps
  */
-export const uiContent: UIContent = {
+export const UI: UIContent = {
   buttons: {
     save: 'Guardar',
     cancel: 'Cancelar',
