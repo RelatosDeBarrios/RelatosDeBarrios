@@ -1,12 +1,10 @@
 'use client'
 
 import { cn } from '@/utils/css'
-import { useRef } from 'react'
 import { Check, Loader2, Send, X } from 'lucide-react'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
 import { SubmitButtonType } from '../types/form'
 import { ActionState } from '../types/action'
+import { useSubmitButtonAnimation } from '../hooks/useSubmitButtonAnimation'
 
 interface FormSubmitButtonProps {
   submitContent: SubmitButtonType
@@ -19,79 +17,19 @@ export const FormSubmitButton = ({
   state,
   pending,
 }: FormSubmitButtonProps) => {
-  const fillRef = useRef<HTMLSpanElement | null>(null)
-  const shineRef = useRef<HTMLSpanElement | null>(null)
-  const btnRef = useRef<HTMLButtonElement | null>(null)
-
   const isPending = pending
   const idle = state.ok === null && !isPending
   const isSuccess = !idle && state.ok && !isPending
   const isError = !idle && !state.ok && !isPending
 
-  useGSAP(
-    () => {
-      if (!btnRef.current || !shineRef.current || !fillRef.current) return
-
-      // Always kill previous tweens before starting a new one
-      gsap.killTweensOf(fillRef.current)
-      gsap.killTweensOf(shineRef.current)
-
-      // Get the current xPercent (so we can animate from the current position)
-      let currentX: number
-      // Decide target values based on state
-      let targetX: number
-      let targetColor: string
-      let duration: number
-
-      if (isPending) {
-        targetX = 85
-        targetColor = '#05df72'
-        duration = 5
-      } else if (isSuccess) {
-        currentX = gsap.getProperty(fillRef.current, 'xPercent') as number
-        targetX = 100
-        targetColor = 'green'
-        // Duration proportional to distance for smoothness
-        duration = Math.max(1, (Math.abs(100 - (currentX ?? 0)) / 100) * 1)
-      } else if (isError) {
-        currentX = gsap.getProperty(fillRef.current, 'xPercent') as number
-        targetX = -100
-        targetColor = 'red'
-        duration = Math.max(1, (Math.abs(-100 - (currentX ?? 0)) / 185) * 0.35)
-      } else {
-        // Fallback
-        targetX = 0
-        targetColor = '#05df72'
-        duration = 0
-      }
-
-      // Animate to the new state
-      gsap.to(fillRef.current, {
-        xPercent: targetX,
-        backgroundColor: targetColor,
-        duration,
-        ease: 'power2.inOut',
-      })
-
-      // Shine animation (only when pending)
-      if (isPending) {
-        gsap.to(shineRef.current, {
-          xPercent: 200,
-          duration: 1.5,
-          ease: 'power2.inOut',
-          repeat: -1,
-          repeatDelay: -0.1,
-        })
-      } else {
-        // Reset shine position and opacity when not pending
-        gsap.set(shineRef.current, {
-          xPercent: -100,
-          opacity: 0,
-        })
-      }
+  const { btnRef, shineRef, fillRef } = useSubmitButtonAnimation({
+    states: {
+      idle,
+      isPending,
+      isSuccess,
+      isError,
     },
-    { dependencies: [isPending, isSuccess, isError, idle], scope: btnRef }
-  )
+  })
 
   const label = isPending
     ? 'Enviando'
