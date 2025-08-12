@@ -5,7 +5,7 @@ export interface InputType {
   id: string
   type: 'text' | 'email' | 'file' | 'textarea' | 'select'
   label: string
-  placeholder: string
+  placeholder?: string
   required: boolean
   requiredMessage?: string
   invalidMessage?: string
@@ -24,7 +24,7 @@ export interface SubmitButtonType {
 
 export interface ContributionType extends InputType {
   options: {
-    id: ProjectsId
+    id: ProjectsId | ''
     label: string
   }[]
 }
