@@ -15,7 +15,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     if (blobsToDelete.length === 0)
       return new NextResponse(null, { status: 204 })
 
-    del(blobsToDelete)
+    await del(blobsToDelete)
 
     // 204 No Content
     return new NextResponse(null, { status: 204 })
