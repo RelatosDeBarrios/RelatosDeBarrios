@@ -4,15 +4,18 @@ import { FormAttachments } from './FormAttachments'
 import { ContributionType } from '../types/form'
 import { AttachmentsType } from '../types/attachments'
 import { ProjectsId } from '@/types/core'
+import { FieldError } from './FieldError'
 
 interface FormAttachmentsProps {
   contribution: ContributionType
   attachments: AttachmentsType
+  fieldErrors?: string[]
 }
 
 export const FormContribution = ({
   contribution,
   attachments,
+  fieldErrors,
 }: FormAttachmentsProps) => {
   const [selectedProject, setSelectedProject] = useState<ProjectsId | ''>('')
 
@@ -25,22 +28,31 @@ export const FormContribution = ({
           id={contribution.id}
           name={contribution.id}
           value={selectedProject}
-          onChange={(e) =>
-            setSelectedProject((e.target.value as ProjectsId) || '')
-          }
+          onChange={(e) => setSelectedProject(e.target.value as ProjectsId)}
           className='border-hub-border focus:ring-hub-accent bg-hub-background/60 w-full rounded-lg border px-4 py-3 focus:ring-1 focus:outline-none'
         >
-          <option value=''>{contribution.placeholder}</option>
           {Object.values(contribution.options).map((option) => (
             <option key={option.id} value={option.id}>
-              Sí, para {option.label}
+              {option.label}
             </option>
           ))}
         </select>
+        {fieldErrors && <FieldError errors={fieldErrors} />}
       </div>
 
       {/* File attachments - conditionally rendered */}
-      {selectedProject && <FormAttachments attachments={attachments} />}
+      {selectedProject && (
+        <>
+          <FormAttachments attachments={attachments} />
+          {fieldErrors && fieldErrors.length > 0 && (
+            <div className='text-hub-error mt-1 text-sm'>
+              {fieldErrors.map((error, index) => (
+                <p key={index}>{error}</p>
+              ))}
+            </div>
+          )}
+        </>
+      )}
     </>
   )
 }

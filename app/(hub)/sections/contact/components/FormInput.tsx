@@ -1,9 +1,11 @@
 'use client'
 import { cn } from '@/utils/css'
 import { InputType } from '../types/form'
+import { FieldError } from './FieldError'
 
 interface InputFormProps {
   inputContent: InputType
+  fieldErrors?: string[]
   className?: string
 }
 
@@ -15,26 +17,33 @@ const inputValue = {
 
 const isDev = process.env.NODE_ENV === 'development'
 
-export const FormInput = ({ inputContent, className }: InputFormProps) => {
+export const FormInput = ({
+  inputContent,
+  className,
+  fieldErrors,
+}: InputFormProps) => {
   const Element = inputContent.type === 'textarea' ? Textarea : Input
 
   return (
-    <label
-      htmlFor={inputContent.id}
-      className='text-hub-text block font-medium'
-    >
-      {inputContent.label}
-      {inputContent.required && (
-        <span className='text-hub-error ml-1 align-middle text-sm'>*</span>
-      )}
-      <Element
-        inputContent={inputContent}
-        className={cn(
-          className,
-          'border-hub-border focus:ring-hub-accent bg-hub-background/60 w-full rounded-lg border px-3 py-2 focus:ring-1 focus:outline-none md:px-4 md:py-3'
+    <>
+      <label
+        htmlFor={inputContent.id}
+        className='text-hub-text block font-medium'
+      >
+        {inputContent.label}
+        {inputContent.required && (
+          <span className='text-hub-error ml-1 align-middle text-sm'>*</span>
         )}
-      />
-    </label>
+        <Element
+          inputContent={inputContent}
+          className={cn(
+            className,
+            'border-hub-border focus:ring-hub-accent bg-hub-background/60 w-full rounded-lg border px-3 py-2 focus:ring-1 focus:outline-none md:px-4 md:py-3'
+          )}
+        />
+      </label>
+      {fieldErrors && <FieldError errors={fieldErrors} />}
+    </>
   )
 }
 

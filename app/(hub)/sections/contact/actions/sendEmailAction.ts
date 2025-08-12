@@ -4,62 +4,82 @@ import { Resend } from 'resend'
 import { CONTACT } from '../content'
 import { SendEmailAction } from '../types/action'
 import { EmailTemplate } from '../components/EmailTemplate'
+import z from 'zod'
+import { FormSchema } from '../schemas/formSchema'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const {
-  name: { id: name },
-  email: { id: email },
-  commentary: { id: commentary },
-  contribution: { id: contribution },
-  attachments: { id: attachments },
+  name: { id: nameId },
+  email: { id: emailId },
+  commentary: { id: commentaryId },
+  contribution: { id: contributionId },
+  attachments: { id: attachmentsId },
 } = CONTACT.form
 
 export const sendEmail: SendEmailAction = async (_, formData) => {
-  const formName = (formData.get(name) ?? '') as string
-  const formEmail = (formData.get(email) ?? '') as string
-  const formCommentary = (formData.get(commentary) ?? '') as string
-  const formContribution = (formData.get(contribution) ?? '') as string
-  const formAttachments = (formData.getAll(attachments) ?? []) as File[]
+  const form = {
+    name: formData.get(nameId),
+    email: formData.get(emailId),
+    commentary: formData.get(commentaryId),
+    contribution: formData.get(contributionId),
+    attachments: formData.getAll(attachmentsId),
+  }
 
-  const projectContribution =
-    BRAND.projects[formContribution as keyof typeof BRAND.projects]
+  // Data Validation
+  const validation = z.safeParse(FormSchema, form)
 
-  const resendAttachments =
-    formAttachments.length > 0
-      ? await Promise.all(
-          formAttachments.map(async (file) => ({
-            content: Buffer.from(await file.arrayBuffer()).toString('base64'),
-            filename: file.name,
-          }))
-        )
-      : []
+  if (validation.success === false)
+    return {
+      ok: false,
+      error: validation.error,
+    }
 
-  // send email
+  const { name, email, commentary, contribution, attachments } = validation.data
+
+  const projectContribution = !!contribution && BRAND.projects[contribution]
+
+  // Prepare attachments - could be from File objects or from Blob URLs
+  let resendAttachments: { content: string; filename: string }[] = []
+
+  if (!!attachments && attachments.length > 0) {
+    // If we have blob URLs, fetch them and use as attachments
+    try {
+      resendAttachments = await Promise.all(
+        attachments.map(async ({ blob, filename }) => {
+          const response = await fetch(blob)
+          const arrayBuffer = await response.arrayBuffer()
+          const content = Buffer.from(arrayBuffer).toString('base64')
+
+          return { content, filename }
+        })
+      )
+    } catch (error) {
+      return { ok: false, error, message: 'Error fetching blob URLs' }
+    }
+  }
+  // Send email
   try {
-    const { data, error } = await resend.emails.send({
-      from: `${formName} <web@contacto.relatosdebarrios.cl>`,
-      replyTo: formEmail,
+    const { error } = await resend.emails.send({
+      from: `${name} <web@contacto.relatosdebarrios.cl>`,
+      replyTo: email,
       to: ['strocsdev@gmail.com'],
-      subject: 'Contacto desde el sitio web de ' + formName,
-      text: formCommentary as string,
+      subject: 'Contacto desde el sitio web de ' + name,
+      text: commentary,
       attachments: resendAttachments,
       react: EmailTemplate({
-        name: formName,
-        commentary: formCommentary,
+        name: name,
+        commentary: commentary,
         contribution: projectContribution,
       }),
     })
 
     if (error) {
-      console.error('Error sending email:', error)
-      return { ok: false }
+      return { ok: false, error, message: 'Error sending email' }
     }
 
-    console.log('Email sent successfully:', data)
-    return { ok: true }
+    return { ok: true, error: null, message: 'Email sent successfully' }
   } catch (error) {
-    console.error(error)
-    return { ok: false }
+    return { ok: false, error, message: 'Error sending email' }
   }
 }
