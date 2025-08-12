@@ -7,7 +7,7 @@ export function processImageFile(file: File): Promise<DropzoneFile> {
     img.onload = () => {
       resolve({
         file,
-        src: objectUrl,
+        src: objectUrl, // Blob URL to display the image
         width: img.width,
         height: img.height,
         type: file.type,

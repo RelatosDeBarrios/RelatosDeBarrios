@@ -35,8 +35,11 @@ export const CONTACT: ContactSection = {
       id: 'form_project',
       type: 'select',
       label: '¿Deseas aportar material a alguno de nuestros proyectos?',
-      placeholder: 'No tengo material para aportar',
       options: [
+        {
+          id: '',
+          label: 'Sin material para aportar',
+        },
         {
           id: 'rengifo',
           label: BRAND.projects.rengifo,
@@ -56,7 +59,7 @@ export const CONTACT: ContactSection = {
       required: false,
       maxSize: 30,
       accept: {
-        'image/jpeg': ['.jpeg', '.jpg'],
+        'image/*': ['.jpeg', '.jpg'],
         'image/png': ['.png'],
         'application/pdf': ['.pdf'],
         'application/msword': ['.doc'],

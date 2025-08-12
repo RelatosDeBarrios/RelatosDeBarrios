@@ -9,6 +9,7 @@ import {
 
 export function useFileAttachments(attachments: AttachmentsType) {
   const [files, setFiles] = useState<DropzoneFile[]>([])
+
   const hiddenInputRef = useRef<HTMLInputElement>(null)
 
   const onDrop = useCallback(
@@ -49,6 +50,16 @@ export function useFileAttachments(attachments: AttachmentsType) {
     }
     setFiles([])
   }
+
+  const removeFile = (index: number) => {
+    setFiles((prev) => {
+      if (prev[index] && prev[index].src) {
+        URL.revokeObjectURL(prev[index].src)
+      }
+      return prev.filter((_, i) => i !== index)
+    })
+  }
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -69,5 +80,6 @@ export function useFileAttachments(attachments: AttachmentsType) {
     getInputProps,
     isDragActive,
     clearFiles,
+    removeFile,
   }
 }

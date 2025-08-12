@@ -4,12 +4,20 @@ import { FilePreviewItem } from './FilePreviewItem'
 
 interface FilePreviewGridProps {
   files: DropzoneFile[]
+  removeFile: (index: number) => void
 }
 
-export const FilePreviewGrid: React.FC<FilePreviewGridProps> = ({ files }) => (
+export const FilePreviewGrid = ({
+  files,
+  removeFile,
+}: FilePreviewGridProps) => (
   <div className='mt-4 flex flex-wrap justify-center gap-2'>
     {files.map((file, index) => (
-      <FilePreviewItem key={index + file.name} file={file} />
+      <FilePreviewItem
+        key={index + file.name}
+        file={file}
+        onClick={() => removeFile(index)}
+      />
     ))}
   </div>
 )

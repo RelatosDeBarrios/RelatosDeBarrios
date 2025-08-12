@@ -18,6 +18,7 @@ export const FormAttachments = ({ attachments }: FormAttachmentsProps) => {
     getInputProps,
     isDragActive,
     clearFiles,
+    removeFile,
   } = useFileAttachments(attachments)
 
   return (
@@ -51,7 +52,7 @@ export const FormAttachments = ({ attachments }: FormAttachmentsProps) => {
             : `Tamaño máximo: ${attachments.maxSize}MB`}
         </p>
         {previewFiles.total_qty > 0 && (
-          <FilePreviewGrid files={previewFiles.files} />
+          <FilePreviewGrid removeFile={removeFile} files={previewFiles.files} />
         )}
       </FileDropzone>
 
