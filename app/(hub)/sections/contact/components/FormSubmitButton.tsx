@@ -15,12 +15,12 @@ interface FormSubmitButtonProps {
 export const FormSubmitButton = ({
   submitContent,
   state,
-  pending,
+  pending = false,
 }: FormSubmitButtonProps) => {
   const isPending = pending
-  const idle = state.ok === null && !isPending
-  const isSuccess = !idle && state.ok && !isPending
-  const isError = !idle && !state.ok && !isPending
+  const idle = state.success === null && !isPending
+  const isSuccess = !idle && state.success && !isPending
+  const isError = !idle && !state.success && !isPending
 
   const { btnRef, shineRef, fillRef } = useSubmitButtonAnimation({
     states: {
