@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback, useRef, useState, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import type { AttachmentsType, DropzoneFile } from '../types/attachments'
