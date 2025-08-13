@@ -32,7 +32,7 @@ export const CONTACT: ContactSection = {
       requiredMessage: 'Por favor ingresa un mensaje',
     },
     contribution: {
-      id: 'form_project',
+      id: 'form_contribution',
       type: 'select',
       label: '¿Deseas aportar material a alguno de nuestros proyectos?',
       options: [
