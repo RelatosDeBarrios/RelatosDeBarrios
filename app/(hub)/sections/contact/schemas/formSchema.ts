@@ -1,4 +1,4 @@
-import z from 'zod'
+import { z } from 'zod'
 import { CONTACT } from '../content'
 
 const {
@@ -8,22 +8,18 @@ const {
 } = CONTACT.form
 
 export const FormSchema = z.object({
-  name: z
-    .string({ error: nameRequiredMsg })
+  form_name: z
+    .string({ message: nameRequiredMsg })
     .trim()
-    .min(2, 'Debe contener más de 2 caracteres')
+    .min(3, 'Debe contener más de 2 caracteres')
     .max(100, 'El nombre no puede exceder los 100 caracteres'),
-  email: z
-    .email({
-      error: (iss) => {
-        if (iss.code === 'invalid_type') return emailRequiredMsg
-        if (iss.code === 'invalid_format') return emailInvalidMsg
-      },
-    })
-    .trim(),
-  commentary: z.string({ error: commentaryRequiredMsg }).trim(),
-  contribution: z.enum(['rengifo', 'covico']),
-  attachments: z
+  form_email: z.email(emailInvalidMsg).trim().min(1, emailRequiredMsg),
+  form_commentary: z.string().trim().min(1, commentaryRequiredMsg),
+  form_contribution: z
+    .union([z.literal(''), z.enum(['rengifo', 'covico'])])
+    .transform((v) => (v === '' ? undefined : v))
+    .optional(),
+  form_attachments: z
     .array(
       z.object({
         blob: z.string(),
@@ -33,4 +29,4 @@ export const FormSchema = z.object({
     .optional(),
 })
 
-export type FormSchemaType = z.infer<typeof FormSchema>
+export type ContactForm = z.infer<typeof FormSchema>

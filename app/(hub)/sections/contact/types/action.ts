@@ -9,9 +9,9 @@ export type SendEmailAction = (
 export type SendEmailResponse = Promise<ActionState>
 
 export type ActionState = {
-  ok: boolean | null
+  success: boolean | null
   error: Error | ZodError | unknown | null
-  message?: string
+  messages?: string
 }
 
 export type ActionFormData = {

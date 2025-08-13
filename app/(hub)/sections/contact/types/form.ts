@@ -1,5 +1,6 @@
 import { ProjectsId } from '@/types/core'
 import { AttachmentsType } from './attachments'
+import { CONTACT } from '../content'
 
 export interface InputType {
   id: string
@@ -37,3 +38,11 @@ export type ContactForm = {
   attachments: AttachmentsType
   submit: SubmitButtonType
 }
+
+export type FormFieldIds = {
+  [K in keyof typeof CONTACT.form]: (typeof CONTACT.form)[K] extends {
+    id: string
+  }
+    ? (typeof CONTACT.form)[K]['id']
+    : never
+}[keyof typeof CONTACT.form]
