@@ -19,14 +19,7 @@ export const FormSchema = z.object({
     .union([z.literal(''), z.enum(['rengifo', 'covico'])])
     .transform((v) => (v === '' ? undefined : v))
     .optional(),
-  form_attachments: z
-    .array(
-      z.object({
-        blob: z.string(),
-        filename: z.string(),
-      })
-    )
-    .optional(),
+  form_attachments: z.array(z.file()).optional().nullable(),
 })
 
 export type ContactForm = z.infer<typeof FormSchema>
