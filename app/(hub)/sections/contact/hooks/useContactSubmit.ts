@@ -24,7 +24,17 @@ export const useContactSubmit = ({ action }: UseContactSubmitProps) => {
       return
     }
 
-    // Next: setPhase('uploading') -> upload blobs
+    // Start Upload phase
+    setTimeout(() => {
+      setPhase('uploading')
+      setTimeout(() => {
+        setPhase('submitting')
+        setTimeout(() => {
+          setPhase('success')
+        }, 3000) // mocking submitting delay
+      }, 5000) // mocking upload delay
+    }, 0)
+
     // Next: setPhase('submitting') -> await action(res.data)
     // On success: setPhase('success') and clear errors
   }
