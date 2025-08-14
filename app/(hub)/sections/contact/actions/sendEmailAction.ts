@@ -8,14 +8,6 @@ import { FormSchema } from '../schemas/formSchema'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const {
-  name: { id: nameId },
-  email: { id: emailId },
-  commentary: { id: commentaryId },
-  contribution: { id: contributionId },
-  attachments: { id: attachmentsId },
-} = CONTACT.form
-
 export const sendEmail: SendEmailAction = async (_, formData) => {
   const form = {
     form_name: formData.get(nameId),
