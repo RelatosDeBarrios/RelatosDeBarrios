@@ -1,6 +1,7 @@
 'use client'
 import z, { ZodError } from 'zod'
 import { FormSchema } from '../schemas/formSchema'
+import { parseFormData } from './parseFormData'
 
 export type ValidationFieldErrors = Record<string, string[]>
 export interface ValidationResultOk<T> {
@@ -15,10 +16,10 @@ export interface ValidationResultErr {
 export type ValidationResult<T> = ValidationResultOk<T> | ValidationResultErr
 
 export function validateForm(formData: FormData): ValidationResult<unknown> {
-  const obj = Object.fromEntries(formData.entries())
+  const data = parseFormData(formData)
 
   try {
-    const result = FormSchema.safeParse(obj)
+    const result = FormSchema.safeParse(data)
 
     if (!result.success) {
       const flat = z.flattenError(result.error)
