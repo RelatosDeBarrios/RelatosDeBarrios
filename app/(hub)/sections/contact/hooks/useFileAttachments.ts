@@ -11,7 +11,6 @@ import {
 
 export function useFileAttachments(attachments: AttachmentsType) {
   const [files, setFiles] = useState<DropzoneFile[]>([])
-
   const hiddenInputRef = useRef<HTMLInputElement>(null)
 
   const onDrop = useCallback(
