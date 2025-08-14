@@ -5,6 +5,7 @@ import { Check, Loader2, Send, X } from 'lucide-react'
 import { SubmitButtonType } from '../types/form'
 import { ActionState } from '../types/action'
 import { useSubmitButtonAnimation } from '../hooks/useSubmitButtonAnimation'
+import { useFormStore } from '../store/formStore'
 
 interface FormSubmitButtonProps {
   submitContent: SubmitButtonType
@@ -12,15 +13,15 @@ interface FormSubmitButtonProps {
   state: ActionState
 }
 
-export const FormSubmitButton = ({
-  submitContent,
-  state,
-  pending = false,
-}: FormSubmitButtonProps) => {
+export const FormSubmitButton = ({ submitContent }: FormSubmitButtonProps) => {
+  const phase = useFormStore((s) => s.phase)
+  const pending = useFormStore((s) => s.pending)
+  console.log(phase)
+
   const isPending = pending
-  const idle = state.success === null && !isPending
-  const isSuccess = !idle && state.success && !isPending
-  const isError = !idle && !state.success && !isPending
+  const idle = phase === 'idle'
+  const isSuccess = phase === 'success'
+  const isError = phase === 'error'
 
   const { btnRef, shineRef, fillRef } = useSubmitButtonAnimation({
     states: {
