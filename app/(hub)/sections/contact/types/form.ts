@@ -4,8 +4,9 @@ import { CONTACT } from '../content'
 
 export interface InputType {
   id: string
-  type: 'text' | 'email' | 'file' | 'textarea' | 'select'
+  type: 'text' | 'email' | 'file' | 'textarea' | 'select' | 'name'
   label: string
+  name?: string
   placeholder?: string
   required: boolean
   requiredMessage?: string

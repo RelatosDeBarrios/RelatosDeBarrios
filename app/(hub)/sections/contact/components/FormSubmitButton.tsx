@@ -16,7 +16,6 @@ interface FormSubmitButtonProps {
 export const FormSubmitButton = ({ submitContent }: FormSubmitButtonProps) => {
   const phase = useFormStore((s) => s.phase)
   const pending = useFormStore((s) => s.pending)
-  console.log(phase)
 
   const isPending = pending
   const idle = phase === 'idle'

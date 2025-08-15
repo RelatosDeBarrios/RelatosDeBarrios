@@ -48,11 +48,12 @@ export const useFormStore = create<State>((set) => ({
     })),
   clearFieldError: (id) =>
     set((state) => {
-      if (!state.fieldErrors) return { fieldErrors: null }
+      if (!state.fieldErrors) return { fieldErrors: null, phase: 'idle' }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [id]: _removed, ...rest } = state.fieldErrors
       const next = (
         Object.keys(rest).length ? rest : null
       ) as FieldErrors | null
-      return { fieldErrors: next }
+      return { fieldErrors: next, phase: next ? 'error' : 'idle' }
     }),
 }))

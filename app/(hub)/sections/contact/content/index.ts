@@ -10,6 +10,7 @@ export const CONTACT: ContactSection = {
       id: 'form_name',
       type: 'text',
       label: 'Nombre',
+      name: 'name',
       placeholder: 'Nombre completo',
       required: true,
       requiredMessage: 'Por favor ingresa tu nombre',

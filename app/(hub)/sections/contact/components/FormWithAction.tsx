@@ -16,6 +16,7 @@ interface FormProps {
 export const FormWithAction = ({ action, data }: FormProps) => {
   const { handleSubmit } = useContactSubmit({ action })
   const fieldErrors = useFormStore((s) => s.fieldErrors)
+  const clearFieldError = useFormStore((s) => s.clearFieldError)
   const pending = useFormStore((s) => s.pending)
   const phase = useFormStore((s) => s.phase)
 
@@ -26,13 +27,25 @@ export const FormWithAction = ({ action, data }: FormProps) => {
         className='bg-hub-background/20 ring-hub-border mx-auto w-full max-w-2xl space-y-4 rounded-2xl p-4 ring backdrop-blur-2xl md:p-8'
       >
         {/* Name field */}
-        <FormInput inputContent={data.name} fieldErrors={fieldErrors?.[data.name.id]} />
+        <FormInput
+          inputContent={data.name}
+          fieldErrors={fieldErrors?.[data.name.id]}
+          reset={clearFieldError}
+        />
 
         {/* Email field */}
-        <FormInput inputContent={data.email} fieldErrors={fieldErrors?.[data.email.id]} />
+        <FormInput
+          inputContent={data.email}
+          fieldErrors={fieldErrors?.[data.email.id]}
+          reset={clearFieldError}
+        />
 
         {/* Message/Commentary field */}
-        <FormInput inputContent={data.commentary} fieldErrors={fieldErrors?.[data.commentary.id]} />
+        <FormInput
+          inputContent={data.commentary}
+          fieldErrors={fieldErrors?.[data.commentary.id]}
+          reset={clearFieldError}
+        />
 
         {/* Material contribution */}
         <FormContribution

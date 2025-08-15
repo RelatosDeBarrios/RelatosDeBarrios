@@ -6,6 +6,7 @@
 import { SendEmailAction } from '../types/action'
 import { validateForm } from '../utils/formValidation'
 import { useFormStore } from '../store/formStore'
+import { validateIp } from '../utils/validateIp'
 
 interface UseContactSubmitProps {
   action: SendEmailAction
@@ -23,6 +24,13 @@ export const useContactSubmit = ({ action }: UseContactSubmitProps) => {
       setFieldErrors(res.fieldErrors)
       return
     }
+
+    // validate IP address
+    // const { allowed, message } = await validateIp('/api/validate-ip')
+    //
+    // if (!allowed) {
+    //   setFieldErrors({ form_submit: message })
+    // }
 
     // Start Upload phase
     setTimeout(() => {
