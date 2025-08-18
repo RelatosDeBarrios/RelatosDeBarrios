@@ -1,30 +1,21 @@
 'use client'
 import { cn } from '@/utils/css'
+import { useFormContext } from 'react-hook-form'
 import { InputType } from '../types/form'
 import { FieldError } from './FieldError'
 
 interface InputFormProps {
   inputContent: InputType
-  fieldErrors?: string[]
   className?: string
-  reset?: (id: string) => void
 }
 
-// const inputValue: Record<string, string> = {
-//   form_email: 'test@email.com',
-//   form_name: 'John Doe',
-//   form_commentary: 'Hello! This is a test message.',
-// }
-//
-// const isDev = process.env.NODE_ENV === 'development'
-
-export const FormInput = ({
-  inputContent,
-  className,
-  fieldErrors,
-  reset = () => {},
-}: InputFormProps) => {
+export const FormInput = ({ inputContent, className }: InputFormProps) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
   const Element = inputContent.type === 'textarea' ? Textarea : Input
+  const errorMessage = errors[inputContent.id]?.message as string | undefined
 
   return (
     <>
@@ -38,46 +29,51 @@ export const FormInput = ({
         )}
         <Element
           inputContent={inputContent}
-          reset={reset}
+          register={register}
           className={cn(
             className,
             'border-hub-border focus:ring-hub-accent bg-hub-background/60 w-full rounded-lg border px-3 py-2 focus:ring-1 focus:outline-none md:px-4 md:py-3'
           )}
         />
       </label>
-      {fieldErrors && <FieldError errors={fieldErrors} />}
+      {errorMessage && <FieldError message={errorMessage} />}
     </>
   )
 }
 
-const Input = ({ inputContent, className, reset }: InputFormProps) => {
+interface ElementProps extends Omit<InputFormProps, 'fieldErrors'> {
+  register: ReturnType<typeof useFormContext>['register']
+}
+
+const Input = ({ inputContent, className, register }: ElementProps) => {
   return (
     <input
       type={inputContent.type}
-      // defaultValue={
-      //   isDev ? inputValue[inputContent.id] : undefined
-      // }
       id={inputContent.id}
-      name={inputContent.id}
       placeholder={inputContent.placeholder}
-      required={inputContent.required}
+      autoComplete={inputContent.autocomplete}
       className={className}
-      onChange={() => reset!(inputContent.id)}
+      {...register(inputContent.id, {
+        required:
+          inputContent.required &&
+          (inputContent.requiredMessage || 'Este campo es requerido'),
+      })}
     />
   )
 }
 
-const Textarea = ({ inputContent, className, reset }: InputFormProps) => {
+const Textarea = ({ inputContent, className, register }: ElementProps) => {
   return (
     <textarea
       id={inputContent.id}
-      // defaultValue={isDev ? inputValue[inputContent.id] : undefined}
-      name={inputContent.id}
       placeholder={inputContent.placeholder}
-      required={inputContent.required}
       rows={5}
       className={className}
-      onChange={() => reset!(inputContent.id)}
+      {...register(inputContent.id, {
+        required:
+          inputContent.required &&
+          (inputContent.requiredMessage || 'Este campo es requerido'),
+      })}
     />
   )
 }

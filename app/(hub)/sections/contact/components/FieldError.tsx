@@ -1,20 +1,17 @@
 'use client'
 
 interface FieldErrorProps {
-  errors?: string[]
+  message?: string
 }
 
-export const FieldError = ({ errors }: FieldErrorProps) => {
-  if (!errors || errors.length === 0) {
+export const FieldError = ({ message }: FieldErrorProps) => {
+  if (!message) {
     return null
   }
 
   return (
     <div className='text-hub-error mt-1 text-sm'>
-      {errors.map((error, index) => (
-        <p key={index}>{error}</p>
-      ))}
+      <p>{message}</p>
     </div>
   )
 }
-

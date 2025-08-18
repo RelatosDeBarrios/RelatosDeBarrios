@@ -1,25 +1,108 @@
 'use client'
+import { useState, useCallback } from 'react'
+import { useFormContext } from 'react-hook-form'
+import { useDropzone } from 'react-dropzone'
 import { formatBytes } from '@/utils/format'
 import { FileDropzone } from './FileDropzone'
 import { FilePreviewGrid } from './FilePreviewGrid'
 import { cn } from '@/utils/css'
-import { AttachmentsType } from '../types/attachments'
-import { useFileAttachments } from '../hooks/useFileAttachments'
+import { AttachmentsType, DropzoneFile } from '../types/attachments'
+import { processImageFile, processNonImageFile } from '../utils/fileUtils'
+import { FieldError } from './FieldError'
 
 interface FormAttachmentsProps {
   attachments: AttachmentsType
 }
 
 export const FormAttachments = ({ attachments }: FormAttachmentsProps) => {
+  // Track preview files locally for UI
+  const [previewFiles, setPreviewFiles] = useState<DropzoneFile[]>([])
+
+  // Access React Hook Form methods
   const {
-    previewFiles,
-    hiddenInputRef,
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    clearFiles,
-    removeFile,
-  } = useFileAttachments(attachments)
+    setValue,
+    formState: { errors },
+    clearErrors,
+  } = useFormContext()
+
+  // Derive stats for UI
+  const total_qty = previewFiles.length
+  const total_size = previewFiles.reduce((acc, f) => acc + f.file.size, 0)
+  const errorMessage = errors[attachments.id]?.message as string | undefined
+
+  // Handle file drops
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      try {
+        // Process files for preview
+        const processedFiles = await Promise.all(
+          acceptedFiles.map((file) =>
+            file.type.startsWith('image/')
+              ? processImageFile(file)
+              : Promise.resolve(processNonImageFile(file))
+          )
+        )
+
+        // Update preview state
+        setPreviewFiles((prev) => [...prev, ...processedFiles])
+
+        // Extract actual files for RHF
+        const allFiles = [...previewFiles, ...processedFiles].map((f) => f.file)
+
+        // Update RHF value
+        setValue(attachments.id, allFiles, {
+          shouldDirty: true,
+          shouldValidate: true,
+        })
+
+        // Clear any previous errors
+        clearErrors(attachments.id)
+      } catch (error) {
+        console.error('Error processing files:', error)
+      }
+    },
+    [previewFiles, setValue, clearErrors, attachments.id]
+  )
+
+  // Initialize dropzone
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: attachments.accept,
+  })
+
+  // Handle removing a file
+  const removeFile = (index: number) => {
+    setPreviewFiles((prev) => {
+      // Clean up object URL if needed
+      if (prev[index]?.src) {
+        URL.revokeObjectURL(prev[index].src)
+      }
+
+      // Create new array without the removed file
+      const newFiles = prev.filter((_, i) => i !== index)
+
+      // Update RHF value
+      setValue(
+        attachments.id,
+        newFiles.map((f) => f.file),
+        { shouldDirty: true, shouldValidate: true }
+      )
+
+      return newFiles
+    })
+  }
+
+  // Handle clearing all files
+  const clearFiles = () => {
+    // Clean up object URLs
+    previewFiles.forEach(({ src }) => src && URL.revokeObjectURL(src))
+
+    // Clear preview state
+    setPreviewFiles([])
+
+    // Clear RHF value
+    setValue(attachments.id, [], { shouldDirty: true })
+  }
 
   return (
     <div>
@@ -39,7 +122,7 @@ export const FormAttachments = ({ attachments }: FormAttachmentsProps) => {
           isDragActive && 'bg-hub-secondary/10'
         )}
       >
-        {previewFiles.total_qty === 0 && (
+        {total_qty === 0 && (
           <p className='text-hub-text mb-2'>
             {isDragActive
               ? 'Suelta los archivos aquí...'
@@ -47,25 +130,18 @@ export const FormAttachments = ({ attachments }: FormAttachmentsProps) => {
           </p>
         )}
         <p className='text-sm text-gray-500'>
-          {previewFiles.total_qty > 0
-            ? `${previewFiles.total_qty} archivos y ${formatBytes(previewFiles.total_size)} cargados`
+          {total_qty > 0
+            ? `${total_qty} archivos y ${formatBytes(total_size)} cargados`
             : `Tamaño máximo: ${attachments.maxSize}MB`}
         </p>
-        {previewFiles.total_qty > 0 && (
-          <FilePreviewGrid removeFile={removeFile} files={previewFiles.files} />
+        {total_qty > 0 && (
+          <FilePreviewGrid removeFile={removeFile} files={previewFiles} />
         )}
       </FileDropzone>
 
-      <input
-        type={attachments.type}
-        name={attachments.id}
-        id={attachments.id}
-        required={attachments.required}
-        ref={hiddenInputRef}
-        className='opacity-0'
-      />
+      <FieldError message={errorMessage} />
 
-      {previewFiles.total_qty > 0 && (
+      {total_qty > 0 && (
         <button
           type='button'
           onClick={clearFiles}

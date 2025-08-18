@@ -1,23 +1,28 @@
 'use client'
-import { useState } from 'react'
+import { useFormContext } from 'react-hook-form'
 import { FormAttachments } from './FormAttachments'
 import { ContributionType } from '../types/form'
 import { AttachmentsType } from '../types/attachments'
-import { ProjectsId } from '@/types/core'
 import { FieldError } from './FieldError'
 
 interface FormAttachmentsProps {
   contribution: ContributionType
   attachments: AttachmentsType
-  fieldErrors?: string[]
 }
 
 export const FormContribution = ({
   contribution,
   attachments,
-  fieldErrors,
 }: FormAttachmentsProps) => {
-  const [selectedProject, setSelectedProject] = useState<ProjectsId | ''>('')
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext()
+
+  // Watch for project selection to conditionally render attachments
+  const selectedProject = watch(contribution.id)
+  const errorMessage = errors[contribution.id]?.message as string | undefined
 
   return (
     <>
@@ -26,10 +31,8 @@ export const FormContribution = ({
         <p className='text-hub-text block font-medium'>{contribution.label}</p>
         <select
           id={contribution.id}
-          name={contribution.id}
-          value={selectedProject}
-          onChange={(e) => setSelectedProject(e.target.value as ProjectsId)}
           className='border-hub-border focus:ring-hub-accent bg-hub-background/60 w-full rounded-lg border px-4 py-3 focus:ring-1 focus:outline-none'
+          {...register(contribution.id)}
         >
           {Object.values(contribution.options).map((option) => (
             <option key={option.id} value={option.id}>
@@ -37,22 +40,11 @@ export const FormContribution = ({
             </option>
           ))}
         </select>
-        {fieldErrors && <FieldError errors={fieldErrors} />}
+        <FieldError message={errorMessage} />
       </div>
 
       {/* File attachments - conditionally rendered */}
-      {selectedProject && (
-        <>
-          <FormAttachments attachments={attachments} />
-          {fieldErrors && fieldErrors.length > 0 && (
-            <div className='text-hub-error mt-1 text-sm'>
-              {fieldErrors.map((error, index) => (
-                <p key={index}>{error}</p>
-              ))}
-            </div>
-          )}
-        </>
-      )}
+      {selectedProject && <FormAttachments attachments={attachments} />}
     </>
   )
 }

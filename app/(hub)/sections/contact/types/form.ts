@@ -6,7 +6,7 @@ export interface InputType {
   id: string
   type: 'text' | 'email' | 'file' | 'textarea' | 'select' | 'name'
   label: string
-  name?: string
+  autocomplete?: string
   placeholder?: string
   required: boolean
   requiredMessage?: string

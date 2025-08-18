@@ -5,22 +5,25 @@ import { Check, Loader2, Send, X } from 'lucide-react'
 import { SubmitButtonType } from '../types/form'
 import { ActionState } from '../types/action'
 import { useSubmitButtonAnimation } from '../hooks/useSubmitButtonAnimation'
-import { useFormStore } from '../store/formStore'
+import { useFormContext } from 'react-hook-form'
 
 interface FormSubmitButtonProps {
   submitContent: SubmitButtonType
-  pending: boolean
+  pending?: boolean
   state: ActionState
 }
 
-export const FormSubmitButton = ({ submitContent }: FormSubmitButtonProps) => {
-  const phase = useFormStore((s) => s.phase)
-  const pending = useFormStore((s) => s.pending)
+export const FormSubmitButton = ({
+  submitContent,
+  pending = false,
+  state,
+}: FormSubmitButtonProps) => {
+  const { formState } = useFormContext()
 
-  const isPending = pending
-  const idle = phase === 'idle'
-  const isSuccess = phase === 'success'
-  const isError = phase === 'error'
+  const isPending = pending || formState.isSubmitting
+  const idle = !isPending && !state.success && !state.error
+  const isSuccess = !!state.success
+  const isError = !!state.error
 
   const { btnRef, shineRef, fillRef } = useSubmitButtonAnimation({
     states: {
@@ -36,7 +39,7 @@ export const FormSubmitButton = ({ submitContent }: FormSubmitButtonProps) => {
     : isSuccess
       ? 'Enviado'
       : isError
-        ? 'Error'
+        ? (formState.errors['form_submit']?.message as string) || 'Error'
         : 'Enviar Correo'
   const Icon = isPending ? Loader2 : isSuccess ? Check : isError ? X : Send
 
