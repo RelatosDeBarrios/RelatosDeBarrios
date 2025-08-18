@@ -1,20 +1,20 @@
 'use server'
 import { BRAND } from '@/content/brand'
 import { Resend } from 'resend'
-import { CONTACT } from '../content'
 import { SendEmailAction } from '../types/action'
 import { EmailTemplate } from '../components/EmailTemplate'
-import { FormSchema } from '../schemas/formSchema'
+import { FormSchema, FIELD_IDS } from '../schemas/formSchema'
+import { ProjectsId } from '@/types/core'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export const sendEmail: SendEmailAction = async (_, formData) => {
   const form = {
-    form_name: formData.get(nameId),
-    form_email: formData.get(emailId),
-    form_commentary: formData.get(commentaryId),
-    form_contribution: formData.get(contributionId),
-    form_attachments: formData.getAll(attachmentsId),
+    [FIELD_IDS.name]: formData.get(FIELD_IDS.name),
+    [FIELD_IDS.email]: formData.get(FIELD_IDS.email),
+    [FIELD_IDS.commentary]: formData.get(FIELD_IDS.commentary),
+    [FIELD_IDS.contribution]: formData.get(FIELD_IDS.contribution),
+    [FIELD_IDS.attachments]: formData.getAll(FIELD_IDS.attachments),
   }
 
   const validation = FormSchema.safeParse(form)
@@ -26,44 +26,50 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
     }
 
   const {
-    form_name: name,
-    form_email: email,
-    form_commentary: commentary,
-    form_contribution: contribution,
-    form_attachments: attachments,
+    [FIELD_IDS.name]: name,
+    [FIELD_IDS.email]: email,
+    [FIELD_IDS.commentary]: commentary,
+    [FIELD_IDS.contribution]: contribution,
+    [FIELD_IDS.attachments]: attachments,
   } = validation.data
 
-  const projectContribution = !!contribution && BRAND.projects[contribution]
+  // Safely cast the contribution to ProjectsId
+  const projectContribution =
+    contribution && BRAND.projects[contribution as ProjectsId]
 
   let resendAttachments: { content: string; filename: string }[] = []
 
-  if (!!attachments && attachments.length > 0) {
+  // Process attachments if they exist
+  if (attachments && Array.isArray(attachments) && attachments.length > 0) {
     try {
       resendAttachments = await Promise.all(
-        attachments.map(async ({ blob, filename }) => {
-          const response = await fetch(blob)
-          const arrayBuffer = await response.arrayBuffer()
+        attachments.map(async (file: File) => {
+          // For actual File objects from FormData
+          const arrayBuffer = await file.arrayBuffer()
           const content = Buffer.from(arrayBuffer).toString('base64')
 
-          return { content, filename }
+          return {
+            content,
+            filename: file.name,
+          }
         })
       )
     } catch (error) {
-      return { success: false, error, message: 'Error fetching blob URLs' }
+      return { success: false, error, message: 'Error processing attachments' }
     }
   }
 
   try {
     const { error } = await resend.emails.send({
-      from: `${name} <web@contacto.relatosdebarrios.cl>`,
-      replyTo: email,
+      from: `${String(name)} <web@contacto.relatosdebarrios.cl>`,
+      replyTo: String(email),
       to: ['strocsdev@gmail.com'],
-      subject: 'Contacto desde el sitio web de ' + name,
-      text: commentary,
+      subject: 'Contacto desde el sitio web de ' + String(name),
+      text: String(commentary),
       attachments: resendAttachments,
       react: EmailTemplate({
-        name: name,
-        commentary: commentary,
+        name: String(name),
+        commentary: String(commentary),
         contribution: projectContribution,
       }),
     })
