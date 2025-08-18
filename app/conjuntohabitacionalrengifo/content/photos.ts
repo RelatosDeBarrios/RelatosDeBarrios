@@ -55,28 +55,26 @@ export const photosContent: PhotoContent = {
       id: 'exterior',
       title: 'Recorrido 3D',
       subTitle: 'Exterior',
-      href: '',
+      href: 'https://www.vista3d.cl/conjuntohabitacionalrengifo/',
       bg: {
         src: formatPath(`${brandContent.paths.rengifo}/images/exterior.jpg`),
         width: 900,
         height: 600,
         alt: 'Recorrido 3D exterior del barrio Rengifo',
       },
-      disabled: true,
     },
 
     interior: {
       id: 'interior',
       title: 'Recorrido 3D',
       subTitle: 'Interior',
-      href: '',
+      href: 'https://www.vista3d.cl/vivienda/',
       bg: {
         src: formatPath(`${brandContent.paths.rengifo}/images/interior.jpg`),
         width: 899,
         height: 696,
         alt: 'Recorrido 3D interior del barrio Rengifo',
       },
-      disabled: true,
     },
   },
 
