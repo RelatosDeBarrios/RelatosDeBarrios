@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@hookform/resolvers": "^5.2.1",
     "@react-email/render": "^1.2.0",
     "@vercel/analytics": "^1.5.0",
     "@vercel/blob": "^1.1.1",
@@ -21,6 +22,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-dropzone": "^14.3.8",
+    "react-hook-form": "^7.62.0",
     "react-markdown": "^10.1.0",
     "redis": "^5.8.0",
     "resend": "^6.0.0",
