@@ -2,11 +2,10 @@ interface EmailTemplateProps {
   name: string
   commentary: string
   contribution:
-    | null
     | 'Conjunto Habitacional Rengifo'
     | 'Villa Covico'
-    | ''
-    | undefined
+    | 'Sin material para aportar'
+    | string
 }
 
 export const EmailTemplate = ({
@@ -16,11 +15,9 @@ export const EmailTemplate = ({
 }: EmailTemplateProps) => {
   return (
     <div>
-      {contribution && (
-        <p>
-          <strong>Aporte:</strong> {contribution}
-        </p>
-      )}
+      <p>
+        <strong>Aporte:</strong> {contribution}
+      </p>
       <p>{name}</p>
       <p>{commentary}</p>
     </div>

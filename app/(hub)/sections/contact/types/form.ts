@@ -26,7 +26,7 @@ export interface SubmitButtonType {
 
 export interface ContributionType extends InputType {
   options: {
-    id: ProjectsId | ''
+    id: ProjectsId | '' | undefined
     label: string
   }[]
 }

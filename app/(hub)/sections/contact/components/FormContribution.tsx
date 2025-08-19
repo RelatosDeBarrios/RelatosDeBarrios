@@ -31,6 +31,7 @@ export const FormContribution = ({
         <p className='text-hub-text block font-medium'>{contribution.label}</p>
         <select
           id={contribution.id}
+          defaultValue=''
           className='border-hub-border focus:ring-hub-accent bg-hub-background/60 w-full rounded-lg border px-4 py-3 focus:ring-1 focus:outline-none'
           {...register(contribution.id)}
         >
