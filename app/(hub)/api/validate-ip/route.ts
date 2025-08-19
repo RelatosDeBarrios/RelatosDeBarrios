@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server'
-import { createClient } from 'redis'
+import { rateLimit, secureHash } from '../../lib/redis'
+import { createUploadProof, createCorrelationId } from '../../lib/crypto'
 
-const redis = createClient({ url: process.env.REDIS_URL })
-redis.connect()
-
-// Ensure the Redis client is connected before handling requests
-const RATE_LIMIT = 5 // Max uploads per IP per 24 hours
-const WINDOW_SECONDS = 24 * 60 * 60 // 24 hours
+// Rate limit configuration
+const RATE_LIMIT = Number(process.env.HUB_RATE_LIMIT || 5) // Max uploads per IP per window
+const WINDOW_SECONDS = Number(process.env.HUB_WINDOW_SECONDS || 24 * 60 * 60) // 24 hours
+const PROOF_COOKIE_NAME = process.env.HUB_PROOF_COOKIE || 'hub_upload_proof'
 
 export async function POST(request: Request): Promise<
   NextResponse<{
@@ -16,52 +15,122 @@ export async function POST(request: Request): Promise<
     error?: string
   }>
 > {
-  // Extract IP address (basic, can be improved for proxies)
+  // Extract correlation ID for request tracing or create a new one
+  const correlationId = await createCorrelationId(
+    request.headers.get('x-correlation-id') || undefined
+  )
+
+  // Extract IP address with improved extraction handling
   const ip =
-    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    request.headers.get('x-real-ip') ||
+    'unknown'
 
   if (ip === 'unknown') {
-    return new NextResponse(JSON.stringify({ error: 'IP address not found' }), {
-      status: 400,
+    console.warn('Could not determine client IP address for rate limiting', {
+      correlationId,
     })
-  }
-
-  const key = `rate:ip:${ip}`
-
-  // Increment the counter for this IP
-  const count = await redis.incr(key)
-
-  // If this is the first upload, set the expiry window
-  if (count === 1) {
-    await redis.expire(key, WINDOW_SECONDS)
-  }
-
-  if (count > RATE_LIMIT) {
-    // Log the blocked attempt
-    const now = new Date().toISOString()
-    await redis.lpush('log:rate-limit-hits', `${ip}|${now}`)
-    await redis.ltrim('log:rate-limit-hits', 0, 999) // Keep last 1000 entries
-
-    // Get TTL to inform user how long to wait
-    const ttl = await redis.ttl(key)
-    return new NextResponse(
-      JSON.stringify({
-        error: 'Rate limit exceeded',
+    // Fail closed for unknown IPs
+    return NextResponse.json(
+      {
+        error: 'Could not verify your identity',
         allowed: false,
-        retryAfter: ttl,
         remaining: 0,
-      }),
-      { status: 429 }
+      },
+      {
+        status: 400,
+        headers: {
+          'X-Correlation-Id': correlationId,
+        },
+      }
     )
   }
 
-  // Allow the request
-  return new NextResponse(
-    JSON.stringify({
-      error: null,
-      allowed: true,
-      remaining: RATE_LIMIT - count,
-    }),
-    { status: 200 }
-  )
+  try {
+    // Hash the IP for security before using it in the rate limit key
+    const ipHash = await secureHash(ip)
+    const key = `rate:ip:${ipHash}`
+
+    // Use the centralized rate limit function
+    const result = await rateLimit(
+      key,
+      RATE_LIMIT,
+      WINDOW_SECONDS,
+      'validate-ip',
+      correlationId
+    )
+
+    if (!result.allowed) {
+      return NextResponse.json(
+        {
+          error: result.error || 'Rate limit exceeded',
+          allowed: false,
+          retryAfter: result.retryAfter,
+          remaining: 0,
+        },
+        {
+          status: 429,
+          headers: {
+            'X-Correlation-Id': correlationId,
+          },
+        }
+      )
+    }
+
+    // Create a proof token for the blob upload endpoint
+    const token = await createUploadProof({
+      ipHash,
+      timestamp: Date.now(),
+      nonce: crypto.randomUUID(),
+      correlationId,
+    })
+
+    // Set the proof token as a secure HTTP-only cookie
+    // This will be sent with the request to /api/blob-upload
+    const response = NextResponse.json(
+      {
+        error: null as unknown as string | undefined, // Type hack to satisfy return type
+        allowed: true,
+        remaining: result.remaining,
+      },
+      {
+        status: 200,
+        headers: {
+          'X-Correlation-Id': correlationId,
+        },
+      }
+    )
+
+    // Set cookie on the response
+    response.cookies.set({
+      name: PROOF_COOKIE_NAME,
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/api', // Only send to API routes
+      maxAge: 300, // 5 minute expiry (seconds)
+    })
+
+    return response
+
+    // Response is already returned above
+  } catch (error) {
+    // Log the error and fail closed to prevent abuse
+    console.error('Error during validate-ip:', error, { correlationId })
+
+    return NextResponse.json(
+      {
+        error: 'Service unavailable',
+        allowed: false,
+        remaining: 0,
+      },
+      {
+        status: 503,
+        headers: {
+          'X-Correlation-Id': correlationId,
+        },
+      }
+    )
+  }
 }

@@ -11,13 +11,15 @@ export type SendEmailResponse = Promise<ActionState>
 export type ActionState = {
   success: boolean | null
   error: Error | ZodError | unknown | null
-  messages?: string
+  message?: string
+  fieldErrors?: Record<string, string | string[]>
+  correlationId?: string
 }
 
 export type ActionFormData = {
   name: string
   email: string
   commentary: string
-  contribution: ProjectsId
+  contribution?: ProjectsId
   attachments: string[]
 }
