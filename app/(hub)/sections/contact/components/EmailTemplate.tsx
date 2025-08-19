@@ -1,7 +1,12 @@
 interface EmailTemplateProps {
   name: string
   commentary: string
-  contribution: false | 'Conjunto Habitacional Rengifo' | 'Villa Covico'
+  contribution:
+    | null
+    | 'Conjunto Habitacional Rengifo'
+    | 'Villa Covico'
+    | ''
+    | undefined
 }
 
 export const EmailTemplate = ({

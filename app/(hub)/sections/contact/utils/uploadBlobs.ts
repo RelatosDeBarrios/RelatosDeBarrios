@@ -1,7 +1,15 @@
 import { upload } from '@vercel/blob/client'
 
-export async function uploadBlobs(files: File[], handleUploadUrl: string) {
-  if (files.length === 0) return []
+export async function uploadBlobs(
+  files: File[],
+  handleUploadUrl: string
+): Promise<{ success: boolean; paths: string[]; message: string }> {
+  if (files.length === 0)
+    return {
+      success: false,
+      paths: [],
+      message: 'No files to upload',
+    }
 
   try {
     const urls = files.map(async (file) => {
@@ -12,9 +20,17 @@ export async function uploadBlobs(files: File[], handleUploadUrl: string) {
       return url
     })
 
-    return Promise.all(urls)
+    return {
+      success: true,
+      paths: await Promise.all(urls),
+      message: 'Files uploaded successfully',
+    }
   } catch {
     // update global state
-    return []
+    return {
+      success: false,
+      paths: [],
+      message: 'Error uploading files',
+    }
   }
 }

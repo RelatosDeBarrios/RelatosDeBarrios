@@ -10,6 +10,8 @@ import { FormContribution } from './FormContribution'
 import { FormInput } from './FormInput'
 import { FormSubmitButton } from './FormSubmitButton'
 import { validateIp } from '../utils/validateIp'
+import { uploadBlobs } from '../utils/uploadBlobs'
+import { parseFormData } from '../utils/parseFormData'
 
 interface FormProps {
   action: SendEmailAction
@@ -54,7 +56,7 @@ export const FormWithAction = ({ action, data }: FormProps) => {
   } = methods
 
   // Form submission handler
-  const onSubmit = async (values: FormValues) => {
+  const onSubmit = async (values: FormData) => {
     try {
       // Validate client-side (handled by RHF with Zod resolver)
       setPhase('validating')
@@ -71,14 +73,38 @@ export const FormWithAction = ({ action, data }: FormProps) => {
         return
       }
 
+      const {
+        form_name,
+        form_email,
+        form_contribution,
+        form_commentary,
+        form_attachments,
+      } = parseFormData(values)
+
+      let attachmentsBlobs: string[]
       // Handle file uploads if present
-      if (values[FIELD_IDS.attachments]?.length) {
+      if (form_attachments?.length) {
         setPhase('uploading')
+        console.log('Uploading files:', form_attachments)
+
+        const { success, paths, message } = await uploadBlobs(
+          form_attachments,
+          '/api/blob-upload'
+        )
+
+        if (!success) {
+          setPhase('error')
+          setError('form_submit', { message: message || 'File upload failed.' })
+          return
+        }
+
+        attachmentsBlobs = paths
+
         // Here you'd upload files and get reference URLs
         // const uploadRefs = await uploadFiles(values[FIELD_IDS.attachments])
 
         // Simulate upload delay
-        await new Promise((resolve) => setTimeout(resolve, 2000))
+        // await new Promise((resolve) => setTimeout(resolve, 2000))
       }
 
       // Submit to server
@@ -88,15 +114,28 @@ export const FormWithAction = ({ action, data }: FormProps) => {
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
       // Here you'd call the actual server action
-      // const formData = new FormData()
-      // Object.entries(values).forEach(([key, value]) => {
-      //   if (Array.isArray(value)) {
-      //     value.forEach(item => formData.append(key, item))
-      //   } else if (value !== undefined && value !== null) {
-      //     formData.append(key, value)
-      //   }
-      // })
-      // const result = await action({}, formData)
+      //
+      const formData = new FormData()
+
+      Object.entries(values).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((item) => formData.append(key, item))
+        } else if (value !== undefined && value !== null) {
+          formData.append(key, value)
+        }
+      })
+
+      const result = await action(
+        { success: true, error, messages: '' },
+        formData
+      )
+
+      if (result.error) {
+        setPhase('error')
+        setError('form_submit', {
+          message: result.messages || 'Submission failed.',
+        })
+      }
 
       // On success
       setPhase('success')
