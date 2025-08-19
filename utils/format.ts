@@ -117,22 +117,46 @@ export function maskSensitive(
 }
 
 /**
- * Formats a duration in milliseconds to human readable format
+ * Formats a duration to a human readable format based on provided properties.
+ *
+ * @param {Object} params - The duration parameters.
+ * @param {number} [params.milliseconds=0] - The number of milliseconds.
+ * @param {number} [params.seconds=0] - The number of seconds.
+ * @param {number} [params.minutes=0] - The number of minutes.
+ * @param {number} [params.hours=0] - The number of hours.
+ * @returns {string} The formatted duration string (e.g., '1d 2h 3m', '4h 5m', '6m 7s', or '8s').
  */
-export function formatDuration(milliseconds: number): string {
-  const seconds = Math.floor(milliseconds / 1000)
-  const minutes = Math.floor(seconds / 60)
-  const hours = Math.floor(minutes / 60)
-  const days = Math.floor(hours / 24)
+export function formatDuration({
+  milliseconds = 0,
+  seconds = 0,
+  minutes = 0,
+  hours = 0,
+}: {
+  milliseconds?: number
+  seconds?: number
+  minutes?: number
+  hours?: number
+}): string {
+  // Convert all to milliseconds
+  let totalMilliseconds = 0
+  totalMilliseconds += milliseconds
+  totalMilliseconds += seconds * 1000
+  totalMilliseconds += minutes * 60 * 1000
+  totalMilliseconds += hours * 60 * 60 * 1000
+
+  const totalSeconds = Math.floor(totalMilliseconds / 1000)
+  const totalMinutes = Math.floor(totalSeconds / 60)
+  const totalHours = Math.floor(totalMinutes / 60)
+  const days = Math.floor(totalHours / 24)
 
   if (days > 0) {
-    return `${days}d ${hours % 24}h ${minutes % 60}m`
-  } else if (hours > 0) {
-    return `${hours}h ${minutes % 60}m`
-  } else if (minutes > 0) {
-    return `${minutes}m ${seconds % 60}s`
+    return `${days}d ${totalHours % 24}h ${totalMinutes % 60}m`
+  } else if (totalHours > 0) {
+    return `${totalHours}h ${totalMinutes % 60}m`
+  } else if (totalMinutes > 0) {
+    return `${totalMinutes}m ${totalSeconds % 60}s`
   } else {
-    return `${seconds}s`
+    return `${totalSeconds}s`
   }
 }
 
