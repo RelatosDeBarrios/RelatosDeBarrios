@@ -1,5 +1,6 @@
 import { BRAND } from '@/content/brand'
 import { ContactSection } from '../types'
+import { ContactErrors } from './errors'
 
 export const CONTACT: ContactSection = {
   id: 'contact',
@@ -13,7 +14,7 @@ export const CONTACT: ContactSection = {
       autocomplete: 'name',
       placeholder: 'Nombre completo',
       required: true,
-      requiredMessage: 'Por favor ingresa tu nombre',
+      requiredMessage: ContactErrors.NameRequired,
     },
     email: {
       id: 'form_email',
@@ -21,8 +22,8 @@ export const CONTACT: ContactSection = {
       label: 'Correo electrónico',
       placeholder: 'ejemplo@correo.com',
       required: true,
-      requiredMessage: 'Por favor ingresa tu correo electrónico',
-      invalidMessage: 'Por favor ingresa un correo electrónico válido',
+      requiredMessage: ContactErrors.EmailRequired,
+      invalidMessage: ContactErrors.EmailInvalid,
     },
     commentary: {
       id: 'form_commentary',
@@ -30,7 +31,7 @@ export const CONTACT: ContactSection = {
       label: 'Mensaje',
       placeholder: 'Escribe tu mensaje aquí',
       required: true,
-      requiredMessage: 'Por favor ingresa un mensaje',
+      requiredMessage: ContactErrors.CommentaryRequired,
     },
     contribution: {
       id: 'form_contribution',

@@ -1,11 +1,11 @@
 import { z } from 'zod'
 import { CONTACT } from '../content'
+import { ContactErrors } from '../content/errors'
 
-const {
-  name: { requiredMessage: nameRequiredMsg },
-  email: { requiredMessage: emailRequiredMsg, invalidMessage: emailInvalidMsg },
-  commentary: { requiredMessage: commentaryRequiredMsg },
-} = CONTACT.form
+const nameRequiredMsg = ContactErrors.NameRequired
+const emailRequiredMsg = ContactErrors.EmailRequired
+const emailInvalidMsg = ContactErrors.EmailInvalid
+const commentaryRequiredMsg = ContactErrors.CommentaryRequired
 
 // Define field IDs for consistent access
 export const FIELD_IDS = {
@@ -16,23 +16,77 @@ export const FIELD_IDS = {
   attachments: CONTACT.form.attachments.id,
 } as const
 
-// Form schema for both client and server validation
-export const FormSchema = z.object({
+/**
+ * Base schema with common validation rules for all fields except attachments
+ * This is used as the foundation for both client and server schemas
+ */
+export const BaseFormSchema = {
   [FIELD_IDS.name]: z
     .string({ message: nameRequiredMsg })
     .trim()
-    .min(3, 'Debe contener más de 2 caracteres')
-    .max(100, 'El nombre no puede exceder los 100 caracteres'),
+    .min(3, ContactErrors.NameTooShort)
+    .max(100, ContactErrors.NameTooLong),
   [FIELD_IDS.email]: z.email(emailInvalidMsg).trim().min(1, emailRequiredMsg),
-  [FIELD_IDS.commentary]: z.string().trim().min(1, commentaryRequiredMsg),
+  [FIELD_IDS.commentary]: z
+    .string()
+    .trim()
+    .min(1, commentaryRequiredMsg)
+    .max(3000, ContactErrors.CommentaryTooLong),
+}
+
+/**
+ * Client-specific schema used for React Hook Form validation
+ * Uses File[] for attachments (direct file uploads)
+ */
+export const ClientFormSchema = z
+  .object({
+    ...BaseFormSchema,
+    [FIELD_IDS.contribution]: z
+      .union([z.literal(''), z.enum(['rengifo', 'covico'] as const)])
+      .optional()
+      .transform((v) => (v === '' || v === undefined ? undefined : v)),
+    [FIELD_IDS.attachments]: z
+      .array(z.instanceof(File))
+      .optional()
+      .nullable()
+      .transform((v) => v ?? []),
+  })
+  .superRefine((data, ctx) => {
+    const contribution = data[FIELD_IDS.contribution]
+    const attachments = data[FIELD_IDS.attachments] as File[]
+
+    // Rule: if contribution is selected (not the default ''), require at least one attachment
+    if (contribution && attachments.length === 0) {
+      // Root-level error for centralized message in UI
+      ctx.addIssue({
+        code: 'custom',
+        message: ContactErrors.ContributionRequiresAttachment,
+        path: [FIELD_IDS.attachments],
+      })
+    }
+  })
+
+/**
+ * Server-specific schema used for server-side validation
+ * Uses string[] for attachments (uploaded blob URLs)
+ */
+export const ServerFormSchema = z.object({
+  ...BaseFormSchema,
   [FIELD_IDS.contribution]: z
-    .union([z.literal(''), z.enum(['rengifo', 'covico'] as const)])
+    .union([
+      z.undefined(),
+      z.null(),
+      z.literal(''),
+      z.enum(['rengifo', 'covico'] as const),
+    ])
+    .transform((v) => (v == null || v === '' ? undefined : v))
     .optional(),
-  [FIELD_IDS.attachments]: z.array(z.instanceof(File)).optional().nullable(),
+  [FIELD_IDS.attachments]: z
+    .array(z.url(ContactErrors.AttachmentUrlInvalid))
+    .optional()
+    .default([]),
 })
 
-// Infer the form values type from our schema
-export type FormValues = z.infer<typeof FormSchema>
-
-// Keep the existing ContactForm type for content structure
-export type ContactFormSchema = FormValues
+// Infer types from schemas
+export type ClientFormValues = z.infer<typeof ClientFormSchema>
+export type ServerFormValues = z.infer<typeof ServerFormSchema>
