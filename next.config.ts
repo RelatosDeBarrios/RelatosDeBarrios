@@ -6,6 +6,15 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '40mb',
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'developers.elementor.com',
+        pathname: '**',
+      },
+    ],
+  },
 }
 
 export default nextConfig
