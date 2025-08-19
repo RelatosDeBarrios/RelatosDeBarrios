@@ -19,6 +19,7 @@ export const HERO: HeroSection = {
       id: 'covico',
       title: '## Villa **Covico**',
       href: BRAND.paths.covico,
+      disabled: true,
       bg: {
         src: '/hub/images/placeholder.png',
         alt: 'Placeholder image for Villa Covico',

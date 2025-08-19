@@ -11,11 +11,13 @@ export const HeroProjects = () => {
         href={rengifo.href!}
         title={rengifo.title}
         videoSrc={rengifo.bg.src}
+        disabled={rengifo.disabled}
       />
       <ProjectCard
         href={covico.href!}
         title={covico.title}
         badge={<NewBadge />}
+        disabled={covico.disabled}
       />
     </section>
   )
