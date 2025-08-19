@@ -16,7 +16,6 @@ export const HeroProjects = () => {
         href={covico.href!}
         title={covico.title}
         badge={<NewBadge />}
-        disabled
       />
     </section>
   )
