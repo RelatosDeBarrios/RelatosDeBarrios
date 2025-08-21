@@ -1,4 +1,4 @@
-export const ContactErrors = {
+export const formErrors = {
   ValidationFailed: 'Validación fallida. Revisa tus datos.',
   InvalidEmail: 'El correo electrónico no es válido.',
   RequiredField: 'Este campo es obligatorio.',
@@ -30,4 +30,4 @@ export const ContactErrors = {
   RetryAfterTemplate: 'Inténtalo de nuevo en {seconds}.',
 } as const
 
-export type ContactErrorKey = keyof typeof ContactErrors
+export type FormErrorKey = keyof typeof formErrors

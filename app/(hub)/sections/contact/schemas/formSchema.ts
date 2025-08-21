@@ -1,11 +1,6 @@
 import { z } from 'zod'
 import { CONTACT } from '../content'
-import { ContactErrors } from '../content/errors'
-
-const nameRequiredMsg = ContactErrors.NameRequired
-const emailRequiredMsg = ContactErrors.EmailRequired
-const emailInvalidMsg = ContactErrors.EmailInvalid
-const commentaryRequiredMsg = ContactErrors.CommentaryRequired
+import { formErrors } from '../content/errors'
 
 // Define field IDs for consistent access
 export const FIELD_IDS = {
@@ -22,16 +17,19 @@ export const FIELD_IDS = {
  */
 export const BaseFormSchema = {
   [FIELD_IDS.name]: z
-    .string({ message: nameRequiredMsg })
+    .string({ message: formErrors.NameRequired })
     .trim()
-    .min(3, ContactErrors.NameTooShort)
-    .max(100, ContactErrors.NameTooLong),
-  [FIELD_IDS.email]: z.email(emailInvalidMsg).trim().min(1, emailRequiredMsg),
+    .min(3, formErrors.NameTooShort)
+    .max(100, formErrors.NameTooLong),
+  [FIELD_IDS.email]: z
+    .email(formErrors.EmailInvalid)
+    .trim()
+    .min(1, formErrors.EmailRequired),
   [FIELD_IDS.commentary]: z
     .string()
     .trim()
-    .min(1, commentaryRequiredMsg)
-    .max(3000, ContactErrors.CommentaryTooLong),
+    .min(1, formErrors.CommentaryRequired)
+    .max(3000, formErrors.CommentaryTooLong),
 }
 
 /**
@@ -60,7 +58,7 @@ export const ClientFormSchema = z
       // Root-level error for centralized message in UI
       ctx.addIssue({
         code: 'custom',
-        message: ContactErrors.ContributionRequiresAttachment,
+        message: formErrors.ContributionRequiresAttachment,
         path: [FIELD_IDS.attachments],
       })
     }
@@ -82,7 +80,7 @@ export const ServerFormSchema = z.object({
     .transform((v) => (v == null || v === '' ? undefined : v))
     .optional(),
   [FIELD_IDS.attachments]: z
-    .array(z.url(ContactErrors.AttachmentUrlInvalid))
+    .array(z.url(formErrors.AttachmentUrlInvalid))
     .optional()
     .default([]),
 })

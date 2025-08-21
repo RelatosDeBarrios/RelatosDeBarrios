@@ -7,7 +7,7 @@ import { EmailTemplate } from '../components/EmailTemplate'
 import { ServerFormSchema, FIELD_IDS } from '../schemas/formSchema'
 import { ProjectsId } from '@/types/core'
 import { createCorrelationId } from '@/app/(hub)/lib/crypto'
-import { ContactErrors } from '../content/errors'
+import { formErrors } from '../content/errors'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -39,7 +39,7 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
       return {
         success: false,
         error: null,
-        message: ContactErrors.ValidationFailed,
+        message: formErrors.ValidationFailed,
         correlationId,
       }
     }
@@ -96,7 +96,7 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
         return {
           success: false,
           error: null,
-          message: ContactErrors.UploadFailed,
+          message: formErrors.UploadFailed,
           correlationId,
         }
       }
@@ -128,7 +128,7 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
         return {
           success: false,
           error: null,
-          message: ContactErrors.SendFailed,
+          message: formErrors.SendFailed,
           correlationId,
         }
       }
@@ -137,7 +137,7 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
       return {
         success: true,
         error: null,
-        message: ContactErrors.SendSuccess,
+        message: formErrors.SendSuccess,
         correlationId,
       }
     } catch (error) {
@@ -151,7 +151,7 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
       return {
         success: false,
         error: null,
-        message: ContactErrors.SendFailed,
+        message: formErrors.SendFailed,
         correlationId,
       }
     }
@@ -164,7 +164,7 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
     return {
       success: false,
       error: null,
-      message: ContactErrors.Unexpected,
+      message: formErrors.Unexpected,
       correlationId,
     }
   }

@@ -8,14 +8,14 @@ import { validateIp } from '../utils/validateIp'
 import { uploadBlobs } from '../utils/uploadBlobs'
 import { toDomain } from '../utils/toDomain'
 import { validateFileConstraints } from '../utils/fileConstraints'
-import { ContactErrors } from '../content/errors'
+import { formErrors } from '../content/errors'
 import { formatDuration } from '@/utils/format'
 
 // API endpoints
 const VALIDATE_IP_URL = '/api/validate-ip'
 const BLOB_UPLOAD_URL = '/api/blob-upload'
 
-type Phase =
+export type Phase =
   | 'idle'
   | 'validating'
   | 'uploading'
@@ -61,7 +61,7 @@ export const useContactSubmit = ({
 
           // Set a general submission error too
           setError('form_submit', {
-            message: ContactErrors.UploadFailed,
+            message: formErrors.UploadFailed,
           })
           return
         }
@@ -79,8 +79,8 @@ export const useContactSubmit = ({
         setPhase('error')
         const retryAfter = ipValidation.retryAfter
         const message = retryAfter
-          ? `${ContactErrors.UploadRateLimited} ${ContactErrors.RetryAfterTemplate.replace('{seconds}', formatDuration({ seconds: Number(retryAfter) }))}`
-          : ipValidation.message || ContactErrors.UploadClientError
+          ? `${formErrors.UploadRateLimited} ${formErrors.RetryAfterTemplate.replace('{seconds}', formatDuration({ seconds: Number(retryAfter) }))}`
+          : ipValidation.message || formErrors.UploadClientError
         setError('form_submit', { message })
         return
       }

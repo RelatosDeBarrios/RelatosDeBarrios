@@ -3,6 +3,7 @@ import { cn } from '@/utils/css'
 import { useFormContext } from 'react-hook-form'
 import { InputType } from '../types/form'
 import { FieldError } from './FieldError'
+import { formErrors } from '../content/errors'
 
 interface InputFormProps {
   inputContent: InputType
@@ -56,7 +57,7 @@ const Input = ({ inputContent, className, register }: ElementProps) => {
       {...register(inputContent.id, {
         required:
           inputContent.required &&
-          (inputContent.requiredMessage || 'Este campo es requerido'),
+          (formErrors.RequiredField || 'Este campo es requerido'),
       })}
     />
   )
@@ -72,7 +73,7 @@ const Textarea = ({ inputContent, className, register }: ElementProps) => {
       {...register(inputContent.id, {
         required:
           inputContent.required &&
-          (inputContent.requiredMessage || 'Este campo es requerido'),
+          (formErrors.RequiredField || 'Este campo es requerido'),
       })}
     />
   )
