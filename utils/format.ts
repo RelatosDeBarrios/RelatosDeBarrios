@@ -60,3 +60,14 @@ export function formatDuration({
     return `${totalSeconds}s`
   }
 }
+
+/**
+ * Formats a given path to ensure it starts with a single leading slash and has no duplicate slashes.
+ *
+ * @param {string} path - The input path string to format.
+ * @returns {string} The formatted path with a single leading slash and no duplicate slashes.
+ */
+export const formatPath = (path: string): string => {
+  const formatted = path.startsWith('/') ? path : `/${path}`
+  return formatted.replaceAll('//', '/')
+}
