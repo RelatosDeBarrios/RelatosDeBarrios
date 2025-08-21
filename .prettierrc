@@ -9,5 +9,15 @@
   "useTabs": false,
   "tailwindStylesheet": "./styles/globals.css",
   "tailwindAttributes": ["className", "class", "style"],
-  "tailwindFunctions": ["clsx", "twMerge", "cn"]
+  "tailwindFunctions": ["clsx", "twMerge", "cn"],
+  "ignoreFiles": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/.next/**",
+    "**/.nuxt/**",
+    "**/.cache/**",
+    "**/.out/**"
+  ]
 }
