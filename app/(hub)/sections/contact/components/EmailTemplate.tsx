@@ -1,5 +1,12 @@
-import { Background } from '@/app/(hub)/components/Background'
-import Image from 'next/image'
+import {
+  Heading,
+  Html,
+  Img,
+  pixelBasedPreset,
+  Section,
+  Tailwind,
+  Text,
+} from '@react-email/components'
 
 interface EmailTemplateProps {
   name: string
@@ -17,34 +24,47 @@ export const EmailTemplate = ({
   contribution,
 }: EmailTemplateProps) => {
   return (
-    <div className='h-full min-h-screen w-full'>
-      <Background />
-      <div className='bg-hub-background/60 border-hub-border m-auto mt-10 max-w-2xl rounded-xl border p-8'>
-        <header>
-          <Image
-            src='/hub/favicon.png'
-            alt='Logotipo de Relatos de Barrios'
-            width={200}
-            height={200}
-            className='mx-auto size-20'
-          />
-          <p className='text-hub-text text-sm'>
-            <strong>Aporte:</strong> {contribution}
-          </p>
-          <p className='text-hub-text my-4 text-xl'>
-            Mensaje de <strong>{name}</strong>
-          </p>
-        </header>
-        <main className='bg-hub-background/40 rounded-lg p-4'>
-          <p className='text-pretty'>{commentary}</p>
-        </main>
-        <footer className='mx-auto mt-8 max-w-prose'>
-          <p className='text-hub-text text-center text-sm'>
-            Responde directamente a {name} presionando el botón de responder de
-            Gmail
-          </p>
-        </footer>
-      </div>
-    </div>
+    <Html>
+      <Tailwind
+        config={{
+          presets: [pixelBasedPreset],
+          theme: {
+            extend: {
+              colors: {
+                'hub-primary': '#294581',
+                'hub-text': '#425270',
+                'hub-border': '#00000001',
+                'hub-background': '#f3f4f6',
+              },
+            },
+          },
+        }}
+      >
+        <Section className='bg-hub-primary/10 border-hub-border m-auto my-10 max-w-2xl rounded-xl border p-8'>
+          <Section>
+            <Img
+              src='https://www.relatosdebarrios.cl/hub/favicon.png'
+              alt='Logotipo de Relatos de Barrios'
+              className='mx-auto size-20'
+            />
+            <Text className='text-hub-text text-sm'>
+              <strong>Aporte:</strong> {contribution}
+            </Text>
+            <Heading as='h1' className='text-hub-text my-4 text-xl'>
+              Mensaje de <strong>{name}</strong>
+            </Heading>
+          </Section>
+          <Section className='bg-hub-background/60 rounded-lg p-4'>
+            <Text className='text-pretty'>{commentary}</Text>
+          </Section>
+          <Section className='mx-auto mt-8 max-w-prose'>
+            <Text className='text-hub-text text-center text-sm'>
+              Responde directamente a {name} presionando el botón de responder
+              de Gmail
+            </Text>
+          </Section>
+        </Section>
+      </Tailwind>
+    </Html>
   )
 }
