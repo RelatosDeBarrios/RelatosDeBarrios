@@ -9,19 +9,12 @@ export interface InputType {
   autocomplete?: string
   placeholder?: string
   required: boolean
-  requiredMessage?: string
-  invalidMessage?: string
 }
 
 export interface SubmitButtonType {
   id: string
   type: 'submit'
   label: string
-  success: string
-  error: {
-    validation: string
-    server: string
-  }
 }
 
 export interface ContributionType extends InputType {

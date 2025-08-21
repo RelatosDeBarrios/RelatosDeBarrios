@@ -1,6 +1,5 @@
 import { BRAND } from '@/content/brand'
 import { ContactSection } from '../types'
-import { ContactErrors } from './errors'
 
 export const CONTACT: ContactSection = {
   id: 'contact',
@@ -14,7 +13,6 @@ export const CONTACT: ContactSection = {
       autocomplete: 'name',
       placeholder: 'Nombre completo',
       required: true,
-      requiredMessage: ContactErrors.NameRequired,
     },
     email: {
       id: 'form_email',
@@ -22,8 +20,6 @@ export const CONTACT: ContactSection = {
       label: 'Correo electrónico',
       placeholder: 'ejemplo@correo.com',
       required: true,
-      requiredMessage: ContactErrors.EmailRequired,
-      invalidMessage: ContactErrors.EmailInvalid,
     },
     commentary: {
       id: 'form_commentary',
@@ -31,7 +27,6 @@ export const CONTACT: ContactSection = {
       label: 'Mensaje',
       placeholder: 'Escribe tu mensaje aquí',
       required: true,
-      requiredMessage: ContactErrors.CommentaryRequired,
     },
     contribution: {
       id: 'form_contribution',
@@ -73,13 +68,6 @@ export const CONTACT: ContactSection = {
       id: 'form_button',
       type: 'submit',
       label: 'Enviar mensaje',
-      success:
-        'Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.',
-      error: {
-        validation: 'Por favor completa todos los campos requeridos',
-        server:
-          'Ocurrió un error al enviar tu mensaje. Por favor intenta nuevamente más tarde.',
-      },
     },
   },
 }
