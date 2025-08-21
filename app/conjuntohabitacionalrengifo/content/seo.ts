@@ -4,7 +4,7 @@
  */
 
 import { formatPath } from '@/utils/format'
-import { brandContent } from '@/content/brand'
+import { BRAND } from '@/content/brand'
 import { SEOContent } from '@/types/seo'
 
 export const seoContent: SEOContent = {
@@ -21,12 +21,12 @@ export const seoContent: SEOContent = {
     'chile',
   ],
   url: 'https://relatosdebarrios.cl/rengifo',
-  icons: formatPath(`${brandContent.paths.rengifo}/icons/favicon.png`),
+  icons: formatPath(`${BRAND.paths.rengifo}/icons/favicon.png`),
   openGraph: {
     title: 'Conjunto Habitacional Rengifo - Relatos de Barrios',
     description:
       'Proyecto de investigación y valorización del patrimonio industrial y habitacional del Barrio Rengifo en La Serena.',
-    image: formatPath(`${brandContent.paths.rengifo}/images/og-rengifo.jpg`), // Path in public folder
+    image: formatPath(`${BRAND.paths.rengifo}/images/og-rengifo.jpg`), // Path in public folder
     type: 'website',
   },
 

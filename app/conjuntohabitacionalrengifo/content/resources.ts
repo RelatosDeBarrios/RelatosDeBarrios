@@ -1,4 +1,4 @@
-import { brandContent } from '@/content/brand'
+import { BRAND } from '@/content/brand'
 import { ResourcesContent } from '@/rengifo/types/content'
 import { formatPath } from '@/utils/format'
 
@@ -14,7 +14,7 @@ export const resourcesContent: ResourcesContent = {
       href: `/Libro_RelatosDeBarrios.pdf`,
 
       bg: {
-        src: formatPath(`${brandContent.paths.rengifo}/images/ventana1.png`),
+        src: formatPath(`${BRAND.paths.rengifo}/images/ventana1.png`),
         width: 300,
         height: 300,
         alt: 'Portada del libro documental Rengifo',
@@ -26,7 +26,7 @@ export const resourcesContent: ResourcesContent = {
       subTitle: 'Míralo Aquí',
       href: 'https://www.youtube.com/embed/6Vg9ZTJFnj4?fs=1',
       bg: {
-        src: formatPath(`${brandContent.paths.rengifo}/images/ventana2.png`),
+        src: formatPath(`${BRAND.paths.rengifo}/images/ventana2.png`),
         width: 300,
         height: 300,
         alt: 'Portada del libro documental Rengifo 2',

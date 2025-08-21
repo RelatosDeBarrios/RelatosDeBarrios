@@ -54,7 +54,7 @@ export const PhotosSection = () => {
               .map(({ href, id, title, subTitle, bg, disabled }) => (
                 <Card
                   variant='link'
-                  href={href}
+                  href={href!}
                   key={id}
                   id={id}
                   bg={bg}

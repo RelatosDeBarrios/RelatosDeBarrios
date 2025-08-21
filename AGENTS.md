@@ -2,10 +2,6 @@
 
 ## Project Overview
 
-This is a Next.js web project called "Relatos de Barrios". Its main purpose is to document and showcase the industrial and architectural heritage of neighborhoods in La Serena and Coquimbo, Chile. The project highlights specific areas like "Villa Covico" and "Conjunto Habitacional Rengifo", presenting historical information, architectural plans, and digital archives.
-
-The project is built with a modern web stack, including:
-
 - **Framework**: Next.js (with Turbopack)
 - **Language**: TypeScript
 - **UI Library**: React
@@ -14,6 +10,7 @@ The project is built with a modern web stack, including:
 - **State Management**: Zustand
 - **Linting**: ESLint
 - **Package Manager**: pnpm
+- **Schemas**: Zod
 
 ## Technical Overview & Architecture Rules
 
@@ -35,6 +32,7 @@ The project is built with a modern web stack, including:
 - **Build:** `pnpm build` (Next.js build)
 - **Dev:** `pnpm dev` (local dev server)
 - **Lint:** `pnpm lint` (Next.js/ESLint)
+- Types: `pnpm type` (tsx type checking)
 - **Test:** _No test script defined; add one if tests are introduced._
 - **Single test:** _Not applicable unless a test runner is added._
 
@@ -48,11 +46,10 @@ The project is built with a modern web stack, including:
   - Prefer absolute imports over relative where possible
 - **Types:**
   - TypeScript strict mode enabled; always type function arguments and return values
+  - NEVER use any types, always use specific types or unknown
 - **Naming:**
   - Use camelCase for variables/functions, PascalCase for components/types
 - **Error Handling:**
   - Prefer explicit error handling; avoid silent failures
 - **Linting:**
   - Follows Next.js core-web-vitals and TypeScript ESLint rules
-
-_If you add tests, update this file with test commands and conventions._

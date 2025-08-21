@@ -1,4 +1,4 @@
-import { uiContent } from '@/content/ui'
+import { UI } from '@/content/ui'
 import { cn } from '@/utils/css'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -50,7 +50,7 @@ const CardContent = ({ title, subTitle, bg, disabled }: BaseCardProps) => (
     {disabled && (
       <div className='bg-rengifo-azul/20 absolute inset-0 z-20 hidden size-full place-items-center backdrop-blur-xs group-hover:grid'>
         <p className='text-4xl font-bold text-white'>
-          {uiContent.messages.not_available}
+          {UI.messages.not_available}
         </p>
       </div>
     )}
