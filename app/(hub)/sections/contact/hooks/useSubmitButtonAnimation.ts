@@ -1,18 +1,16 @@
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { useRef } from 'react'
+import { Phase } from './useContactSubmit'
 
 interface UseSubmitButtonAnimationProps {
-  states: {
-    isPending: boolean
-    isSuccess: boolean
-    isError: boolean
-    idle?: boolean
-  }
+  formPhase: Phase
+  isPending?: boolean
 }
 
 export const useSubmitButtonAnimation = ({
-  states: { isPending, isSuccess, isError, idle },
+  formPhase,
+  isPending = false,
 }: UseSubmitButtonAnimationProps) => {
   const btn = useRef<HTMLButtonElement | null>(null)
   const shine = useRef<HTMLSpanElement | null>(null)
@@ -36,17 +34,34 @@ export const useSubmitButtonAnimation = ({
       const buttonRect = btn.current.getBoundingClientRect()
       const buttonWidth = buttonRect.width
 
-      // Defaults
-      let targetSize = 0
-      let duration = 0.6
+      const styles = {
+        validating: {
+          targetSize: buttonWidth * 0.4,
+          duration: 1,
+        },
+        uploading: {
+          targetSize: buttonWidth * 0.8,
+          duration: 2,
+        },
+        submitting: {
+          targetSize: buttonWidth * 0.9,
+          duration: 1,
+        },
+        success: {
+          targetSize: buttonWidth * 1.5, // 150% of button width
+          duration: 1,
+        },
+        error: {
+          targetSize: 0, // Collapse to zero
+          duration: 0.35,
+        },
+        idle: {
+          targetSize: 0, // Collapse to zero
+          duration: 0.35,
+        },
+      }
 
-      if (isPending) {
-        targetSize = buttonWidth * 0.7 // 70% of button width
-        duration = 0.8
-      } else if (isSuccess) {
-        targetSize = buttonWidth * 1.5 // 150% of button width
-        duration = 0.8
-
+      if (formPhase === 'success') {
         // Text transition animation for success state
         gsap.to(text.current, {
           opacity: 1,
@@ -54,15 +69,12 @@ export const useSubmitButtonAnimation = ({
           delay: 0.2,
           ease: 'power2.inOut',
         })
-      } else if (isError) {
-        targetSize = 0
-        duration = 0.35
       }
 
       gsap.to(fill.current, {
-        width: targetSize,
-        height: targetSize, // Keep it circular
-        duration,
+        width: styles[formPhase].targetSize,
+        height: styles[formPhase].targetSize, // Keep it circular
+        duration: styles[formPhase].duration,
         ease: 'power2.inOut',
       })
 
@@ -78,7 +90,7 @@ export const useSubmitButtonAnimation = ({
         })
       }
     },
-    { dependencies: [isPending, isSuccess, isError, idle] }
+    { dependencies: [formPhase] }
   )
 
   return {

@@ -28,7 +28,8 @@ export const FormSubmitButton = ({
   }
 
   const { btnRef, shineRef, fillRef, textRef } = useSubmitButtonAnimation({
-    states,
+    formPhase,
+    isPending: states.isPending,
   })
 
   const label: Record<Phase, string> = {
