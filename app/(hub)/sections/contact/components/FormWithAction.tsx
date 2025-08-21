@@ -13,6 +13,8 @@ import { FormContribution } from './FormContribution'
 import { FormInput } from './FormInput'
 import { FormSubmitButton } from './FormSubmitButton'
 import { useContactSubmit } from '../hooks/useContactSubmit'
+import { cn } from '@/utils/css'
+import { useEffect, useRef } from 'react'
 
 interface FormProps {
   action: SendEmailAction
@@ -20,6 +22,8 @@ interface FormProps {
 }
 
 export const FormWithAction = ({ action, data }: FormProps) => {
+  const formRef = useRef<HTMLFormElement | null>(null)
+
   // Initialize React Hook Form with Zod resolver
   const methods = useForm<ClientFormValues>({
     mode: 'onChange',
@@ -34,45 +38,50 @@ export const FormWithAction = ({ action, data }: FormProps) => {
     },
   })
 
-  const {
-    handleSubmit,
-    setError,
-    formState: { isSubmitting },
-  } = methods
-
   // Use the contact submission hook
-  const { onSubmit, phase } = useContactSubmit({ action, setError })
+  const { onSubmit, phase } = useContactSubmit({
+    action,
+    setError: methods.setError,
+  })
+
+  useEffect(() => {
+    if (!formRef.current) return
+    if (phase === 'submitting') {
+      const currentFormHeight = formRef.current.getBoundingClientRect().height
+      formRef.current.style.height = `${currentFormHeight}px`
+    }
+  }, [phase])
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={handleSubmit(onSubmit)}
-        className='bg-hub-background/20 ring-hub-border mx-auto w-full max-w-2xl space-y-4 rounded-2xl p-4 ring backdrop-blur-2xl md:p-8'
+        ref={formRef}
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className={cn(
+          'bg-hub-background/20 ring-hub-border relative mx-auto w-full max-w-2xl space-y-4 overflow-hidden rounded-2xl p-4 ring backdrop-blur-2xl md:p-8'
+        )}
       >
-        {/* Name field */}
-        <FormInput inputContent={data.name} />
+        {phase !== 'success' && (
+          <>
+            {/* Name field */}
+            <FormInput inputContent={data.name} />
 
-        {/* Email field */}
-        <FormInput inputContent={data.email} />
+            {/* Email field */}
+            <FormInput inputContent={data.email} />
 
-        {/* Message/Commentary field */}
-        <FormInput inputContent={data.commentary} />
+            {/* Message/Commentary field */}
+            <FormInput inputContent={data.commentary} />
 
-        {/* Material contribution */}
-        <FormContribution
-          contribution={data.contribution}
-          attachments={data.attachments}
-        />
+            {/* Material contribution */}
+            <FormContribution
+              contribution={data.contribution}
+              attachments={data.attachments}
+            />
+          </>
+        )}
 
         {/* Submit button */}
-        <FormSubmitButton
-          submitContent={data.submit}
-          state={{ success: phase === 'success', error: phase === 'error' }}
-          pending={
-            isSubmitting ||
-            ['validating', 'uploading', 'submitting'].includes(phase)
-          }
-        />
+        <FormSubmitButton submitContent={data.submit} formPhase={phase} />
       </form>
     </FormProvider>
   )
