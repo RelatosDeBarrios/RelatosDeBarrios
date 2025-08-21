@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import DocumentarySection from '../components/DocumentarySection'
 import DownloadSection from '../components/DownloadSection'
 import Footer from '../components/Footer'
@@ -7,6 +8,7 @@ import PhotoArchive from '../components/PhotoArchive'
 import VirtualTours from '../components/VirtualTours'
 
 export default function Home() {
+  redirect('/')
   return (
     <main className='min-h-screen'>
       <Header />
