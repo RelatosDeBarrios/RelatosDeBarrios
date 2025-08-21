@@ -5,87 +5,86 @@ import { useRef } from 'react'
 interface UseSubmitButtonAnimationProps {
   states: {
     isPending: boolean
-    isSuccess: boolean | null
+    isSuccess: boolean
     isError: boolean
     idle?: boolean
   }
 }
 
 export const useSubmitButtonAnimation = ({
-  states: { isPending, isSuccess, isError, idle = false },
+  states: { isPending, isSuccess, isError, idle },
 }: UseSubmitButtonAnimationProps) => {
   const btn = useRef<HTMLButtonElement | null>(null)
   const shine = useRef<HTMLSpanElement | null>(null)
   const fill = useRef<HTMLSpanElement | null>(null)
+  const text = useRef<HTMLSpanElement | null>(null)
+  const shineTl = useRef<gsap.core.Timeline | null>(null)
 
   useGSAP(
     () => {
-      if (!btn.current || !shine.current || !fill.current) return
+      if (!btn.current || !shine.current || !fill.current || !text.current)
+        return
 
-      // Always kill previous tweens before starting a new one
+      // Kill previous tweens/timelines before starting new ones
       gsap.killTweensOf(fill.current)
       gsap.killTweensOf(shine.current)
+      gsap.killTweensOf(text.current)
+      shineTl.current?.kill()
+      shineTl.current = null
 
-      // Get the current xPercent (so we can animate from the current position)
-      let currentX: number
-      // Decide target values based on state
-      let targetX: number
-      let targetColor: string
-      let duration: number
+      // Get button dimensions for circle sizing
+      const buttonRect = btn.current.getBoundingClientRect()
+      const buttonWidth = buttonRect.width
+
+      // Defaults
+      let targetSize = 0
+      let duration = 0.6
 
       if (isPending) {
-        targetX = 85
-        targetColor = '#05df72'
-        duration = 5
+        targetSize = buttonWidth * 0.7 // 70% of button width
+        duration = 0.8
       } else if (isSuccess) {
-        currentX = gsap.getProperty(fill.current, 'xPercent') as number
-        targetX = 100
-        targetColor = 'green'
-        // Duration proportional to distance for smoothness
-        duration = Math.max(1, (Math.abs(100 - (currentX ?? 0)) / 100) * 1)
+        targetSize = buttonWidth * 1.5 // 150% of button width
+        duration = 0.8
+
+        // Text transition animation for success state
+        gsap.to(text.current, {
+          opacity: 1,
+          duration: 0.3,
+          delay: 0.2,
+          ease: 'power2.inOut',
+        })
       } else if (isError) {
-        currentX = gsap.getProperty(fill.current, 'xPercent') as number
-        targetX = -100
-        targetColor = 'red'
-        duration = Math.max(1, (Math.abs(-100 - (currentX ?? 0)) / 185) * 0.35)
-      } else {
-        // Fallback
-        targetX = 0
-        targetColor = '#05df72'
-        duration = 0
+        targetSize = 0
+        duration = 0.35
       }
 
-      // Animate to the new state
       gsap.to(fill.current, {
-        xPercent: targetX,
-        backgroundColor: targetColor,
+        width: targetSize,
+        height: targetSize, // Keep it circular
         duration,
         ease: 'power2.inOut',
       })
 
-      // Shine animation (only when pending)
+      // Shine animation (pending only): pulsing inner circle
       if (isPending) {
         gsap.to(shine.current, {
-          xPercent: 200,
-          duration: 1.5,
-          ease: 'power2.inOut',
+          width: '100%',
+          height: '100%',
+          duration: 2,
+          yoyo: true,
           repeat: -1,
-          repeatDelay: -0.1,
-        })
-      } else {
-        // Reset shine position and opacity when not pending
-        gsap.set(shine.current, {
-          xPercent: -100,
-          opacity: 0,
+          ease: 'power2.out',
         })
       }
     },
-    { dependencies: [isPending, isSuccess, isError, idle], scope: btn }
+    { dependencies: [isPending, isSuccess, isError, idle] }
   )
 
   return {
     btnRef: btn,
     shineRef: shine,
     fillRef: fill,
+    textRef: text,
   }
 }

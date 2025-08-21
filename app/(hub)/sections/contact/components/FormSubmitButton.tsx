@@ -3,63 +3,80 @@
 import { cn } from '@/utils/css'
 import { Check, Loader2, Send, X } from 'lucide-react'
 import { SubmitButtonType } from '../types/form'
-import { ActionState } from '../types/action'
 import { useSubmitButtonAnimation } from '../hooks/useSubmitButtonAnimation'
 import { useFormContext } from 'react-hook-form'
+import { Phase } from '../hooks/useContactSubmit'
 
 interface FormSubmitButtonProps {
   submitContent: SubmitButtonType
-  pending?: boolean
-  state: ActionState
+  formPhase: Phase
 }
 
 export const FormSubmitButton = ({
   submitContent,
-  pending = false,
-  state,
+  formPhase,
 }: FormSubmitButtonProps) => {
   const { formState } = useFormContext()
+  const states = {
+    idle: formPhase === 'idle',
+    isPending:
+      formPhase === 'validating' ||
+      formPhase === 'uploading' ||
+      formPhase === 'submitting',
+    isSuccess: formPhase === 'success',
+    isError: formPhase === 'error',
+  }
 
-  const isPending = pending || formState.isSubmitting
-  const idle = !isPending && !state.success && !state.error
-  const isSuccess = !!state.success
-  const isError = !!state.error
-
-  const { btnRef, shineRef, fillRef } = useSubmitButtonAnimation({
-    states: {
-      idle,
-      isPending,
-      isSuccess,
-      isError,
-    },
+  const { btnRef, shineRef, fillRef, textRef } = useSubmitButtonAnimation({
+    states,
   })
 
-  const label = isPending
-    ? 'Enviando'
-    : isSuccess
-      ? 'Enviado'
-      : isError
-        ? (formState.errors['form_submit']?.message as string) || 'Error'
-        : 'Enviar Correo'
-  const Icon = isPending ? Loader2 : isSuccess ? Check : isError ? X : Send
+  const label: Record<Phase, string> = {
+    validating: 'Estamos validando tu información...',
+    idle: 'Enviar correo',
+    uploading: 'Subiendo archivos...',
+    submitting: 'Enviando correo..',
+    error: (formState.errors['form_submit']?.message as string) || 'Error',
+    success:
+      'Correo enviado exitosamente! Nos pondremos en contacto contigo pronto.',
+  }
+
+  const Icon = states.isPending
+    ? Loader2
+    : states.isSuccess
+      ? Check
+      : states.isError
+        ? X
+        : Send
 
   return (
     <button
       ref={btnRef}
       type={submitContent.type}
-      disabled={isPending || isSuccess || isError}
+      disabled={!states.idle}
       className={cn(
-        'relative mt-2 overflow-hidden rounded-lg px-6 py-4',
-        'bg-hub-accent/60 hover:bg-hub-accent/80 transition-colors duration-300 ease-out',
-        isError && 'bg-hub-error/80 hover:bg-hub-error/40',
-        isPending && 'bg-hub-accent/40 hover:bg-hub-accent/40',
-        'w-full cursor-pointer'
+        'relative overflow-hidden rounded-lg px-6 py-4',
+        'bg-hub-accent/60 hover:bg-hub-accent/80 transition-all duration-600 ease-out',
+        'w-full cursor-pointer',
+        states.isError && 'bg-hub-error/80 hover:bg-hub-error/40',
+        states.isPending && 'bg-hub-accent/5 hover:bg-hub-accent/0',
+        states.isSuccess &&
+          'absolute inset-0 h-full cursor-auto bg-transparent hover:bg-transparent'
       )}
     >
       {/* Content */}
-      <span className='text-hub-background relative z-30 flex w-full items-center justify-center gap-2 font-semibold tracking-wide'>
-        <Icon className={cn('size-4', isPending && 'animate-spin')} />
-        <span>{label}</span>
+      <span
+        ref={textRef}
+        className={cn(
+          'text-hub-background relative z-30 flex w-full items-center justify-center gap-2 font-semibold tracking-wide',
+          states.isSuccess && 'text-4xl opacity-0'
+        )}
+      >
+        {!states.isSuccess && (
+          <Icon className={cn('size-4', states.isPending && 'animate-spin')} />
+        )}
+
+        <span>{label[formPhase]}</span>
       </span>
 
       {/* Soft mint fill (animated) */}
@@ -67,20 +84,30 @@ export const FormSubmitButton = ({
         ref={fillRef}
         aria-hidden
         className={cn(
-          'absolute inset-0 z-20 w-full -translate-x-full overflow-hidden will-change-transform',
-          'bg-green-400',
+          'absolute top-1/2 left-1/2 z-20 size-0 origin-center -translate-x-1/2 -translate-y-1/2 rounded-full bg-radial from-green-400/90 to-transparent blur-2xl will-change-transform',
+          states.isError && 'from-hub-error/90',
+          states.isSuccess && 'from-green-400/40 to-green-500/50',
           'pointer-events-none'
         )}
       >
-        {/* Shimmer line */}
+        <svg
+          className='min-h-screen min-w-screen opacity-25 mix-blend-difference'
+          viewBox='0 0 1600 1600'
+        >
+          <filter id='noise-filter'>
+            <feTurbulence baseFrequency='2'></feTurbulence>
+          </filter>
+          <rect width='100%' height='100%' filter='url(#noise-filter)'></rect>
+        </svg>
+        {/* Inner pulse (shine) */}
         <span
           ref={shineRef}
           aria-hidden
           className={cn(
-            'absolute inset-0 z-40 w-full -translate-x-full will-change-transform',
-            'bg-[linear-gradient(120deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.5)_50%,rgba(255,255,255,0)_100%)]',
-            isPending ? 'opacity-50' : 'opacity-0',
-            'pointer-events-none'
+            'absolute top-1/2 left-1/2 z-40 size-0 origin-center -translate-x-1/2 -translate-y-1/2 rounded-full will-change-transform',
+            'bg-[radial-gradient(circle,rgba(255,255,255,0.7)_0%,rgba(255,255,255,0.2)_60%,rgba(255,255,255,0)_100%)]',
+            states.isPending ? 'opacity-50' : 'opacity-0',
+            'pointer-events-none mix-blend-screen'
           )}
         />
       </span>
