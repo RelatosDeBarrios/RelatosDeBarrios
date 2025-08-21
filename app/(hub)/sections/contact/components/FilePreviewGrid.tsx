@@ -16,7 +16,10 @@ export const FilePreviewGrid = ({
       <FilePreviewItem
         key={index + file.name}
         file={file}
-        onClick={() => removeFile(index)}
+        onClick={(e: React.MouseEvent<HTMLElement>) => {
+          e.stopPropagation()
+          removeFile(index)
+        }}
       />
     ))}
   </div>
