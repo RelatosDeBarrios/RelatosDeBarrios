@@ -8,6 +8,7 @@ import { ServerFormSchema, FIELD_IDS } from '../schemas/formSchema'
 import { ProjectsId } from '@/types/core'
 import { createCorrelationId } from '@/app/(hub)/lib/crypto'
 import { formErrors } from '../content/errors'
+import { isEnv } from '@/utils/env'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -106,7 +107,11 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
       const { error } = await resend.emails.send({
         from: `Relatos de Barrios <web@contacto.relatosdebarrios.cl>`,
         replyTo: String(email),
-        to: ['strocsdev@gmail.com'],
+        to: [
+          isEnv('prod')
+            ? BRAND.contact_email
+            : 'web.relatosdebarrios@gmail.com',
+        ],
         subject: `Contacto desde el sitio web - ${String(name)}`,
         text: `${String(name)} (${String(email)}) envió: ${String(commentary)}`,
         react: EmailTemplate({

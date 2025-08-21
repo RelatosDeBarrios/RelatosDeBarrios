@@ -15,10 +15,19 @@ import { FormSubmitButton } from './FormSubmitButton'
 import { useContactSubmit } from '../hooks/useContactSubmit'
 import { cn } from '@/utils/css'
 import { useEffect, useRef } from 'react'
+import { isEnv } from '@/utils/env'
 
 interface FormProps {
   action: SendEmailAction
   data: ContactForm
+}
+
+const defaultValues = {
+  [FIELD_IDS.name]: isEnv('dev') ? 'Randy Orton' : '',
+  [FIELD_IDS.email]: isEnv('dev') ? 'rko@email.com' : '',
+  [FIELD_IDS.commentary]: isEnv('dev') ? 'Test message' : '',
+  [FIELD_IDS.contribution]: isEnv('dev') ? 'rengifo' : '',
+  [FIELD_IDS.attachments]: [],
 }
 
 export const FormWithAction = ({ action, data }: FormProps) => {
@@ -29,13 +38,7 @@ export const FormWithAction = ({ action, data }: FormProps) => {
     mode: 'onChange',
     // @ts-expect-error The zod schema defines nullable but RHF expects non-nullable
     resolver: zodResolver(ClientFormSchema),
-    defaultValues: {
-      [FIELD_IDS.name]: '',
-      [FIELD_IDS.email]: '',
-      [FIELD_IDS.commentary]: '',
-      [FIELD_IDS.contribution]: '',
-      [FIELD_IDS.attachments]: [],
-    },
+    defaultValues,
   })
 
   // Use the contact submission hook
