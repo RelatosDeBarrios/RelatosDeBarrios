@@ -1,1 +1,10 @@
-@import '@/styles/globals.css';
+@import 'tailwindcss';
+
+@theme inline {
+  --color-covico-red: #995d59;
+  --color-covico-primary: #4f677f;
+  --color-covico-secondary: #3d687e;
+  --color-covico-yellow: #bfa647;
+  --color-covico-brown: #8c6e59;
+  --color-covico-green: #29736a;
+}
