@@ -32,7 +32,7 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled ? 'bg-background/90 backdrop-blur-md' : 'bg-transparent'
+        isScrolled ? '' : 'bg-transparent'
       }`}
     >
       <nav className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
@@ -40,7 +40,7 @@ export default function Header() {
           <div className='flex-shrink-0'>
             <h1
               className={`font-serif text-xl font-bold transition-colors duration-300 ${
-                isScrolled ? 'text-foreground' : 'text-white'
+                isScrolled ? 'mix-blend-exclusion' : 'text-black'
               }`}
             >
               Relatos de Barrios
@@ -57,7 +57,7 @@ export default function Header() {
                   className={`px-3 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 ${
                     isScrolled
                       ? 'text-muted-foreground hover:text-foreground'
-                      : 'text-white/80 hover:text-white'
+                      : 'text-black/80 hover:text-black'
                   }`}
                 >
                   {item.label}
