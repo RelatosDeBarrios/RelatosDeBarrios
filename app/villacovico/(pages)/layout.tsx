@@ -1,26 +1,24 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Playfair_Display } from 'next/font/google'
+import { Instrument_Sans, Roboto_Serif } from 'next/font/google'
 import '@/covico/styles/globals.css'
+import { cn } from '@/utils/css'
+import { SEO } from '../content/seo'
+import SmoothScroll from '../components/smooth-scroll/SmoothScroll'
+import Header from '../sections/nav/header'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const robotoSerif = Roboto_Serif({
+  variable: '--font-roboto-serif',
   subsets: ['latin'],
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const instrumentSans = Instrument_Sans({
+  variable: '--font-instrument-sans',
   subsets: ['latin'],
-})
-
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-playfair',
 })
 
 export const metadata: Metadata = {
-  title: 'Relatos de Barrios - Villa Covico',
-  description: '',
+  metadataBase: new URL(SEO.url),
+  ...SEO,
 }
 
 export default function RootLayout({
@@ -30,9 +28,17 @@ export default function RootLayout({
 }>) {
   return (
     <body
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
+      className={cn(
+        robotoSerif.variable,
+        instrumentSans.variable,
+        'bg-covico-background h-full antialiased'
+      )}
     >
-      {children}
+      <Header />
+      <div id="'smooth-wrapper'">
+        <div id='smooth-content'>{children}</div>
+      </div>
+      <SmoothScroll />
     </body>
   )
 }
