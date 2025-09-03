@@ -1,21 +1,13 @@
-import DocumentarySection from '../components/DocumentarySection'
-import DownloadSection from '../components/DownloadSection'
-import Footer from '../components/Footer'
-import Header from '../components/Header'
-import Hero from '../components/Hero'
-import PhotoArchive from '../components/PhotoArchive'
-import VirtualTours from '../components/VirtualTours'
+import Hero from '../sections/hero/hero'
 
 export default function Home() {
   return (
-    <main className='flex min-h-screen flex-col gap-10 px-10 pt-24 pb-10'>
-      <Header />
+    <main className='flex min-h-screen flex-col gap-10 px-10 pb-10'>
       <Hero />
-      <DownloadSection />
-      <PhotoArchive />
-      <VirtualTours />
-      <DocumentarySection />
-      <Footer />
+      <div className='h-screen w-full bg-red-200'></div>
+      <div className='h-screen w-full bg-blue-200'></div>
+      {/* <PhotoArchive /> */}
+      {/* <Footer /> */}
     </main>
   )
 }
