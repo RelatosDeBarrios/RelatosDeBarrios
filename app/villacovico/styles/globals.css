@@ -7,4 +7,23 @@
   --color-covico-yellow: #bfa647;
   --color-covico-brown: #8c6e59;
   --color-covico-green: #29736a;
+  --color-covico-background: #fffcf8;
+  --color-covico-foreground: #2f2f2f;
+
+  --p-covico-outside: 1rem;
+
+  --font-roboto: 'Roboto Serif', serif;
+  --font-instrument: 'Instrument Sans', sans-serif;
+}
+
+.text-fluid {
+  font-size: calc(24px + (340 - 24) * ((100vw - 320px) / (1920 - 320)));
+  line-height: 0.8;
+}
+
+.text-noise-clip {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
