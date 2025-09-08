@@ -1,5 +1,3 @@
-'use client'
-
 interface HeaderNavProps {
   navItems: { href: string; label: string }[]
   handleScrollTo: (id: string, open: boolean) => void
@@ -13,7 +11,7 @@ export const HeaderNav = ({ navItems, handleScrollTo }: HeaderNavProps) => {
           key={item.href}
           onClick={() => handleScrollTo(item.href, false)}
           className={
-            'text-instrument cursor-pointer px-3 py-2 text-lg lowercase'
+            'text-instrument hover:text-covico-red cursor-pointer px-3 py-2 text-lg lowercase duration-300'
           }
         >
           {item.label}

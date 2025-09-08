@@ -7,6 +7,7 @@ import { HeaderNav } from './components/HeaderNav'
 import { NavMobile } from './components/NavMobile'
 import { NavMobilePanel } from './components/NavMobilePanel'
 import { HeaderLogo } from './components/HeaderLogo'
+import Link from 'next/link'
 
 export default function Header() {
   const { scrollDirection, isMenuOpen, toggleMenu, handleScrollTo } = useNav()
@@ -20,7 +21,12 @@ export default function Header() {
     >
       <nav className='mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex h-20 items-center justify-between'>
-          <HeaderLogo logo={NAV.utilityImages.logo} />
+          <Link href='/' aria-label='Villacovico Logo' className='group h-20'>
+            <HeaderLogo
+              className='mix-blend-difference'
+              logo={NAV.utilityImages.logo}
+            />
+          </Link>
 
           <HeaderNav navItems={NAV.navItems} handleScrollTo={handleScrollTo} />
 
