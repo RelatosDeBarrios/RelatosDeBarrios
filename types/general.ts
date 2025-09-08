@@ -8,6 +8,7 @@ export type ImageType = {
 export type VideoType = {
   src: string
   autoplay: boolean
+  poster?: string
   loop: boolean
   muted: boolean
   preload: string

@@ -1,15 +1,16 @@
 'use client'
 
 import { UI } from '@/content/ui'
+import { ImageType, VideoType } from '@/types/general'
 import { cn } from '@/utils/css'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRef } from 'react'
 import Markdown from 'react-markdown'
 
 interface ProjectCardProps {
   title: string
-  videoSrc?: string
-  posterSrc?: string
+  background?: ImageType | VideoType
   href: URL | string
   disabled?: boolean
   badge?: React.ReactNode
@@ -17,23 +18,36 @@ interface ProjectCardProps {
 
 export const ProjectCard = ({
   title,
-  videoSrc,
-  posterSrc,
+  background,
   badge,
   href,
   disabled,
 }: ProjectCardProps) => {
   const videoRef = useRef<HTMLVideoElement>(null)
+
   const Element = disabled ? 'div' : Link
+
+  const handleVideoPlay = () => {
+    if (videoRef.current && (background as VideoType).autoplay) {
+      videoRef.current.play()
+    }
+  }
+
+  const handleVideoPause = () => {
+    if (videoRef.current && (background as VideoType).autoplay) {
+      videoRef.current.pause()
+    }
+  }
+
   return (
     <Element
-      onMouseEnter={() => videoRef.current?.play()}
-      onMouseLeave={() => videoRef.current?.pause()}
+      onMouseEnter={handleVideoPlay}
+      onMouseLeave={handleVideoPause}
       href={href}
       className={cn(
         'ring-hub-accent/50 group relative aspect-video w-full cursor-pointer content-end overflow-hidden rounded-2xl p-8 transition-all hover:ring-2 md:w-md',
         {
-          'bg-hub-primary/10': !videoSrc,
+          'bg-hub-primary/10': !background,
         }
       )}
     >
@@ -45,17 +59,9 @@ export const ProjectCard = ({
         </div>
       )}
       {!!badge && badge}
-      {videoSrc && (
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          poster={posterSrc}
-          loop
-          muted
-          playsInline
-          className='absolute inset-0 h-full w-full object-cover opacity-25 mix-blend-hard-light transition-opacity group-hover:opacity-40'
-        />
-      )}
+
+      {background && <Background ref={videoRef} background={background} />}
+
       <Markdown
         components={{
           h2: ({ ...props }) => (
@@ -70,4 +76,42 @@ export const ProjectCard = ({
       </Markdown>
     </Element>
   )
+}
+
+interface BackgroundProps {
+  background: ImageType | VideoType
+  ref: React.RefObject<HTMLVideoElement | null>
+}
+
+const Background = ({ background, ref }: BackgroundProps) => {
+  if ('src' in background && (background as VideoType).autoplay) {
+    const video = background as VideoType
+    return (
+      <video
+        ref={ref}
+        src={video.src}
+        loop={video.loop}
+        muted={video.muted}
+        playsInline
+        preload={video.preload}
+        className='absolute inset-0 h-full w-full object-cover opacity-25 mix-blend-hard-light transition-opacity group-hover:opacity-40'
+      />
+    )
+  }
+
+  if ('src' in background && (background as ImageType).alt) {
+    const image = background as ImageType
+
+    return (
+      <Image
+        src={image.src}
+        alt={image.alt}
+        width={image.width}
+        height={image.height}
+        className='absolute inset-0 h-full w-full object-cover opacity-25 transition-opacity group-hover:opacity-40'
+      />
+    )
+  }
+
+  return null
 }
