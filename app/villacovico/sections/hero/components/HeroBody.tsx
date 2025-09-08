@@ -30,7 +30,7 @@ export const HeroBody = ({
       className='relative flex aspect-square size-full items-center justify-center'
     >
       {/* Parallax container for images */}
-      <div className='size-full'>
+      <div className='relative size-full overflow-hidden rounded-xl'>
         <div
           aria-hidden
           className='to-covico-foreground/60 absolute z-3 aspect-square w-full bg-gradient-to-b from-transparent'
