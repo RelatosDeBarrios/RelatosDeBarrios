@@ -3,7 +3,7 @@ import { Section } from '@/types/general'
 export type Covico =
   | 'nav'
   | 'hero'
-  | 'gallery'
+  | 'visual-archive'
   | 'downloads'
   | '3d'
   | 'book-documental'
