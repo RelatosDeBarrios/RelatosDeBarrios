@@ -4,6 +4,7 @@ import { VisualArchivePoster } from './components/VisualArchivePoster'
 import { VISUAL_ARCHIVE } from './content'
 import { GalleryItems } from './types'
 import { ImageType } from '@/types/general'
+import { VisualArchiveGallery } from './components/VisualArchiveGallery'
 
 export const VisualArchive = () => {
   const completeGallery = Object.fromEntries(
@@ -14,7 +15,10 @@ export const VisualArchive = () => {
   ) as Record<GalleryItems, ImageType[]>
 
   return (
-    <article id='images' className='relative grid w-full grid-cols-2 gap-x-8'>
+    <article
+      id={VISUAL_ARCHIVE.id}
+      className='relative grid w-full grid-cols-2 gap-x-8'
+    >
       <section className='flex flex-col items-end justify-center gap-4'>
         <h2 className='text-covico-foreground font-roboto max-w-prose text-right text-8xl font-semibold tracking-wide'>
           {VISUAL_ARCHIVE.title}
@@ -37,6 +41,7 @@ export const VisualArchive = () => {
         </nav>
         <VisualArchiveOpenGalleryBtn />
       </section>
+      <VisualArchiveGallery />
     </article>
   )
 }
