@@ -20,34 +20,38 @@ export const useAnimateText = <
 
       console.log('parentRef: ', parentRef, parentRef.current)
 
-      const split = SplitText.create(textRef.current, {
+      const { lines } = SplitText.create(textRef.current, {
         type: 'lines',
         mask: 'lines',
         linesClass: 'line++',
       })
 
+      const textLines = lines as HTMLElement[]
+
       const computedStyle = window.getComputedStyle(textRef.current)
       const textIndent = computedStyle.textIndent
 
       if (textIndent && textIndent !== '0px') {
-        if (split.lines.length > 0) {
-          ;(split.lines[0] as HTMLElement).style.paddingLeft = textIndent
+        if (textLines.length > 0) {
+          textLines[0].style.paddingLeft = textIndent
         }
         textRef.current.style.textIndent = '0'
       }
 
-      gsap.set(split.lines, { y: '40%', opacity: 0 })
+      gsap.set(textLines, { y: '40%', opacity: 0 })
 
-      // ScrollTrigger.create({
-      //   trigger: parentRef.current,
-      //   start: 'top center',
-      //   end: 'bottom bottom',
-      //   pin: textRef.current,
-      //   pinSpacing: false,
-      //   markers: true,
-      // })
+      ScrollTrigger.create({
+        trigger: parentRef.current,
+        start: 'center center',
+        end: 'bottom bottom',
+        pin: textRef.current,
+        pinSpacing: false,
+        anticipatePin: 1,
+        refreshPriority: -1,
+        scrub: 1,
+      })
 
-      gsap.to(split.lines, {
+      gsap.to(textLines, {
         y: '0%',
         opacity: 1,
         stagger: 0.1,
@@ -57,7 +61,6 @@ export const useAnimateText = <
           start: 'top top',
           end: 'bottom bottom',
           scrub: 1,
-          // markers: true,
         },
       })
     },
