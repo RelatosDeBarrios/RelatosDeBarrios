@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { GalleryItems } from '../types'
+import { getNextIndex, getPrevIndex } from '../utils'
 
 interface VisualArchiveGalleryState {
   currentGallery: GalleryItems
@@ -7,8 +8,8 @@ interface VisualArchiveGalleryState {
   isGalleryOpen?: boolean
   setCurrentGallery: (gallery: GalleryItems) => void
   setImage: (index: number) => void
-  nextImage: (galleryLength: number) => void
-  prevImage: (galleryLength: number) => void
+  setNextImage: (galleryLength: number) => void
+  setPrevImage: (galleryLength: number) => void
   openGallery: () => void
   closeGallery: () => void
 }
@@ -21,19 +22,13 @@ export const useVisualArchiveGallery = create<VisualArchiveGalleryState>(
     setCurrentGallery: (gallery) =>
       set({ currentGallery: gallery, currentImageIndex: 0 }),
     setImage: (index) => set({ currentImageIndex: index }),
-    nextImage: (galleryLength) =>
+    setNextImage: (galleryLength) =>
       set((state) => ({
-        currentImageIndex:
-          state.currentImageIndex === galleryLength - 1
-            ? 0
-            : state.currentImageIndex + 1,
+        currentImageIndex: getNextIndex(state.currentImageIndex, galleryLength),
       })),
-    prevImage: (galleryLength) =>
+    setPrevImage: (galleryLength) =>
       set((state) => ({
-        currentImageIndex:
-          state.currentImageIndex === 0
-            ? galleryLength - 1
-            : state.currentImageIndex - 1,
+        currentImageIndex: getPrevIndex(state.currentImageIndex, galleryLength),
       })),
     openGallery: () => set({ isGalleryOpen: true }),
     closeGallery: () => set({ isGalleryOpen: false }),
