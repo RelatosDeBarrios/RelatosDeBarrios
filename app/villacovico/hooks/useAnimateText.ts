@@ -38,6 +38,15 @@ export const useAnimateText = <
 
       gsap.set(split.lines, { y: '40%', opacity: 0 })
 
+      // ScrollTrigger.create({
+      //   trigger: parentRef.current,
+      //   start: 'top center',
+      //   end: 'bottom bottom',
+      //   pin: textRef.current,
+      //   pinSpacing: false,
+      //   markers: true,
+      // })
+
       gsap.to(split.lines, {
         y: '0%',
         opacity: 1,
@@ -46,8 +55,9 @@ export const useAnimateText = <
         scrollTrigger: {
           trigger: parentRef.current,
           start: 'top top',
-          end: '90% bottom',
+          end: 'bottom bottom',
           scrub: 1,
+          // markers: true,
         },
       })
     },
