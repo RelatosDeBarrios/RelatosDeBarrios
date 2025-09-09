@@ -7,7 +7,7 @@ export const VISUAL_ARCHIVE = {
   cards: {
     photos: {
       id: 'photos',
-      title: 'Fotografías',
+      title: 'Archivo Fotográfico',
       gallery: [
         {
           src: '/villacovico/sections/visual-archive/photos/JORGE ORACIO PEREZ 1.0.webp',
@@ -179,11 +179,13 @@ export const VISUAL_ARCHIVE = {
         },
       ],
     },
+
     'aerial-images': {
       id: 'aerial-images',
-      title: 'Fotografías Aéreas',
+      title: 'Imágenes Aéreas',
       gallery: [],
     },
+
     illustrations: {
       id: 'illustrations',
       title: 'Ilustraciones',

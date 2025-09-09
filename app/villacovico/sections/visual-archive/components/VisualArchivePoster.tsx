@@ -10,7 +10,7 @@ interface VisualArchivePosterProps {
   gallery: Record<GalleryItems, ImageType[]>
 }
 
-const IMAGE_CHANGE_RATE = 5 * 1000
+const IMAGE_CHANGE_RATE = 10 // time in seconds
 
 export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
   const [hovered, setHovered] = useState(false)
@@ -31,7 +31,7 @@ export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
     const interval = setInterval(() => {
       const galleryLength = gallery[currentGallery].length
       nextImage(galleryLength)
-    }, IMAGE_CHANGE_RATE)
+    }, IMAGE_CHANGE_RATE * 1000)
     return () => clearInterval(interval)
   }, [currentGallery, nextImage, gallery, hovered])
 
