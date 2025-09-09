@@ -12,7 +12,7 @@ export const NAV = {
   },
   navItems: [
     { href: 'top', label: 'Inicio' },
-    { href: '#gallery', label: 'Imágenes' },
+    { href: '#visual-archive', label: 'Archivo Visual' },
     { href: '#downloads', label: 'Planimetrías' },
     { href: '#3d', label: 'Recorridos' },
     { href: '#book-documental', label: 'Libro / Documental' },

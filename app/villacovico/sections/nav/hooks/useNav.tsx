@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { scrollTo } from '@/utils/dom'
+import { smoothScrollTo } from '../utils/smoothScrollTo'
+import { NavItemsID } from '../types'
 
 export const useNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -20,9 +21,9 @@ export const useNav = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [handleScroll])
 
-  const handleScrollTo = (id: string, open: boolean) => {
-    scrollTo(id)
-    setIsMenuOpen(open)
+  const handleScrollTo = (id: NavItemsID) => {
+    smoothScrollTo(id)
+    setIsMenuOpen(false)
   }
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
