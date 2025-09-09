@@ -2,6 +2,7 @@
 
 import { useVisualArchiveGallery } from '../store/visualArchiveGalleryStore'
 import { GalleryItems } from '../types'
+import { VisualArchiveSelectorCheckbox } from './VisualArchiveSelectorCheckbox'
 
 interface VisualArchiveSelectorProps {
   id: GalleryItems
@@ -12,6 +13,10 @@ export const VisualArchiveSelector = ({
   id,
   archiveTitle,
 }: VisualArchiveSelectorProps) => {
+  const currentGallery = useVisualArchiveGallery(
+    (state) => state.currentGallery
+  )
+
   const setCurrentGallery = useVisualArchiveGallery(
     (state) => state.setCurrentGallery
   )
@@ -23,10 +28,14 @@ export const VisualArchiveSelector = ({
 
   return (
     <button
+      type='button'
       onClick={(evt) => handleChangeGallery(evt, id)}
-      className='text-covico-background block text-right'
+      className='text-covico-background justift-end group flex cursor-pointer items-end gap-4'
     >
-      {archiveTitle}
+      <span className='font-montserrat text-right text-2xl leading-none font-extralight tracking-wider whitespace-nowrap'>
+        {archiveTitle}
+      </span>
+      <VisualArchiveSelectorCheckbox id={id} selected={currentGallery === id} />
     </button>
   )
 }

@@ -26,7 +26,7 @@ export const VisualArchive = () => {
 
       <section className='relative'>
         <VisualArchivePoster gallery={completeGallery} />
-        <nav className='absolute top-8 right-8 flex flex-col items-end gap-2'>
+        <nav className='absolute top-8 right-8 flex flex-col items-end gap-4'>
           {Object.values(VISUAL_ARCHIVE.cards).map((card) => (
             <VisualArchiveSelector
               key={card.id}
