@@ -42,7 +42,7 @@ export default function RootLayout({
       )}
     >
       <Header />
-      <div id="'smooth-wrapper'">
+      <div id='smooth-wrapper'>
         <div id='smooth-content'>{children}</div>
       </div>
       <SmoothScroll />
