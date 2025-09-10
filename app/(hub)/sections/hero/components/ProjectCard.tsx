@@ -16,13 +16,7 @@ interface ProjectCardProps {
   badge?: React.ReactNode
 }
 
-export const ProjectCard = ({
-  title,
-  background,
-  badge,
-  href,
-  disabled,
-}: ProjectCardProps) => {
+export const ProjectCard = ({ title, background, badge, href, disabled }: ProjectCardProps) => {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   const Element = disabled ? 'div' : Link
@@ -53,9 +47,7 @@ export const ProjectCard = ({
     >
       {disabled && (
         <div className='bg-hub-primary/10 absolute inset-0 z-10 flex items-center justify-center transition-opacity group-hover:opacity-100 landscape:opacity-0'>
-          <span className='text-hub-accent text-2xl font-bold'>
-            {UI.messages.coming_soon}
-          </span>
+          <span className='text-hub-accent text-2xl font-bold'>{UI.messages.coming_soon}</span>
         </div>
       )}
       {!!badge && badge}
@@ -65,10 +57,7 @@ export const ProjectCard = ({
       <Markdown
         components={{
           h2: ({ ...props }) => (
-            <h2
-              {...props}
-              className='text-hub-text relative w-full max-w-xs text-4xl leading-none'
-            />
+            <h2 {...props} className='text-hub-text relative w-full max-w-xs text-4xl leading-none' />
           ),
         }}
       >

@@ -4,8 +4,7 @@ import { HeroSection } from '../types'
 export const HERO = {
   id: 'home',
   title: 'Relatos de Barrios | Villa Covico',
-  description:
-    'Voces que construyen identidad en los barrios de la Región de Coquimbo.',
+  description: 'Voces que construyen identidad en los barrios de la Región de Coquimbo.',
   utilityImages: {
     logo: {
       src: '/hub/images/hero-blue.png',
