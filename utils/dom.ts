@@ -29,10 +29,7 @@ interface scrollToOptions {
  * @param to - CSS selector for the element to scroll to, or 'top' to scroll to the top of the page.
  * @param options - Optional scroll options (smooth scrolling, block alignment).
  */
-export function scrollTo(
-  to: string | 'top',
-  { smooth = true }: scrollToOptions = {}
-): void {
+export function scrollTo(to: string | 'top', { smooth = true }: scrollToOptions = {}): void {
   if (!to || !isBrowser()) return
   const behavior = smooth ? 'smooth' : 'auto'
   if (to === 'top') {
