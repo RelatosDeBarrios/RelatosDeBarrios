@@ -4,20 +4,10 @@
   "trailingComma": "es5",
   "singleQuote": true,
   "jsxSingleQuote": true,
-  "printWidth": 80,
+  "printWidth": 120,
   "tabWidth": 2,
   "useTabs": false,
   "tailwindStylesheet": "./styles/globals.css",
   "tailwindAttributes": ["className", "class", "style"],
-  "tailwindFunctions": ["clsx", "twMerge", "cn"],
-  "ignoreFiles": [
-    "**/node_modules/**",
-    "**/dist/**",
-    "**/build/**",
-    "**/coverage/**",
-    "**/.next/**",
-    "**/.nuxt/**",
-    "**/.cache/**",
-    "**/.out/**"
-  ]
+  "tailwindFunctions": ["clsx", "twMerge", "cn"]
 }
