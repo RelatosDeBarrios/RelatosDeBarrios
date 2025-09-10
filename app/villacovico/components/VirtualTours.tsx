@@ -5,12 +5,10 @@ export default function VirtualTours() {
   const tours = [
     {
       title: 'Recorrido 360° Exterior',
-      description:
-        'Explora los espacios exteriores de Villa Covico y su entorno',
+      description: 'Explora los espacios exteriores de Villa Covico y su entorno',
       duration: 'Interactivo',
       icon: <Navigation className='h-6 w-6' />,
-      thumbnail:
-        'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
+      thumbnail: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
       link: 'https://app.cloudpano.com/tours/EieASvgq8',
       color: 'bg-[#3D687E] hover:bg-[#4F677F]',
     },
@@ -19,8 +17,7 @@ export default function VirtualTours() {
       description: 'Recorre el interior de las viviendas',
       duration: 'Interactivo',
       icon: <Eye className='h-6 w-6' />,
-      thumbnail:
-        'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
+      thumbnail: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
       link: 'https://app.cloudpano.com/tours/rHmDzjHtr?sceneId=h1gLeY0Nzh7',
       color: 'bg-[#29736A] hover:bg-[#995D59]',
     },

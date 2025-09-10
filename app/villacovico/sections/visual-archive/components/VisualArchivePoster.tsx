@@ -26,18 +26,14 @@ export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
 
   const containerRef = useRef<HTMLPictureElement>(null)
 
-  const currentGallery = useVisualArchiveGallery(
-    (state) => state.currentGallery
-  )
-  const currentImageIndex = useVisualArchiveGallery(
-    (state) => state.currentImageIndex
-  )
+  const currentGalleryId = useVisualArchiveGallery((state) => state.currentGalleryId)
+  const currentImageIndex = useVisualArchiveGallery((state) => state.currentImageIndex)
 
   const openGallery = useVisualArchiveGallery((state) => state.openGallery)
   const setNextImage = useVisualArchiveGallery((state) => state.setNextImage)
 
-  const currentImage = gallery[currentGallery][displayedImageIndex]
-  const targetImage = gallery[currentGallery][currentImageIndex]
+  const currentImage = gallery[currentGalleryId][displayedImageIndex]
+  const targetImage = gallery[currentGalleryId][currentImageIndex]
 
   const { contextSafe } = useGSAP(
     () => {
@@ -70,11 +66,11 @@ export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
   useEffect(() => {
     if (hovered) return
     const interval = setInterval(() => {
-      const galleryLength = gallery[currentGallery].length
+      const galleryLength = gallery[currentGalleryId].length
       setNextImage(galleryLength)
     }, IMAGE_CHANGE_RATE * 1000)
     return () => clearInterval(interval)
-  }, [currentGallery, setNextImage, gallery, hovered])
+  }, [currentGalleryId, setNextImage, gallery, hovered])
 
   return (
     <figure
@@ -94,9 +90,7 @@ export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
         height={currentImage.height}
         priority
         loading='eager'
-        className={cn(
-          'current-image absolute inset-0 size-full scale-110 object-cover object-center'
-        )}
+        className={cn('current-image absolute inset-0 size-full scale-110 object-cover object-center')}
       />
 
       <Image
@@ -106,9 +100,7 @@ export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
         height={targetImage.height}
         priority
         loading='eager'
-        className={cn(
-          'target-image absolute inset-0 size-full scale-110 object-cover object-center'
-        )}
+        className={cn('target-image absolute inset-0 size-full scale-110 object-cover object-center')}
       />
     </figure>
   )

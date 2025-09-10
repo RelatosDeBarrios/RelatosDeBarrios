@@ -10,9 +10,7 @@ export const HeaderNav = ({ navItems, handleScrollTo }: HeaderNavProps) => {
         <button
           key={item.href}
           onClick={() => handleScrollTo(item.href)}
-          className={
-            'text-instrument hover:text-covico-red cursor-pointer px-3 py-2 text-lg lowercase duration-300'
-          }
+          className={'text-instrument hover:text-covico-red cursor-pointer px-3 py-2 text-lg lowercase duration-300'}
         >
           {item.label}
         </button>

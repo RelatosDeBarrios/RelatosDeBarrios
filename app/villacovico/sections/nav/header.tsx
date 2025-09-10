@@ -22,10 +22,7 @@ export default function Header() {
       <nav className='mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex h-20 items-center justify-between'>
           <Link href='/' aria-label='Villacovico Logo' className='group h-20'>
-            <HeaderLogo
-              className='mix-blend-difference'
-              logo={NAV.utilityImages.logo}
-            />
+            <HeaderLogo className='mix-blend-difference' logo={NAV.utilityImages.logo} />
           </Link>
 
           <HeaderNav navItems={NAV.navItems} handleScrollTo={handleScrollTo} />
@@ -35,11 +32,7 @@ export default function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        <NavMobilePanel
-          isMenuOpen={isMenuOpen}
-          navItems={NAV.navItems}
-          handleScrollTo={handleScrollTo}
-        />
+        <NavMobilePanel isMenuOpen={isMenuOpen} navItems={NAV.navItems} handleScrollTo={handleScrollTo} />
       </nav>
     </header>
   )

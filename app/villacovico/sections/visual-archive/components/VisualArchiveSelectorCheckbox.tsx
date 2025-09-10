@@ -17,10 +17,7 @@ gsap.registerPlugin(useGSAP, MorphSVGPlugin)
 const STROKE_WIDTH = 2
 const SQUARE_PATH = 'M 2 2 H 36 V 36 H 2 Z'
 
-export const VisualArchiveSelectorCheckbox = ({
-  id,
-  selected = false,
-}: VisualArchiveSelectorCheckboxProps) => {
+export const VisualArchiveSelectorCheckbox = ({ id, selected = false }: VisualArchiveSelectorCheckboxProps) => {
   useGSAP(() => {
     if (selected) {
       gsap.to(`#${id}-checkbox-square`, {

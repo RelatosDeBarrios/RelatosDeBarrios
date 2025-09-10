@@ -7,10 +7,7 @@ import { useRef } from 'react'
 
 gsap.registerPlugin(SplitText, ScrollTrigger)
 
-export const useAnimateText = <
-  T extends HTMLElement = HTMLParagraphElement,
-  P extends HTMLElement = HTMLElement,
->() => {
+export const useAnimateText = <T extends HTMLElement = HTMLParagraphElement, P extends HTMLElement = HTMLElement>() => {
   const textRef = useRef<T>(null)
   const parentRef = useRef<P>(null)
 

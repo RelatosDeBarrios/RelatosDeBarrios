@@ -4,11 +4,7 @@ interface NavMobilePanelProps {
   handleScrollTo: (id: string, open: boolean) => void
 }
 
-export const NavMobilePanel = ({
-  isMenuOpen,
-  navItems,
-  handleScrollTo,
-}: NavMobilePanelProps) => {
+export const NavMobilePanel = ({ isMenuOpen, navItems, handleScrollTo }: NavMobilePanelProps) => {
   if (!isMenuOpen) return null
 
   return (

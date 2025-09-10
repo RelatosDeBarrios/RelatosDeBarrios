@@ -9,17 +9,10 @@ interface VisualArchiveSelectorProps {
   archiveTitle: string
 }
 
-export const VisualArchiveSelector = ({
-  id,
-  archiveTitle,
-}: VisualArchiveSelectorProps) => {
-  const currentGallery = useVisualArchiveGallery(
-    (state) => state.currentGallery
-  )
+export const VisualArchiveSelector = ({ id, archiveTitle }: VisualArchiveSelectorProps) => {
+  const currentGalleryId = useVisualArchiveGallery((state) => state.currentGalleryId)
 
-  const setCurrentGallery = useVisualArchiveGallery(
-    (state) => state.setCurrentGallery
-  )
+  const setCurrentGallery = useVisualArchiveGallery((state) => state.setCurrentGallery)
 
   const handleChangeGallery = (e: React.MouseEvent, id: GalleryItems) => {
     e.stopPropagation()
@@ -35,7 +28,7 @@ export const VisualArchiveSelector = ({
       <span className='font-montserrat text-right text-2xl leading-none font-extralight tracking-wider whitespace-nowrap'>
         {archiveTitle}
       </span>
-      <VisualArchiveSelectorCheckbox id={id} selected={currentGallery === id} />
+      <VisualArchiveSelectorCheckbox id={id} selected={currentGalleryId === id} />
     </button>
   )
 }

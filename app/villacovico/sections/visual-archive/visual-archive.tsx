@@ -8,17 +8,11 @@ import { VisualArchiveGallery } from './components/VisualArchiveGallery'
 
 export const VisualArchive = () => {
   const completeGallery = Object.fromEntries(
-    Object.entries(VISUAL_ARCHIVE.cards).map(([key, card]) => [
-      key,
-      card.gallery,
-    ])
+    Object.entries(VISUAL_ARCHIVE.cards).map(([key, card]) => [key, card.gallery])
   ) as Record<GalleryItems, ImageType[]>
 
   return (
-    <article
-      id={VISUAL_ARCHIVE.id}
-      className='relative grid w-full grid-cols-2 gap-x-8'
-    >
+    <article id={VISUAL_ARCHIVE.id} className='relative grid w-full grid-cols-2 gap-x-8'>
       <section className='flex flex-col items-end justify-center gap-4'>
         <h2 className='text-covico-foreground font-roboto max-w-prose text-right text-8xl font-semibold tracking-wide'>
           {VISUAL_ARCHIVE.title}
@@ -32,11 +26,7 @@ export const VisualArchive = () => {
         <VisualArchivePoster gallery={completeGallery} />
         <nav className='absolute top-8 right-8 flex flex-col items-end gap-4'>
           {Object.values(VISUAL_ARCHIVE.cards).map((card) => (
-            <VisualArchiveSelector
-              key={card.id}
-              id={card.id}
-              archiveTitle={card.title}
-            />
+            <VisualArchiveSelector key={card.id} id={card.id} archiveTitle={card.title} />
           ))}
         </nav>
         <VisualArchiveOpenGalleryBtn />
