@@ -12,17 +12,11 @@ interface FormSubmitButtonProps {
   formPhase: Phase
 }
 
-export const FormSubmitButton = ({
-  submitContent,
-  formPhase,
-}: FormSubmitButtonProps) => {
+export const FormSubmitButton = ({ submitContent, formPhase }: FormSubmitButtonProps) => {
   const { formState } = useFormContext()
   const states = {
     idle: formPhase === 'idle',
-    isPending:
-      formPhase === 'validating' ||
-      formPhase === 'uploading' ||
-      formPhase === 'submitting',
+    isPending: formPhase === 'validating' || formPhase === 'uploading' || formPhase === 'submitting',
     isSuccess: formPhase === 'success',
     isError: formPhase === 'error',
   }
@@ -38,17 +32,10 @@ export const FormSubmitButton = ({
     uploading: 'Subiendo archivos...',
     submitting: 'Enviando correo..',
     error: (formState.errors['form_submit']?.message as string) || 'Error',
-    success:
-      'Correo enviado exitosamente! Nos pondremos en contacto contigo pronto.',
+    success: 'Correo enviado exitosamente! Nos pondremos en contacto contigo pronto.',
   }
 
-  const Icon = states.isPending
-    ? Loader2
-    : states.isSuccess
-      ? Check
-      : states.isError
-        ? X
-        : Send
+  const Icon = states.isPending ? Loader2 : states.isSuccess ? Check : states.isError ? X : Send
 
   return (
     <button
@@ -61,8 +48,7 @@ export const FormSubmitButton = ({
         'w-full cursor-pointer',
         states.isError && 'bg-hub-error/80 hover:bg-hub-error/40',
         states.isPending && 'bg-hub-accent/5 hover:bg-hub-accent/0',
-        states.isSuccess &&
-          'absolute inset-0 h-full cursor-auto bg-transparent hover:bg-transparent'
+        states.isSuccess && 'absolute inset-0 h-full cursor-auto bg-transparent hover:bg-transparent'
       )}
     >
       {/* Content */}
@@ -73,9 +59,7 @@ export const FormSubmitButton = ({
           states.isSuccess && 'text-4xl opacity-0'
         )}
       >
-        {!states.isSuccess && (
-          <Icon className={cn('size-4', states.isPending && 'animate-spin')} />
-        )}
+        {!states.isSuccess && <Icon className={cn('size-4', states.isPending && 'animate-spin')} />}
 
         <span>{label[formPhase]}</span>
       </span>
@@ -91,10 +75,7 @@ export const FormSubmitButton = ({
           'pointer-events-none'
         )}
       >
-        <svg
-          className='min-h-screen min-w-screen opacity-25 mix-blend-difference'
-          viewBox='0 0 1600 1600'
-        >
+        <svg className='min-h-screen min-w-screen opacity-25 mix-blend-difference' viewBox='0 0 1600 1600'>
           <filter id='noise-filter'>
             <feTurbulence baseFrequency='2'></feTurbulence>
           </filter>

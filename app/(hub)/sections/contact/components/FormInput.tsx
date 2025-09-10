@@ -20,14 +20,9 @@ export const FormInput = ({ inputContent, className }: InputFormProps) => {
 
   return (
     <>
-      <label
-        htmlFor={inputContent.id}
-        className='text-hub-text block font-medium'
-      >
+      <label htmlFor={inputContent.id} className='text-hub-text block font-medium'>
         {inputContent.label}
-        {inputContent.required && (
-          <span className='text-hub-error ml-1 align-middle text-sm'>*</span>
-        )}
+        {inputContent.required && <span className='text-hub-error ml-1 align-middle text-sm'>*</span>}
         <Element
           inputContent={inputContent}
           register={register}
@@ -55,9 +50,7 @@ const Input = ({ inputContent, className, register }: ElementProps) => {
       autoComplete={inputContent.autocomplete}
       className={className}
       {...register(inputContent.id, {
-        required:
-          inputContent.required &&
-          (formErrors.RequiredField || 'Este campo es requerido'),
+        required: inputContent.required && (formErrors.RequiredField || 'Este campo es requerido'),
       })}
     />
   )
@@ -71,9 +64,7 @@ const Textarea = ({ inputContent, className, register }: ElementProps) => {
       rows={5}
       className={className}
       {...register(inputContent.id, {
-        required:
-          inputContent.required &&
-          (formErrors.RequiredField || 'Este campo es requerido'),
+        required: inputContent.required && (formErrors.RequiredField || 'Este campo es requerido'),
       })}
     />
   )
