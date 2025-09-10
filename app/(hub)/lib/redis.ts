@@ -116,10 +116,7 @@ export async function rateLimit(
     }
   } catch (error) {
     // Log the error but fail open with limited attempts
-    console.error(
-      `Redis error during rate limit check (${logPrefix || 'unknown'}):`,
-      error
-    )
+    console.error(`Redis error during rate limit check (${logPrefix || 'unknown'}):`, error)
 
     return {
       allowed: true,
@@ -176,9 +173,7 @@ function createFallbackClient(): RedisClientType {
       return null
     },
     set: async (key: string, value: string, options: unknown) => {
-      console.log(
-        `[Redis Fallback] SET ${key} ${value} ${JSON.stringify(options)}`
-      )
+      console.log(`[Redis Fallback] SET ${key} ${value} ${JSON.stringify(options)}`)
       return 'OK'
     },
   } as unknown as RedisClientType
