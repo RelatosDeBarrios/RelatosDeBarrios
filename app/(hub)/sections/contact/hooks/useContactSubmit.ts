@@ -15,28 +15,17 @@ import { formatDuration } from '@/utils/format'
 const VALIDATE_IP_URL = '/api/validate-ip'
 const BLOB_UPLOAD_URL = '/api/blob-upload'
 
-export type Phase =
-  | 'idle'
-  | 'validating'
-  | 'uploading'
-  | 'submitting'
-  | 'success'
-  | 'error'
+export type Phase = 'idle' | 'validating' | 'uploading' | 'submitting' | 'success' | 'error'
 
 interface UseContactSubmitProps {
   action: SendEmailAction
   setError: UseFormSetError<ClientFormValues>
 }
 
-export const useContactSubmit = ({
-  action,
-  setError,
-}: UseContactSubmitProps) => {
+export const useContactSubmit = ({ action, setError }: UseContactSubmitProps) => {
   const [phase, setPhase] = useState<Phase>('idle')
   // Keep track of correlation ID for tracing the request
-  const [correlationId, setCorrelationId] = useState<string | undefined>(
-    undefined
-  )
+  const [correlationId, setCorrelationId] = useState<string | undefined>(undefined)
 
   const onSubmit = async (values: ClientFormValues) => {
     try {
@@ -86,13 +75,7 @@ export const useContactSubmit = ({
       }
 
       // Convert once to domain model – tight types, no unions
-      const {
-        form_name,
-        form_email,
-        form_commentary,
-        form_contribution,
-        form_attachments,
-      } = toDomain(values)
+      const { form_name, form_email, form_commentary, form_contribution, form_attachments } = toDomain(values)
 
       // Upload files if any
       let attachmentsBlobs: string[] = []
@@ -129,8 +112,7 @@ export const useContactSubmit = ({
       formData.append(FIELD_IDS.name, form_name)
       formData.append(FIELD_IDS.email, form_email)
       formData.append(FIELD_IDS.commentary, form_commentary)
-      if (form_contribution)
-        formData.append(FIELD_IDS.contribution, form_contribution)
+      if (form_contribution) formData.append(FIELD_IDS.contribution, form_contribution)
 
       // Send blob URLs instead of raw files (files are already uploaded to Vercel Blob)
       // Server will receive URLs it can use to download files as needed
@@ -143,10 +125,7 @@ export const useContactSubmit = ({
         formData.append('correlationId', correlationId)
       }
 
-      const result = await action(
-        { success: true, error: null, message: '' },
-        formData
-      )
+      const result = await action({ success: true, error: null, message: '' }, formData)
 
       if (!result.success) {
         setPhase('error')
@@ -155,9 +134,7 @@ export const useContactSubmit = ({
         if (result.fieldErrors) {
           Object.entries(result.fieldErrors).forEach(([field, messages]) => {
             setError(field as keyof ClientFormValues, {
-              message: Array.isArray(messages)
-                ? messages.join('. ')
-                : String(messages),
+              message: Array.isArray(messages) ? messages.join('. ') : String(messages),
             })
           })
         }
@@ -184,8 +161,7 @@ export const useContactSubmit = ({
       setPhase('error')
 
       // Handle the error more robustly
-      const errorMessage =
-        error instanceof Error ? error.message : 'An unexpected error occurred'
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred'
 
       // Set a general form error
       setError('form_submit', { message: errorMessage })

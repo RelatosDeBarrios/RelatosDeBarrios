@@ -1,10 +1,7 @@
 import { ProjectsId } from '@/types/core'
 import { ZodError } from 'zod'
 
-export type SendEmailAction = (
-  prevState: ActionState,
-  formData: FormData
-) => SendEmailResponse
+export type SendEmailAction = (prevState: ActionState, formData: FormData) => SendEmailResponse
 
 export type SendEmailResponse = Promise<ActionState>
 

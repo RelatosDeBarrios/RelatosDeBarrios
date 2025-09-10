@@ -18,10 +18,7 @@ export function toDomain(values: ClientFormValues): DomainFormData {
     form_name: typeof name === 'string' ? name : '',
     form_email: typeof email === 'string' ? email : '',
     form_commentary: typeof commentary === 'string' ? commentary : '',
-    form_contribution:
-      contribution && contribution !== ''
-        ? (contribution as 'rengifo' | 'covico')
-        : undefined,
+    form_contribution: contribution && contribution !== '' ? (contribution as 'rengifo' | 'covico') : undefined,
     form_attachments: Array.isArray(attachments) ? attachments : [],
   }
 }

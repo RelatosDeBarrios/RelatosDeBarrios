@@ -21,10 +21,7 @@ export const BaseFormSchema = {
     .trim()
     .min(3, formErrors.NameTooShort)
     .max(100, formErrors.NameTooLong),
-  [FIELD_IDS.email]: z
-    .email(formErrors.EmailInvalid)
-    .trim()
-    .min(1, formErrors.EmailRequired),
+  [FIELD_IDS.email]: z.email(formErrors.EmailInvalid).trim().min(1, formErrors.EmailRequired),
   [FIELD_IDS.commentary]: z
     .string()
     .trim()
@@ -71,18 +68,10 @@ export const ClientFormSchema = z
 export const ServerFormSchema = z.object({
   ...BaseFormSchema,
   [FIELD_IDS.contribution]: z
-    .union([
-      z.undefined(),
-      z.null(),
-      z.literal(''),
-      z.enum(['rengifo', 'covico'] as const),
-    ])
+    .union([z.undefined(), z.null(), z.literal(''), z.enum(['rengifo', 'covico'] as const)])
     .transform((v) => (v == null || v === '' ? undefined : v))
     .optional(),
-  [FIELD_IDS.attachments]: z
-    .array(z.url(formErrors.AttachmentUrlInvalid))
-    .optional()
-    .default([]),
+  [FIELD_IDS.attachments]: z.array(z.url(formErrors.AttachmentUrlInvalid)).optional().default([]),
 })
 
 // Infer types from schemas

@@ -8,10 +8,7 @@ interface UseSubmitButtonAnimationProps {
   isPending?: boolean
 }
 
-export const useSubmitButtonAnimation = ({
-  formPhase,
-  isPending = false,
-}: UseSubmitButtonAnimationProps) => {
+export const useSubmitButtonAnimation = ({ formPhase, isPending = false }: UseSubmitButtonAnimationProps) => {
   const btn = useRef<HTMLButtonElement | null>(null)
   const shine = useRef<HTMLSpanElement | null>(null)
   const fill = useRef<HTMLSpanElement | null>(null)
@@ -20,8 +17,7 @@ export const useSubmitButtonAnimation = ({
 
   useGSAP(
     () => {
-      if (!btn.current || !shine.current || !fill.current || !text.current)
-        return
+      if (!btn.current || !shine.current || !fill.current || !text.current) return
 
       // Kill previous tweens/timelines before starting new ones
       gsap.killTweensOf(fill.current)
