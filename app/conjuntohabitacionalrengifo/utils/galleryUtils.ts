@@ -18,9 +18,7 @@ export function getImagesById(id: string): GalleryImage[] {
   for (const source of CONTENT_SOURCES) {
     if (!source.gallery) continue
 
-    const collection = Object.values(source.gallery).find(
-      (collection) => collection.id === id
-    )
+    const collection = Object.values(source.gallery).find((collection) => collection.id === id)
 
     if (collection) {
       return collection.images

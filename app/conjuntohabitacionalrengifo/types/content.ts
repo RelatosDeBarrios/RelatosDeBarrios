@@ -4,24 +4,11 @@
  * This file contains all type definitions for the Rengifo project content
  */
 
-import {
-  Card,
-  Credits,
-  GalleryContent,
-  ImageType,
-  Section,
-  SocialLink,
-  VideoType,
-} from '@/types/general'
+import { Card, Credits, GalleryContent, ImageType, Section, SocialLink, VideoType } from '@/types/general'
 
 export type RengifoSections = 'hero' | 'docs' | 'photos' | 'resources'
 export type Docs = 'planimetries' | 'survey'
-export type Photos =
-  | 'photos'
-  | 'activities'
-  | 'aerials'
-  | 'exterior'
-  | 'interior'
+export type Photos = 'photos' | 'activities' | 'aerials' | 'exterior' | 'interior'
 export type Resources = 'book' | 'documentary'
 
 export type RengifoCard<T> = Omit<Card<T>, 'bg'> & { bg: ImageType }

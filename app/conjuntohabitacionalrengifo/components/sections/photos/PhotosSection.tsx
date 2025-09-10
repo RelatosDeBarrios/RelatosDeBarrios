@@ -23,10 +23,7 @@ export const PhotosSection = () => {
       />
       <article className='relative z-10 container px-4 md:px-8'>
         <section className='relative flex w-full flex-col items-end'>
-          <Title
-            headingLevel='h2'
-            className='text-rengifo-azul z-10 w-fit text-right'
-          >
+          <Title headingLevel='h2' className='text-rengifo-azul z-10 w-fit text-right'>
             {photosContent.title}
             <br />
             <span className='text-rengifo-gris'>{photosContent.subTitle}</span>
@@ -35,35 +32,24 @@ export const PhotosSection = () => {
         </section>
         <section className='space-y-12 py-10 md:py-20'>
           <div className='flex h-full min-h-72 flex-wrap justify-center gap-8 xl:flex-nowrap'>
-            {cardsList
-              .slice(0, 3)
-              .map(({ id, title, subTitle, disabled, bg }) => (
-                <OpenGalleryCard
-                  key={id}
-                  id={id}
-                  title={title}
-                  subTitle={subTitle}
-                  bg={bg}
-                  disabled={disabled}
-                />
-              ))}
+            {cardsList.slice(0, 3).map(({ id, title, subTitle, disabled, bg }) => (
+              <OpenGalleryCard key={id} id={id} title={title} subTitle={subTitle} bg={bg} disabled={disabled} />
+            ))}
           </div>
           <div className='flex h-full min-h-48 flex-wrap justify-center gap-8 xl:flex-nowrap'>
-            {cardsList
-              .slice(3)
-              .map(({ href, id, title, subTitle, bg, disabled }) => (
-                <Card
-                  variant='link'
-                  href={href!}
-                  key={id}
-                  id={id}
-                  bg={bg}
-                  subTitle={subTitle}
-                  title={title}
-                  disabled={disabled}
-                  className='max-w-lg xl:max-w-full'
-                />
-              ))}
+            {cardsList.slice(3).map(({ href, id, title, subTitle, bg, disabled }) => (
+              <Card
+                variant='link'
+                href={href!}
+                key={id}
+                id={id}
+                bg={bg}
+                subTitle={subTitle}
+                title={title}
+                disabled={disabled}
+                className='max-w-lg xl:max-w-full'
+              />
+            ))}
           </div>
         </section>
       </article>

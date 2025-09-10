@@ -17,11 +17,7 @@ interface HeroTitleActionProps {
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-export const HeroTitleAction = ({
-  title,
-  subTitle,
-  actions,
-}: HeroTitleActionProps) => {
+export const HeroTitleAction = ({ title, subTitle, actions }: HeroTitleActionProps) => {
   const sectionRef = useRef<HTMLElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -44,20 +40,11 @@ export const HeroTitleAction = ({
   )
 
   return (
-    <section
-      ref={sectionRef}
-      className='container mx-auto flex h-2/3 w-full items-center justify-end px-8 md:h-1/2'
-    >
+    <section ref={sectionRef} className='container mx-auto flex h-2/3 w-full items-center justify-end px-8 md:h-1/2'>
       {/* Title Container with decorative bar */}
-      <div
-        ref={containerRef}
-        className='relative flex w-fit flex-col items-end will-change-transform'
-      >
+      <div ref={containerRef} className='relative flex w-fit flex-col items-end will-change-transform'>
         <YellowBar />
-        <Title
-          className='w-fit max-w-2xl pt-4 text-right text-4xl font-bold md:text-6xl'
-          headingLevel='h1'
-        >
+        <Title className='w-fit max-w-2xl pt-4 text-right text-4xl font-bold md:text-6xl' headingLevel='h1'>
           {title} <span className='font-black'>{subTitle}</span>
         </Title>
         {/* Action Buttons */}

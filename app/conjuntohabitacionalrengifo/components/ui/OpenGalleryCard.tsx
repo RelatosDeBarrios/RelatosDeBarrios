@@ -8,14 +8,7 @@ interface OpenGalleryCardProps extends BaseCardProps {
   id: string
 }
 
-export const OpenGalleryCard = ({
-  id,
-  title,
-  subTitle,
-  bg,
-  className,
-  disabled,
-}: OpenGalleryCardProps) => {
+export const OpenGalleryCard = ({ id, title, subTitle, bg, className, disabled }: OpenGalleryCardProps) => {
   const openGallery = useGalleryStore((state) => state.openGallery)
 
   const handleOpenGallery = () => {

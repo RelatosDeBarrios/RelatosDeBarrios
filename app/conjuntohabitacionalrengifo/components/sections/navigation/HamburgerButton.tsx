@@ -17,12 +17,7 @@ export const HamburgerButton = () => {
           isMenuOpen ? 'translate-y-2 rotate-45' : ''
         )}
       />
-      <span
-        className={cn(
-          'block h-0.5 w-6 bg-white transition-all duration-300',
-          isMenuOpen ? 'opacity-0' : ''
-        )}
-      />
+      <span className={cn('block h-0.5 w-6 bg-white transition-all duration-300', isMenuOpen ? 'opacity-0' : '')} />
       <span
         className={cn(
           'block h-0.5 w-6 bg-white transition-all duration-300',

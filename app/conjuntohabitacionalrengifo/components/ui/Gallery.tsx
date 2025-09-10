@@ -7,8 +7,7 @@ import { ArrowBigLeft, ArrowBigRight, Minimize2 } from 'lucide-react'
 import { cn } from '@/utils/css'
 
 export const Gallery = () => {
-  const { isOpen, images, currentIndex, closeGallery, next, prev, goTo } =
-    useGalleryStore()
+  const { isOpen, images, currentIndex, closeGallery, next, prev, goTo } = useGalleryStore()
 
   // Trap focus inside modal
   useEffect(() => {
@@ -95,9 +94,7 @@ export const Gallery = () => {
               aria-label={`Go to image ${idx + 1}`}
               className={cn([
                 'border-rengifo-gris hover:bg-rengifo-amarillo/50 h-3 w-3 cursor-pointer rounded-full border',
-                idx === currentIndex
-                  ? 'bg-rengifo-azul-darker'
-                  : 'bg-rengifo-azul/20',
+                idx === currentIndex ? 'bg-rengifo-azul-darker' : 'bg-rengifo-azul/20',
               ])}
               onClick={() => goTo(idx)}
             />

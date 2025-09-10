@@ -7,10 +7,7 @@ const { book, documentary } = resourcesContent.cards!
 
 export const ResourcesSection = () => {
   return (
-    <section
-      id={resourcesContent.id}
-      className='bg-rengifo-azul-darker to-50% xl:pt-40 2xl:-mt-60 2xl:pt-24'
-    >
+    <section id={resourcesContent.id} className='bg-rengifo-azul-darker to-50% xl:pt-40 2xl:-mt-60 2xl:pt-24'>
       <article className='relative z-20 container mx-auto px-4 md:px-8'>
         <div>
           <Title headingLevel='h2' className='text-rengifo-amarillo z-10 w-fit'>
