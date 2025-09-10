@@ -39,12 +39,8 @@ export const FilePreviewItem = ({ file, onClick }: FilePreviewItemProps) => {
       )}
     >
       <Book strokeWidth={1} className='text-hub-text size-4 shrink-0' />
-      <span className='text-hub-text w-full text-center text-xs wrap-break-word'>
-        {truncate(file.name, 20)}
-      </span>
-      <span className='text-hub-text/70 text-[10px]'>
-        {file.name.split('.')[1]}
-      </span>
+      <span className='text-hub-text w-full text-center text-xs wrap-break-word'>{truncate(file.name, 20)}</span>
+      <span className='text-hub-text/70 text-[10px]'>{file.name.split('.')[1]}</span>
       <DeleteIcon />
     </div>
   )

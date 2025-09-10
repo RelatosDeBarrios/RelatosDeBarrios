@@ -24,10 +24,7 @@ export const FormAttachments = ({ attachments }: FormAttachmentsProps) => {
 
   return (
     <div>
-      <label
-        htmlFor={attachments.id}
-        className='text-hub-text mb-2 block font-medium'
-      >
+      <label htmlFor={attachments.id} className='text-hub-text mb-2 block font-medium'>
         {attachments.label}
       </label>
 
@@ -40,19 +37,9 @@ export const FormAttachments = ({ attachments }: FormAttachmentsProps) => {
           isDragActive && 'bg-hub-secondary/10'
         )}
       >
-        <p className='text-hub-text mb-2'>
-          {isDragActive
-            ? 'Suelta los archivos aquí...'
-            : attachments.placeholder}
-        </p>
-        {total_qty === 0 && (
-          <p className='text-sm text-gray-500'>
-            Tamaño máximo: {attachments.maxSize}mb
-          </p>
-        )}
-        {total_qty > 0 && (
-          <FilePreviewGrid removeFile={removeFile} files={previewFiles} />
-        )}
+        <p className='text-hub-text mb-2'>{isDragActive ? 'Suelta los archivos aquí...' : attachments.placeholder}</p>
+        {total_qty === 0 && <p className='text-sm text-gray-500'>Tamaño máximo: {attachments.maxSize}mb</p>}
+        {total_qty > 0 && <FilePreviewGrid removeFile={removeFile} files={previewFiles} />}
       </FileDropzone>
 
       <FieldError message={errorMessage} />

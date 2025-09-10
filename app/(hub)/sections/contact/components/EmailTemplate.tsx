@@ -1,28 +1,12 @@
-import {
-  Heading,
-  Html,
-  Img,
-  pixelBasedPreset,
-  Section,
-  Tailwind,
-  Text,
-} from '@react-email/components'
+import { Heading, Html, Img, pixelBasedPreset, Section, Tailwind, Text } from '@react-email/components'
 
 interface EmailTemplateProps {
   name: string
   commentary: string
-  contribution:
-    | 'Conjunto Habitacional Rengifo'
-    | 'Villa Covico'
-    | 'Sin material para aportar'
-    | string
+  contribution: 'Conjunto Habitacional Rengifo' | 'Villa Covico' | 'Sin material para aportar' | string
 }
 
-export const EmailTemplate = ({
-  name,
-  commentary,
-  contribution,
-}: EmailTemplateProps) => {
+export const EmailTemplate = ({ name, commentary, contribution }: EmailTemplateProps) => {
   return (
     <Html>
       <Tailwind
@@ -59,8 +43,7 @@ export const EmailTemplate = ({
           </Section>
           <Section className='mx-auto mt-8 max-w-prose'>
             <Text className='text-hub-text text-center text-sm'>
-              Responde directamente a {name} presionando el botón de responder
-              de Gmail
+              Responde directamente a {name} presionando el botón de responder de Gmail
             </Text>
           </Section>
         </Section>
