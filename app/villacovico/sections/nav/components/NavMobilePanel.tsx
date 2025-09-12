@@ -1,7 +1,9 @@
+import { NavItemsID } from '../types'
+
 interface NavMobilePanelProps {
   isMenuOpen: boolean
   navItems: { href: string; label: string }[]
-  handleScrollTo: (id: string, open: boolean) => void
+  handleScrollTo: (id: NavItemsID) => void
 }
 
 export const NavMobilePanel = ({ isMenuOpen, navItems, handleScrollTo }: NavMobilePanelProps) => {
@@ -14,7 +16,7 @@ export const NavMobilePanel = ({ isMenuOpen, navItems, handleScrollTo }: NavMobi
           <button
             key={item.href}
             className='text-muted-foreground hover:text-foreground block px-3 py-2 text-base font-medium transition-colors'
-            onClick={() => handleScrollTo(item.href, false)}
+            onClick={() => handleScrollTo(item.href as NavItemsID)}
           >
             {item.label}
           </button>
