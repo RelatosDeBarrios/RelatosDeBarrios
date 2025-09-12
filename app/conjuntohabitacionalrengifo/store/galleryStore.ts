@@ -9,30 +9,28 @@ export interface GalleryImage {
 
 interface GalleryState {
   isOpen: boolean
-  images: GalleryImage[]
+  currentGalleryId: string
   currentIndex: number
-  originId: string | null
-  openGallery: (images: GalleryImage[], startIndex: number, originId: string) => void
+  openGallery: (galleryId: string, startIndex?: number) => void
   closeGallery: () => void
-  next: () => void
-  prev: () => void
-  goTo: (index: number) => void
+  setIndex: (index: number) => void
 }
 
 export const useGalleryStore = create<GalleryState>((set) => ({
   isOpen: false,
-  images: [],
+  currentGalleryId: '',
   currentIndex: 0,
-  originId: null,
-  openGallery: (images, startIndex, originId) => set({ isOpen: true, images, currentIndex: startIndex, originId }),
-  closeGallery: () => set({ isOpen: false, images: [], currentIndex: 0, originId: null }),
-  next: () =>
-    set((state) => ({
-      currentIndex: (state.currentIndex + 1) % state.images.length,
-    })),
-  prev: () =>
-    set((state) => ({
-      currentIndex: (state.currentIndex - 1 + state.images.length) % state.images.length,
-    })),
-  goTo: (index) => set({ currentIndex: index }),
+  openGallery: (galleryId, startIndex = 0) =>
+    set({
+      isOpen: true,
+      currentGalleryId: galleryId,
+      currentIndex: startIndex,
+    }),
+  closeGallery: () =>
+    set({
+      isOpen: false,
+      currentGalleryId: '',
+      currentIndex: 0,
+    }),
+  setIndex: (index) => set({ currentIndex: index }),
 }))
