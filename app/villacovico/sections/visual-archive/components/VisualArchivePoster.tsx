@@ -8,12 +8,8 @@ import { cn } from '@/utils/css'
 
 import type { GalleryItems } from '../types'
 import type { ImageType } from '@/types/general'
-import { useCrossfade } from '@/app/villacovico/hooks/useCrossfade'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
+import { useCrossfadeImages } from '@/app/villacovico/hooks/useCrossfade'
 import { VisualArchiveGallery } from './VisualArchiveGallery'
-
-gsap.registerPlugin(useGSAP)
 
 interface VisualArchivePosterProps {
   gallery: Record<GalleryItems, ImageType[]>
@@ -33,43 +29,20 @@ export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
     e.stopPropagation()
     openGallery(currentGalleryId, currentImageIndex)
   }
+
   const setImage = useVisualArchiveGallery((state) => state.setImage)
   const isGalleryOpen = useVisualArchiveGallery((state) => state.isGalleryOpen)
 
-  const { containerRef, currentImageRef, nextImageRef, currentIndex, nextIndex } = useCrossfade({
-    durationInSeconds: 0.5,
+  const { containerRef, imageA, imageB, imageAIndex, imageBIndex } = useCrossfadeImages({
+    durationInSeconds: 1,
     currentIndex: currentImageIndex,
     disabled: hovered || isGalleryOpen,
   })
 
-  useGSAP(
-    () => {
-      const initialPos = currentImageRef.current?.getBoundingClientRect()
-      if (!initialPos) return
-      console.log('initialPos', initialPos)
-
-      if (isGalleryOpen) {
-        gsap.to(currentImageRef.current, {
-          x: 100,
-          y: 100,
-          z: 100,
-          duration: 0.5,
-          ease: 'power2.out',
-        })
-      } else {
-        gsap.to(currentImageRef.current, {
-          x: initialPos.x,
-          y: initialPos.y,
-          duration: 0.5,
-          ease: 'power2.out',
-        })
-      }
-    },
-    { scope: containerRef, dependencies: [isGalleryOpen] }
-  )
-
-  const currentImage = gallery[currentGalleryId][currentIndex]
-  const nextImage = gallery[currentGalleryId][nextIndex]
+  // Get images for both buffers
+  const currentGallery = gallery[currentGalleryId]
+  const imageAData = currentGallery[imageAIndex]
+  const imageBData = currentGallery[imageBIndex]
 
   useEffect(() => {
     if (hovered || isGalleryOpen) return
@@ -93,32 +66,26 @@ export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
             'after:from-covico-foreground/75 after:absolute after:inset-0 after:z-0 after:rounded-xl after:bg-gradient-to-b after:to-transparent after:content-[""] group-hover:after:opacity-20'
         )}
       >
+        {/* Image Buffer A */}
         <Image
-          ref={currentImageRef}
-          src={currentImage.src}
-          alt={currentImage.alt}
-          width={currentImage.width}
-          height={currentImage.height}
-          priority
-          loading='eager'
-          className={cn(
-            'absolute inset-0 size-full scale-110 object-cover object-center',
-            isGalleryOpen && 'right-0 left-0 z-50'
-          )}
+          ref={imageA}
+          src={imageAData.src}
+          alt={imageAData.alt}
+          width={imageAData.width}
+          height={imageAData.height}
+          loading='lazy'
+          className='absolute inset-0 size-full scale-110 object-cover object-center'
         />
 
+        {/* Image Buffer B */}
         <Image
-          ref={nextImageRef}
-          src={nextImage.src}
-          alt={nextImage.alt}
-          width={nextImage.width}
-          height={nextImage.height}
-          priority
-          loading='eager'
-          className={cn(
-            'absolute inset-0 size-full scale-110 object-cover object-center',
-            isGalleryOpen && 'opacity-0'
-          )}
+          ref={imageB}
+          src={imageBData.src}
+          alt={imageBData.alt}
+          width={imageBData.width}
+          height={imageBData.height}
+          loading='lazy'
+          className='absolute inset-0 size-full scale-110 object-cover object-center'
         />
       </figure>
 

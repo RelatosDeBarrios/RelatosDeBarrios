@@ -46,11 +46,13 @@ const GalleryNavigation = ({
   currentIndex,
   onPrevious,
   onNext,
+  children,
 }: {
   gallery: ImageType[]
   currentIndex: number
   onPrevious: () => void
   onNext: () => void
+  children: React.ReactNode
 }) => {
   const prevIndex = (currentIndex - 1 + gallery.length) % gallery.length
   const nextIndex = (currentIndex + 1) % gallery.length
@@ -66,6 +68,7 @@ const GalleryNavigation = ({
           isClickable
         />
       </div>
+      {children}
 
       {/* Next Image - Hidden on mobile */}
       <div className='hidden items-center justify-center md:flex'>
@@ -101,25 +104,25 @@ const GalleryMainView = ({
   }, [currentIndex])
 
   return (
-    <div className='grid min-h-[70vh] grid-cols-1 items-center justify-items-center gap-4 px-4 md:grid-cols-3'>
+    <div className='grid min-h-[80vh] grid-cols-1 items-center justify-items-center gap-4 px-4 md:grid-cols-4'>
       <GalleryNavigation
         gallery={gallery}
         currentIndex={currentIndex}
         onPrevious={onPrevious}
         onNext={onNext}
-      />
-
-      {/* Central Main Image */}
-      <div className='flex items-center justify-center'>
-        <Image
-          ref={mainImageRef}
-          src={gallery[currentIndex].src}
-          alt={gallery[currentIndex].alt}
-          width={gallery[currentIndex].width}
-          height={gallery[currentIndex].height}
-          className='max-h-[70vh] w-auto object-contain'
-        />
-      </div>
+      >
+        {/* Central Main Image */}
+        <div className='col-span-2 flex items-center justify-center'>
+          <Image
+            ref={mainImageRef}
+            src={gallery[currentIndex].src}
+            alt={gallery[currentIndex].alt}
+            width={gallery[currentIndex].width}
+            height={gallery[currentIndex].height}
+            className='max-h-[80vh] w-auto object-contain'
+          />
+        </div>
+      </GalleryNavigation>
     </div>
   )
 }
@@ -135,12 +138,12 @@ const GalleryPreview = ({
   onImageSelect: (index: number) => void
 }) => {
   return (
-    <div className='flex justify-center gap-2 overflow-x-auto p-4'>
+    <div className='flex justify-center gap-2 overflow-x-hidden p-4'>
       {gallery.map((image, index) => (
         <GalleryImage
           key={index}
           image={image}
-          className={`h-16 w-16 object-cover transition-opacity duration-200 ${
+          className={`size-14 object-cover transition-opacity duration-200 ${
             index === currentIndex
               ? 'opacity-100 ring-2 ring-white'
               : 'opacity-60 hover:opacity-100'
