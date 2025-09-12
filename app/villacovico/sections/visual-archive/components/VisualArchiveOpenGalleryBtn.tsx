@@ -7,7 +7,7 @@ export const VisualArchiveOpenGalleryBtn = () => {
 
   const handleOpenGallery = (e: React.MouseEvent) => {
     e.stopPropagation()
-    openGallery()
+    openGallery('photos')
   }
 
   return (

@@ -7,13 +7,12 @@ import { ImageType } from '@/types/general'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import Image from 'next/image'
+import { useGallery, type GalleryAdapter } from '@/hooks/useGallery'
+import { getGalleryImages } from '../utils/galleryUtils'
+import { GalleryItems } from '../types'
 
 // Register GSAP plugin
 gsap.registerPlugin(useGSAP)
-
-interface VisualArchiveGalleryProps {
-  gallery: ImageType[]
-}
 
 interface GalleryImageProps {
   image: ImageType
@@ -154,39 +153,48 @@ const GalleryPreview = ({
   )
 }
 
-export const VisualArchiveGallery = ({ gallery }: VisualArchiveGalleryProps) => {
-  const isGalleryOpen = useVisualArchiveGallery((state) => state.isGalleryOpen)
-  const closeGallery = useVisualArchiveGallery((state) => state.closeGallery)
-  const currentImageIndex = useVisualArchiveGallery((state) => state.currentImageIndex)
-  const setImage = useVisualArchiveGallery((state) => state.setImage)
-  const setNextImage = useVisualArchiveGallery((state) => state.setNextImage)
-  const setPrevImage = useVisualArchiveGallery((state) => state.setPrevImage)
+export const VisualArchiveGallery = () => {
+  const store = useVisualArchiveGallery()
+
+  // Create adapter for Villa Cóvico store
+  const adapter: GalleryAdapter<ImageType> = {
+    isOpen: store.isGalleryOpen || false,
+    currentIndex: store.currentImageIndex,
+    currentGalleryId: store.currentGalleryId,
+    getImages: () => getGalleryImages(store.currentGalleryId),
+    openGallery: (galleryId, startIndex) =>
+      store.openGallery(galleryId as GalleryItems, startIndex),
+    closeGallery: store.closeGallery,
+    setIndex: store.setImage,
+  }
+
+  const gallery = useGallery(adapter)
 
   const { contextSafe } = useGSAP()
 
   useEffect(() => {
     // Prevent background scrolling when gallery is open
-    document.body.style.overflow = isGalleryOpen ? 'hidden' : ''
+    document.body.style.overflow = gallery.isOpen ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
     }
-  }, [isGalleryOpen])
+  }, [gallery.isOpen])
 
   const handlePrevious = contextSafe(() => {
-    setPrevImage(gallery.length)
+    gallery.navigation.prev()
   })
 
   const handleNext = contextSafe(() => {
-    setNextImage(gallery.length)
+    gallery.navigation.next()
   })
 
   const handleImageSelect = contextSafe((index: number) => {
-    setImage(index)
+    gallery.navigation.goTo(index)
   })
 
   // Keyboard navigation
   useEffect(() => {
-    if (!isGalleryOpen) return
+    if (!gallery.isOpen) return
 
     const handleKeyPress = (e: KeyboardEvent) => {
       switch (e.key) {
@@ -200,22 +208,22 @@ export const VisualArchiveGallery = ({ gallery }: VisualArchiveGalleryProps) => 
           break
         case 'Escape':
           e.preventDefault()
-          closeGallery()
+          gallery.controls.close()
           break
       }
     }
 
     document.addEventListener('keydown', handleKeyPress)
     return () => document.removeEventListener('keydown', handleKeyPress)
-  }, [isGalleryOpen, gallery.length, closeGallery, handleNext, handlePrevious])
+  }, [gallery.isOpen, gallery.controls, handleNext, handlePrevious])
 
-  if (!isGalleryOpen || !gallery || gallery.length === 0) return null
+  if (!gallery.isOpen || !gallery.images || gallery.images.length === 0) return null
 
   return createPortal(
     <div className='bg-covico-foreground/98 fixed inset-0 z-50 flex flex-col'>
       {/* Close Button */}
       <button
-        onClick={closeGallery}
+        onClick={gallery.controls.close}
         className='text-covico-background absolute top-4 right-4 z-10 transition-opacity hover:opacity-80'
       >
         <X size={40} />
@@ -224,8 +232,8 @@ export const VisualArchiveGallery = ({ gallery }: VisualArchiveGalleryProps) => 
       {/* Main Gallery View */}
       <div className='flex flex-1 flex-col justify-center'>
         <GalleryMainView
-          gallery={gallery}
-          currentIndex={currentImageIndex}
+          gallery={gallery.images}
+          currentIndex={gallery.currentIndex}
           onPrevious={handlePrevious}
           onNext={handleNext}
         />
@@ -234,8 +242,8 @@ export const VisualArchiveGallery = ({ gallery }: VisualArchiveGalleryProps) => 
       {/* Preview Thumbnails */}
       <div className='bg-black/20 backdrop-blur-sm'>
         <GalleryPreview
-          gallery={gallery}
-          currentIndex={currentImageIndex}
+          gallery={gallery.images}
+          currentIndex={gallery.currentIndex}
           onImageSelect={handleImageSelect}
         />
       </div>

@@ -28,7 +28,12 @@ export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
   const currentImageIndex = useVisualArchiveGallery((state) => state.currentImageIndex)
 
   const openGallery = useVisualArchiveGallery((state) => state.openGallery)
-  const setNextImage = useVisualArchiveGallery((state) => state.setNextImage)
+
+  const handleOpenGallery = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    openGallery(currentGalleryId, currentImageIndex)
+  }
+  const setImage = useVisualArchiveGallery((state) => state.setImage)
   const isGalleryOpen = useVisualArchiveGallery((state) => state.isGalleryOpen)
 
   const { containerRef, currentImageRef, nextImageRef, currentIndex, nextIndex } = useCrossfade({
@@ -70,16 +75,16 @@ export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
     if (hovered || isGalleryOpen) return
     const interval = setInterval(() => {
       const galleryLength = gallery[currentGalleryId].length
-      setNextImage(galleryLength)
+      setImage((currentImageIndex + 1) % galleryLength)
     }, IMAGE_CHANGE_RATE * 1000)
     return () => clearInterval(interval)
-  }, [currentGalleryId, setNextImage, gallery, hovered, isGalleryOpen])
+  }, [currentGalleryId, setImage, gallery, hovered, isGalleryOpen, currentImageIndex])
 
   return (
     <>
       <figure
         ref={containerRef}
-        onClick={openGallery}
+        onClick={handleOpenGallery}
         onMouseOver={() => setHovered(true)}
         onMouseOut={() => setHovered(false)}
         className={cn(
@@ -117,7 +122,7 @@ export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
         />
       </figure>
 
-      <VisualArchiveGallery gallery={gallery[currentGalleryId]} />
+      <VisualArchiveGallery />
     </>
   )
 }
