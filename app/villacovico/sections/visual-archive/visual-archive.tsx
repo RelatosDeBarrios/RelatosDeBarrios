@@ -4,7 +4,6 @@ import { VisualArchivePoster } from './components/VisualArchivePoster'
 import { VISUAL_ARCHIVE } from './content'
 import { GalleryItems } from './types'
 import { ImageType } from '@/types/general'
-import { VisualArchiveGallery } from './components/VisualArchiveGallery'
 
 export const VisualArchive = () => {
   const completeGallery = Object.fromEntries(
@@ -31,7 +30,6 @@ export const VisualArchive = () => {
         </nav>
         <VisualArchiveOpenGalleryBtn />
       </section>
-      <VisualArchiveGallery />
     </article>
   )
 }
