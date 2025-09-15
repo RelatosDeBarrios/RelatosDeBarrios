@@ -19,10 +19,16 @@ interface HeroBodyProps {
 gsap.registerPlugin(SplitText, ScrollTrigger)
 
 export const HeroBody = ({ images: { over, under }, description }: HeroBodyProps) => {
-  const { textRef, parentRef } = useAnimateText()
+  const { textRef, parentRef } = useAnimateText({
+    parent: { start: 'center center', end: 'bottom bottom' },
+    lines: { start: 'top top', end: 'bottom bottom' },
+  })
 
   return (
-    <section ref={parentRef} className='relative flex aspect-square size-full items-center justify-center'>
+    <section
+      ref={parentRef}
+      className='relative flex aspect-square size-full items-center justify-center'
+    >
       {/* Parallax container for images */}
       <div className='relative size-full overflow-hidden rounded-xl'>
         <div
