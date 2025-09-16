@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { gsap } from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useAnimateText } from '@/app/villacovico/hooks/useAnimateText'
+import { useScrollTextReveal } from '@/app/villacovico/hooks/useScrollTextReveal'
+import { useRef } from 'react'
 
 interface HeroBodyProps {
   images: {
@@ -19,15 +20,31 @@ interface HeroBodyProps {
 gsap.registerPlugin(SplitText, ScrollTrigger)
 
 export const HeroBody = ({ images: { over, under }, description }: HeroBodyProps) => {
-  const { textRef, parentRef } = useAnimateText<HTMLParagraphElement>({
-    parent: { start: 'center center', end: 'bottom bottom' },
-    lines: { start: 'top top', end: 'bottom bottom' },
-  })
+  const parentRef = useRef<HTMLElement>(null)
+  const textRef = useRef<HTMLParagraphElement>(null)
+
+  useScrollTextReveal(
+    textRef,
+    {
+      trigger: parentRef,
+      preset: 'centered',
+      animation: {
+        scrollTrigger: {
+          start: 'top top',
+          end: 'bottom bottom',
+        },
+      },
+      pin: {
+        end: 'bottom bottom',
+      },
+    },
+    { scope: parentRef }
+  )
 
   return (
     <section
       ref={parentRef}
-      className='relative flex aspect-square size-full items-center justify-center'
+      className='parent relative flex aspect-square size-full items-center justify-center'
     >
       {/* Parallax container for images */}
       <div className='relative size-full overflow-hidden rounded-xl'>
@@ -56,7 +73,7 @@ export const HeroBody = ({ images: { over, under }, description }: HeroBodyProps
       {/* Animated description text */}
       <p
         ref={textRef}
-        className='font-roboto text-covico-background absolute z-4 max-w-prose text-center text-4xl leading-snug font-semibold'
+        className='text font-roboto text-covico-background absolute z-4 max-w-prose text-center text-4xl leading-snug font-semibold'
       >
         {description}
       </p>
