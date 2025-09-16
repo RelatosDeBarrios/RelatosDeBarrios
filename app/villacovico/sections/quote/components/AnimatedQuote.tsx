@@ -1,5 +1,6 @@
 'use client'
-import { useAnimateText } from '@/app/villacovico/hooks/useAnimateText'
+import { useScrollTextReveal } from '@/app/villacovico/hooks/useScrollTextReveal'
+import { useRef } from 'react'
 
 interface QuoteProps {
   text: string
@@ -11,46 +12,58 @@ interface QuoteProps {
 }
 
 export const AnimatedQuote = ({ text, title, author }: QuoteProps) => {
-  const { textRef, parentRef, getAdditionalRef } = useAnimateText<HTMLParagraphElement>({
-    preset: 'fullscreen',
-    additionalElements: [
-      {
-        id: 'cite',
-        animation: { opacity: 1, y: 0 },
-        timing: 'after',
-        offset: '+=0.2',
-        initialState: { opacity: 0, y: 20 },
+  const parentRef = useRef<HTMLElement>(null)
+  const textRef = useRef<HTMLParagraphElement>(null)
+  const citeRef = useRef<HTMLElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+
+  useScrollTextReveal(
+    textRef,
+    {
+      trigger: parentRef,
+      preset: 'centered',
+      pin: {
+        disabled: true,
       },
-      {
-        id: 'title',
-        animation: { opacity: 1, y: 0 },
-        timing: 'after',
-        offset: '+=0.4',
-        initialState: { opacity: 0, y: 20 },
+      animation: {
+        scrollTrigger: {
+          start: '10% center',
+          end: 'bottom 75%',
+          markers: true,
+        },
       },
-    ],
-  })
+      timeline: [
+        {
+          target: citeRef,
+          position: '>',
+          animation: { from: { opacity: 0 }, to: { opacity: 1 } },
+        },
+        {
+          target: titleRef,
+          position: '>',
+          animation: { from: { opacity: 0 }, to: { opacity: 1 } },
+        },
+      ],
+    },
+    { scope: parentRef }
+  )
 
   return (
     <section
       ref={parentRef}
-      className='quote-section text-covico-red relative mx-auto flex h-[150dvh] w-full max-w-2xl flex-col items-center justify-center gap-8 px-4'
+      className='quote-section text-covico-red relative mx-auto flex h-screen w-full max-w-2xl flex-col items-center justify-center px-4'
     >
-      <blockquote className='relative w-full'>
-        <div className='flex h-[100dvh] items-center justify-center'>
-          <p ref={textRef} className='w-full text-center text-5xl leading-relaxed'>
-            &quot;{text}&quot;
-          </p>
-        </div>
-        <footer className='absolute right-0 bottom-0 space-y-2 text-right'>
-          <cite ref={getAdditionalRef('cite')} className='block text-lg font-medium'>
-            {author.name}, {author.age} años
-          </cite>
-          <h2 ref={getAdditionalRef<HTMLHeadingElement>('title')} className='text-base font-normal'>
-            {title}
-          </h2>
-        </footer>
+      <blockquote className='relative w-full space-y-16'>
+        <p ref={textRef} className='w-full text-center text-4xl leading-tight'>
+          &quot;{text}&quot;
+        </p>
+        <cite ref={citeRef} className='block text-center text-lg leading-none font-bold not-italic'>
+          {author.name} <br /> <span className='block text-sm font-medium'> {author.age} años</span>
+        </cite>
       </blockquote>
+      <h2 ref={titleRef} className='mt-4 text-right text-base font-semibold italic'>
+        {title}
+      </h2>
     </section>
   )
 }
