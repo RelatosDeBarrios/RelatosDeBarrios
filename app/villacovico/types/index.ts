@@ -4,7 +4,7 @@ export type Covico =
   | 'nav'
   | 'hero'
   | 'visual-archive'
-  | 'downloads'
+  | 'plans'
   | '3d'
   | 'book-documental'
   | `quote-${string}`
