@@ -4,17 +4,16 @@ import { ImageType } from '@/types/general'
 /**
  * Gallery adapter interface - each store implementation provides this
  */
-export interface GalleryAdapter<T extends ImageType> {
+export interface GalleryAdapter {
   // State
   isOpen: boolean
   currentIndex: number
   currentGalleryId: string
 
   // Data fetcher - gets images for current gallery
-  getImages: () => T[]
+  getImages: () => ImageType[]
 
   // Actions
-  openGallery: (galleryId: string, startIndex?: number) => void
   closeGallery: () => void
   setIndex: (index: number) => void
 }
@@ -22,13 +21,13 @@ export interface GalleryAdapter<T extends ImageType> {
 /**
  * Unified gallery interface returned by the hook
  */
-export interface GalleryInterface<T extends ImageType> {
+export interface GalleryInterface {
   // State
   isOpen: boolean
   currentIndex: number
   currentGalleryId: string
-  images: T[]
-  currentImage: T | undefined
+  images: ImageType[]
+  currentImage: ImageType | undefined
 
   // Navigation
   navigation: {
@@ -38,17 +37,14 @@ export interface GalleryInterface<T extends ImageType> {
   }
 
   // Controls
-  controls: {
-    open: (galleryId: string, startIndex?: number) => void
-    close: () => void
-  }
+  close: () => void
 }
 
 /**
  * Gallery abstraction hook
  * Provides unified interface for different gallery store implementations
  */
-export function useGallery<T extends ImageType>(adapter: GalleryAdapter<T>): GalleryInterface<T> {
+export function useGallery(adapter: GalleryAdapter): GalleryInterface {
   const images = adapter.getImages()
 
   const navigation = {
@@ -71,13 +67,8 @@ export function useGallery<T extends ImageType>(adapter: GalleryAdapter<T>): Gal
     },
   }
 
-  const controls = {
-    open: (galleryId: string, startIndex = 0) => {
-      adapter.openGallery(galleryId, startIndex)
-    },
-    close: () => {
-      adapter.closeGallery()
-    },
+  function close() {
+    adapter.closeGallery()
   }
 
   return {
@@ -87,6 +78,6 @@ export function useGallery<T extends ImageType>(adapter: GalleryAdapter<T>): Gal
     images,
     currentImage: images[adapter.currentIndex],
     navigation,
-    controls,
+    close,
   }
 }
