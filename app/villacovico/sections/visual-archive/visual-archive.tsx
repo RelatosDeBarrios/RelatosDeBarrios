@@ -2,13 +2,13 @@ import { VisualArchiveOpenGalleryBtn } from './components/VisualArchiveOpenGalle
 import { VisualArchiveSelector } from './components/VisualArchiveSelector'
 import { VisualArchivePoster } from './components/VisualArchivePoster'
 import { VISUAL_ARCHIVE } from './content'
-import { GalleryItems } from './types'
+import { VisualArchiveGalleryItems } from './types'
 import { ImageType } from '@/types/general'
 
 export const VisualArchive = () => {
   const completeGallery = Object.fromEntries(
     Object.entries(VISUAL_ARCHIVE.cards).map(([key, card]) => [key, card.gallery])
-  ) as Record<GalleryItems, ImageType[]>
+  ) as Record<VisualArchiveGalleryItems, ImageType[]>
 
   return (
     <article id={VISUAL_ARCHIVE.id} className='relative grid w-full grid-cols-2 gap-x-8'>

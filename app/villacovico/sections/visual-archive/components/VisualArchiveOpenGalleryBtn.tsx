@@ -1,6 +1,6 @@
 'use client'
 
-import { useVisualArchiveGallery } from '../store/visualArchiveGalleryStore'
+import { useVisualArchiveGallery } from '../hooks/useVisualArchiveGallery'
 
 export const VisualArchiveOpenGalleryBtn = () => {
   const openGallery = useVisualArchiveGallery((state) => state.openGallery)

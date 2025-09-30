@@ -1,11 +1,11 @@
 'use client'
 
-import { useVisualArchiveGallery } from '../store/visualArchiveGalleryStore'
-import { GalleryItems } from '../types'
+import { useVisualArchiveGallery } from '../hooks/useVisualArchiveGallery'
+import { VisualArchiveGalleryItems } from '../types'
 import { VisualArchiveSelectorCheckbox } from './VisualArchiveSelectorCheckbox'
 
 interface VisualArchiveSelectorProps {
-  id: GalleryItems
+  id: VisualArchiveGalleryItems
   archiveTitle: string
 }
 
@@ -14,7 +14,7 @@ export const VisualArchiveSelector = ({ id, archiveTitle }: VisualArchiveSelecto
 
   const setCurrentGallery = useVisualArchiveGallery((state) => state.setCurrentGallery)
 
-  const handleChangeGallery = (e: React.MouseEvent, id: GalleryItems) => {
+  const handleChangeGallery = (e: React.MouseEvent, id: VisualArchiveGalleryItems) => {
     e.stopPropagation()
     setCurrentGallery(id)
   }
