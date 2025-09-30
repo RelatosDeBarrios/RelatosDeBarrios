@@ -1,3 +1,3 @@
-import { createGalleryStore } from '@/hooks/createGalleryStore'
+import { createGalleryStore } from '@/features/gallery/createGalleryStore'
 
 export const useGalleryStore = createGalleryStore()
