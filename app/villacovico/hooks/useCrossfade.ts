@@ -71,7 +71,7 @@ export const useCrossfadeImages = ({
     if (currentIndex !== lastProcessedIndex) {
       performCrossfade()
     }
-  }, [currentIndex, lastProcessedIndex, disabled, performCrossfade])
+  }, [currentIndex, lastProcessedIndex, disabled, performCrossfade, setLastProcessedIndex])
 
   // Handle disabled state changes
   useEffect(() => {

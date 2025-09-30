@@ -13,7 +13,7 @@ export const NAV = {
   navItems: [
     { href: 'top', label: 'Inicio' },
     { href: '#visual-archive', label: 'Archivo Visual' },
-    { href: '#downloads', label: 'Planimetrías' },
+    { href: '#plans', label: 'Planimetrías' },
     { href: '#3d', label: 'Recorridos' },
     { href: '#book-documental', label: 'Libro / Documental' },
   ],
