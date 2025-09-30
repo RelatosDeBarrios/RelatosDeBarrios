@@ -1,9 +1,9 @@
 import { CovicoSection } from '@/app/villacovico/types'
 import { Card, ImageType } from '@/types/general'
 
-export type PlanType = 'isometric' | 'floor-plans'
+export type PlanType = 'isometrics' | 'floor-plans'
 
-export type PlanCard = Card<PlanType> & {
+export type PlanCard = Omit<Card<PlanType>, 'bg'> & {
   description: string
   downloadLink: string
   collection: ImageType[]

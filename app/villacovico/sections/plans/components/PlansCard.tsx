@@ -1,14 +1,17 @@
+'use client'
+
 import { ImageType } from '@/types/general'
 import { cn } from '@/utils/css'
 import Image from 'next/image'
+import { usePlansGallery } from '../store/usePlansGallery'
+import { PlanType } from '../types'
 
 interface PlansCardProps {
-  id: string
+  id: PlanType
   title: string
   subTitle: string
   description: string
   downloadLink: string
-  collection: string[]
   bg: ImageType
   orientation: 'left' | 'right'
 }
@@ -24,10 +27,11 @@ export function PlansCard({
   subTitle,
   description,
   downloadLink,
-  collection,
   bg,
   orientation = 'left',
 }: PlansCardProps) {
+  const openGallery = usePlansGallery((state) => state.openGallery)
+
   return (
     <article
       id={id}
@@ -45,8 +49,10 @@ export function PlansCard({
       </header>
       <section>
         <Image src={bg.src} alt={bg.alt} width={bg.width} height={bg.height} />
-        <a href={downloadLink} target='_blank' rel='noopener noreferrer'>Descarga contenido</a>
-        <button>Ver galería</button>
+        <a href={downloadLink} target='_blank' rel='noopener noreferrer'>
+          Descarga contenido
+        </a>
+        <button onClick={() => openGallery(id)}>Ver galería</button>
       </section>
     </article>
   )
