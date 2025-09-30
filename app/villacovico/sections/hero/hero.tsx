@@ -2,7 +2,7 @@ import { HeroBody } from './components/HeroBody'
 import { HeroTitle } from './components/HeroTitle'
 import { HERO } from './content'
 
-export default function Hero() {
+export function Hero() {
   const { id, title, utilityImages, description } = HERO
 
   return (

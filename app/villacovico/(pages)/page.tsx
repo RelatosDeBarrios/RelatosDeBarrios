@@ -1,8 +1,8 @@
-import Hero from '@/covico/sections/hero/hero'
+import { Hero } from '@/covico/sections/hero/hero'
 import { VisualArchive } from '@/covico/sections/visual-archive/visual-archive'
 import { Footer } from '@/covico/sections/footer/footer'
-import Quote from '../sections/quote/quote'
-import Plans from '../sections/plans/plans'
+import { Quote } from '../sections/quote/quote'
+import { Plans } from '../sections/plans/plans'
 
 export default function Home() {
   return (
@@ -18,6 +18,7 @@ export default function Home() {
         <Quote position={1} />
         {/* Book & Documental */}
         <div className='h-screen w-full bg-blue-200'></div>
+        {/* <PhotoArchive /> */}
       </main>
       <Footer />
     </>
