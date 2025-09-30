@@ -29,7 +29,6 @@ export const AnimatedQuote = ({ text, title, author }: QuoteProps) => {
         scrollTrigger: {
           start: '10% center',
           end: 'bottom 75%',
-          markers: true,
         },
       },
       timeline: [
