@@ -1,4 +1,4 @@
-import { CovicoSection } from '@/app/villacovico/types'
+import { CovicoSection } from '@/covico/types'
 import { Card, ImageType } from '@/types/general'
 
 export type VisualArchiveGalleryItems = 'photos' | 'aerial-images' | 'illustrations'

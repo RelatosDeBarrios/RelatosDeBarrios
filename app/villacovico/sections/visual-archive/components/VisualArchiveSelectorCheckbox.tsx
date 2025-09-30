@@ -1,10 +1,10 @@
 'use client'
 
-import { LogoSVG } from '@/app/villacovico/components/LogoSVG'
-import { cn } from '@/utils/css'
-import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { MorphSVGPlugin } from 'gsap/all'
+import { useGSAP } from '@gsap/react'
+import { LogoSVG } from '@/covico/components/LogoSVG'
+import { cn } from '@/utils/css'
 
 interface VisualArchiveSelectorCheckboxProps {
   id: string
@@ -17,7 +17,10 @@ gsap.registerPlugin(useGSAP, MorphSVGPlugin)
 const STROKE_WIDTH = 2
 const SQUARE_PATH = 'M 2 2 H 36 V 36 H 2 Z'
 
-export const VisualArchiveSelectorCheckbox = ({ id, selected = false }: VisualArchiveSelectorCheckboxProps) => {
+export const VisualArchiveSelectorCheckbox = ({
+  id,
+  selected = false,
+}: VisualArchiveSelectorCheckboxProps) => {
   useGSAP(() => {
     if (selected) {
       gsap.to(`#${id}-checkbox-square`, {

@@ -2,13 +2,10 @@ import { VisualArchiveOpenGalleryBtn } from './components/VisualArchiveOpenGalle
 import { VisualArchiveSelector } from './components/VisualArchiveSelector'
 import { VisualArchivePoster } from './components/VisualArchivePoster'
 import { VISUAL_ARCHIVE } from './content'
-import { VisualArchiveGalleryItems } from './types'
-import { ImageType } from '@/types/general'
+import { getGallery } from '@/covico/features/gallery/utils/getGallery'
 
 export const VisualArchive = () => {
-  const completeGallery = Object.fromEntries(
-    Object.entries(VISUAL_ARCHIVE.cards).map(([key, card]) => [key, card.gallery])
-  ) as Record<VisualArchiveGalleryItems, ImageType[]>
+  const completeGallery = getGallery(VISUAL_ARCHIVE.cards, 'gallery')
 
   return (
     <article id={VISUAL_ARCHIVE.id} className='relative grid w-full grid-cols-2 gap-x-8'>

@@ -1,4 +1,4 @@
-import { Gallery } from '@/app/villacovico/feature/gallery/gallery'
+import { Gallery } from '@/covico/features/gallery/gallery'
 import { VisualArchiveGalleryItems } from '../types'
 import { ImageType } from '@/types/general'
 

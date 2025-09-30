@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/utils/css'
 
 import type { ImageType } from '@/types/general'
-import { useCrossfadeImages } from '@/app/villacovico/hooks/useCrossfade'
+import { useCrossfadeImages } from '@/covico/hooks/useCrossfade'
 import { VisualArchiveGallery } from './VisualArchiveGallery'
 import { VisualArchiveGalleryItems } from '../types'
 import { useVisualArchiveGallery } from '../hooks/useVisualArchiveGallery'
