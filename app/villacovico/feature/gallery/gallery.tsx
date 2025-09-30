@@ -1,36 +1,33 @@
 'use client'
 
-import { useGallery } from '@/hooks/useGallery'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-import { getGalleryImages } from './utils/galleryUtils'
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 import { GalleryMainView } from './components/GalleryMainView'
 import { GalleryPreview } from './components/GalleryPreview'
 import { ImageType } from '@/types/general'
-import { GalleryState } from './types'
+import { getGalleryImages } from './utils/galleryUtils'
+import { useCovicoGallery } from './store/covicoGalleryStore'
 
 // Register GSAP plugin
 gsap.registerPlugin(useGSAP)
 
 interface GalleryProps<T extends string> {
-  store: GalleryState<T>
   galleries: {
     [key in T]: ImageType[]
   }
 }
 
-export const Gallery = <T extends string>({ store, galleries }: GalleryProps<T>) => {
-  const { isOpen, images, navigation, close, currentIndex } = useGallery({
-    isOpen: store.isGalleryOpen || false,
-    currentIndex: store.currentImageIndex,
-    currentGalleryId: store.currentGalleryId as T,
-    getImages: () => getGalleryImages({ id: store.currentGalleryId, galleries }),
-    closeGallery: store.closeGallery,
-    setIndex: store.setImageIndex,
-  })
+export const Gallery = <T extends string>({ galleries }: GalleryProps<T>) => {
+  const id = useCovicoGallery((state) => state.currentGalleryId)
+  const currentIndex = useCovicoGallery((state) => state.currentImageIndex)
+  const isOpen = useCovicoGallery((state) => state.isGalleryOpen)
+  const navigation = useCovicoGallery((state) => state.navigation)
+  const close = useCovicoGallery((state) => state.closeGallery)
+
+  const images = getGalleryImages({ galleries, id })
 
   const { contextSafe } = useGSAP()
 
@@ -43,11 +40,11 @@ export const Gallery = <T extends string>({ store, galleries }: GalleryProps<T>)
   }, [isOpen])
 
   const handlePrevious = contextSafe(() => {
-    navigation.prev()
+    navigation.prev(images.length)
   })
 
   const handleNext = contextSafe(() => {
-    navigation.next()
+    navigation.next(images.length)
   })
 
   const handleImageSelect = contextSafe((index: number) => {
