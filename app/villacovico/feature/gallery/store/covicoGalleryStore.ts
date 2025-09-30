@@ -1,10 +1,10 @@
 import type { StoreApi, UseBoundStore } from 'zustand'
-import { GalleryState } from '../types'
+import { createGalleryStore } from '@/hooks/createGalleryStore'
 
-export function createGalleryAdapter<TGalleryItems extends string>(
-  store: UseBoundStore<StoreApi<GalleryState>>
-) {
-  return store as UseBoundStore<
+export const useCovicoGallery = createGalleryStore()
+
+export function createCovicoGallery<TGalleryItems extends string = string>() {
+  return useCovicoGallery as UseBoundStore<
     StoreApi<{
       currentGalleryId: TGalleryItems | null
       currentImageIndex: number
