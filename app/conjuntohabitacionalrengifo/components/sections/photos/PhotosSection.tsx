@@ -33,7 +33,14 @@ export const PhotosSection = () => {
         <section className='space-y-12 py-10 md:py-20'>
           <div className='flex h-full min-h-72 flex-wrap justify-center gap-8 xl:flex-nowrap'>
             {cardsList.slice(0, 3).map(({ id, title, subTitle, disabled, bg }) => (
-              <OpenGalleryCard key={id} id={id} title={title} subTitle={subTitle} bg={bg} disabled={disabled} />
+              <OpenGalleryCard
+                key={id}
+                id={id}
+                title={title}
+                subTitle={subTitle}
+                bg={bg}
+                disabled={disabled}
+              />
             ))}
           </div>
           <div className='flex h-full min-h-48 flex-wrap justify-center gap-8 xl:flex-nowrap'>

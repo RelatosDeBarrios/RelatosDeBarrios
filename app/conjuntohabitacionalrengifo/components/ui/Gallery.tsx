@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import { useGalleryStore, type GalleryImage } from '@/rengifo/store/galleryStore'
+import { useGalleryStore } from '@/rengifo/store/galleryStore'
 import Image from 'next/image'
 import { ArrowBigLeft, ArrowBigRight, Minimize2 } from 'lucide-react'
 import { cn } from '@/utils/css'
@@ -12,12 +12,11 @@ export const Gallery = () => {
   const store = useGalleryStore()
 
   // Create adapter for Rengifo store
-  const adapter: GalleryAdapter<GalleryImage> = {
+  const adapter: GalleryAdapter = {
     isOpen: store.isOpen,
     currentIndex: store.currentIndex,
     currentGalleryId: store.currentGalleryId,
     getImages: () => getImagesById(store.currentGalleryId),
-    openGallery: store.openGallery,
     closeGallery: store.closeGallery,
     setIndex: store.setIndex,
   }
@@ -28,13 +27,13 @@ export const Gallery = () => {
   useEffect(() => {
     if (!gallery.isOpen) return
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') gallery.controls.close()
+      if (e.key === 'Escape') gallery.close()
       if (e.key === 'ArrowRight') gallery.navigation.next()
       if (e.key === 'ArrowLeft') gallery.navigation.prev()
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [gallery.isOpen, gallery.controls, gallery.navigation])
+  }, [gallery])
 
   if (!gallery.isOpen || gallery.images.length === 0) return null
 
@@ -57,7 +56,7 @@ export const Gallery = () => {
       aria-modal='true'
       tabIndex={-1}
       className='bg-rengifo-azul/80 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xl'
-      onClick={gallery.controls.close}
+      onClick={gallery.close}
     >
       <div
         className='bg-rengifo-pastel relative mx-4 flex w-full max-w-3xl flex-col items-center rounded-lg shadow-xl'
@@ -68,7 +67,7 @@ export const Gallery = () => {
         <button
           aria-label='Cerrar galería'
           className='text-rengifo-pastel hover:text-rengifo-amarillo absolute top-2 right-2 cursor-pointer text-2xl transition-colors'
-          onClick={gallery.controls.close}
+          onClick={gallery.close}
         >
           <Minimize2 />
         </button>
