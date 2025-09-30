@@ -1,11 +1,13 @@
+import { ImageType } from '@/types/general'
 import { PLANS } from './content'
 
 const { cards, title, id } = PLANS
 
-export default function Plans() {
+export function Plans() {
   return (
-    <section id={id} className=''>
+    <section id={id} className='flex gap-4 min-h-screen w-full'>
       {title}
     </section>
   )
 }
+
