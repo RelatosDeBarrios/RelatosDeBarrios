@@ -5,7 +5,7 @@ export type Covico =
   | 'hero'
   | 'visual-archive'
   | 'plans'
-  | '3d'
+  | 'virtual-tour'
   | 'book-documental'
   | `quote-${string}`
   | 'footer'
