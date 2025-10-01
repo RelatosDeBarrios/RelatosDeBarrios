@@ -10,26 +10,27 @@ export function Plans() {
   const { isometrics, 'floor-plans': floorPlans } = cards
 
   return (
-    <section id={id} className='flex min-h-screen w-full gap-4'>
-      <PlansCard
-        orientation='left'
-        id={isometrics.id}
-        title={isometrics.title}
-        subTitle={isometrics.subTitle}
-        description={isometrics.description}
-        downloadLink={isometrics.downloadLink}
-        bg={cards.isometrics.collection[0]}
-      />
-      <PlansCard
-        orientation='right'
-        id={floorPlans.id}
-        title={floorPlans.title}
-        subTitle={floorPlans.subTitle}
-        description={floorPlans.description}
-        downloadLink={floorPlans.downloadLink}
-        bg={cards['floor-plans'].collection[0]}
-      />
-
+    <section id={id} className='h-screen w-full'>
+      <div className='grid h-full grid-cols-2 gap-10 py-20'>
+        <PlansCard
+          orientation='left'
+          id={isometrics.id}
+          title={isometrics.title}
+          subTitle={isometrics.subTitle}
+          description={isometrics.description}
+          downloadLink={isometrics.downloadLink}
+          bg={isometrics.collection[7]}
+        />
+        <PlansCard
+          orientation='right'
+          id={floorPlans.id}
+          title={floorPlans.title}
+          subTitle={floorPlans.subTitle}
+          description={floorPlans.description}
+          downloadLink={floorPlans.downloadLink}
+          bg={floorPlans.collection[1]}
+        />
+      </div>
       <PlansGallery galleries={galleries} />
     </section>
   )

@@ -6,9 +6,9 @@ export const PLANS = {
   cards: {
     isometrics: {
       id: 'isometrics',
-      title: 'Isométricas',
-      subTitle: '3D',
-      description: '',
+      title: 'Planos',
+      subTitle: 'Isométricos',
+      description: 'Plantas Isométricas De la Villa Covico',
       downloadLink: '/villacovico/sections/plans/downloads/ISOMETRICAS_VILLA_COVICO.zip',
       collection: [
         {
@@ -69,9 +69,9 @@ export const PLANS = {
     },
     'floor-plans': {
       id: 'floor-plans',
-      title: 'Plantas',
-      subTitle: '2D',
-      description: '',
+      title: 'Planimetrías',
+      subTitle: 'Originales',
+      description: 'Planimetrías Originales de la Villa Covico',
       downloadLink: '/villacovico/sections/plans/downloads/PLANTAS_VILLA_COVICO.zip',
       collection: [
         {

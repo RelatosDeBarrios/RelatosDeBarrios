@@ -1,10 +1,11 @@
-'use client'
-
 import { ImageType } from '@/types/general'
 import { cn } from '@/utils/css'
 import Image from 'next/image'
-import { usePlansGallery } from '../store/usePlansGallery'
 import { PlanType } from '../types'
+import { Button } from '@/app/villacovico/components/ui/Button'
+import { Title } from '@/app/villacovico/components/ui/Title'
+import { Paragraph } from '@/app/villacovico/components/ui/Paragraph'
+import { PlansOpenGalleryButton } from './PlansOpenGalleryButton'
 
 interface PlansCardProps {
   id: PlanType
@@ -17,8 +18,9 @@ interface PlansCardProps {
 }
 
 const orientationBasedStyles = {
-  left: '',
-  right: '',
+  left: '[&>header]:text-right [&>header]:items-end [&>section]:justify-self-start [&>section>nav]:right-8',
+  right:
+    '[&>header]:text-left [&>header]:items-start [&>section]:justify-self-end [&>header]:order-1 [&>section>nav>a]:order-1 [&>section>nav]:left-8',
 }
 
 export function PlansCard({
@@ -30,29 +32,41 @@ export function PlansCard({
   bg,
   orientation = 'left',
 }: PlansCardProps) {
-  const openGallery = usePlansGallery((state) => state.openGallery)
-
   return (
     <article
       id={id}
-      className={cn(
-        'grid min-h-screen w-full shrink-0 grid-cols-2 gap-4',
-        orientationBasedStyles[orientation]
-      )}
+      className={cn('grid h-full w-full grid-cols-2 gap-4', orientationBasedStyles[orientation])}
     >
-      <header>
+      <header className='flex flex-col gap-4 self-center'>
         <div>
-          <h2>{title}</h2>
-          <h3>{subTitle}</h3>
+          <Title heading='h2' size='lg' weight='semibold'>
+            {title}
+          </Title>
+          <h3 className='font-roboto text-4xl font-medium'>{subTitle}</h3>
         </div>
-        <p>{description}</p>
+        <Paragraph className='max-w-[250px]'>{description}</Paragraph>
       </header>
-      <section>
-        <Image src={bg.src} alt={bg.alt} width={bg.width} height={bg.height} />
-        <a href={downloadLink} target='_blank' rel='noopener noreferrer'>
-          Descarga contenido
-        </a>
-        <button onClick={() => openGallery(id)}>Ver galería</button>
+      <section className='relative'>
+        <Image
+          src={bg.src}
+          alt={bg.alt}
+          width={bg.width}
+          height={bg.height}
+          className='h-full rounded-2xl object-cover grayscale'
+        />
+
+        <nav className='absolute bottom-8 flex gap-4'>
+          <Button
+            as='a'
+            variant='secondary'
+            href={downloadLink}
+            rel='noopener noreferrer'
+            className='text-lg'
+          >
+            Descarga contenido
+          </Button>
+          <PlansOpenGalleryButton id={id} />
+        </nav>
       </section>
     </article>
   )
