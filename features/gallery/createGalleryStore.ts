@@ -1,12 +1,13 @@
 import { create } from 'zustand'
 import { getNextIndex, getPrevIndex } from '@/utils/circular'
 
-export interface GalleryState<T extends string = string> {
+interface GalleryState<T extends string = string> {
   currentGalleryId: T | null
   currentImageIndex: number
   isGalleryOpen: boolean
+}
 
-  setCurrentGallery: (gallery: T) => void
+export interface GalleryStore<T extends string = string> extends GalleryState<T> {
   setImageIndex: (index: number) => void
 
   openGallery: (galleryId: T, startIndex?: number) => void
@@ -17,6 +18,12 @@ export interface GalleryState<T extends string = string> {
     prev: (length: number) => void
     goTo: (index: number) => void
   }
+}
+
+const initialState: GalleryState = {
+  currentGalleryId: null,
+  currentImageIndex: 0,
+  isGalleryOpen: false,
 }
 
 /**
@@ -32,12 +39,11 @@ export interface GalleryState<T extends string = string> {
  * export const useCovicoGallery = createGalleryStore()
  */
 export const createGalleryStore = () => {
-  return create<GalleryState>((set, get) => ({
-    currentGalleryId: null,
-    currentImageIndex: 0,
-    isGalleryOpen: false,
+  return create<GalleryStore>((set, get) => ({
+    currentGalleryId: initialState.currentGalleryId,
+    currentImageIndex: initialState.currentImageIndex,
+    isGalleryOpen: initialState.isGalleryOpen,
 
-    setCurrentGallery: (gallery) => set({ currentGalleryId: gallery, currentImageIndex: 0 }),
     setImageIndex: (index) => set({ currentImageIndex: index }),
     openGallery: (galleryId, startIndex = 0) =>
       set({
@@ -45,7 +51,7 @@ export const createGalleryStore = () => {
         currentGalleryId: galleryId,
         currentImageIndex: startIndex,
       }),
-    closeGallery: () => set({ isGalleryOpen: false }),
+    closeGallery: () => set({ isGalleryOpen: false, currentGalleryId: null }),
 
     navigation: {
       next: (length) => {
