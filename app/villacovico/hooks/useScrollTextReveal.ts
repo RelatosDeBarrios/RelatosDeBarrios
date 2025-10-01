@@ -76,8 +76,7 @@ const resolveConfig = ({
     },
 
     animation: {
-      y: '0%',
-      opacity: 1,
+      autoAlpha: 1,
       stagger: animation?.stagger || 0.1,
       ease: 'power4.out',
       scrollTrigger: {
@@ -114,7 +113,7 @@ export const useScrollTextReveal = <TText extends HTMLParagraphElement = HTMLPar
 
       const textLines = splitLines as HTMLElement[]
 
-      gsap.set(textLines, { y: '40%', opacity: 0 })
+      gsap.set(textLines, { autoAlpha: 0 })
 
       if (!pin.disabled) {
         ScrollTrigger.create({
