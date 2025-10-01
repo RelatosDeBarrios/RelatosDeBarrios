@@ -1,6 +1,7 @@
 'use client'
 
 import { useVisualArchiveGallery } from '../hooks/useVisualArchiveGallery'
+import { useVisualArchiveSelection } from '../hooks/useVisualArchiveSelection'
 import { VisualArchiveGalleryItems } from '../types'
 import { VisualArchiveSelectorCheckbox } from './VisualArchiveSelectorCheckbox'
 
@@ -10,13 +11,14 @@ interface VisualArchiveSelectorProps {
 }
 
 export const VisualArchiveSelector = ({ id, archiveTitle }: VisualArchiveSelectorProps) => {
-  const currentGalleryId = useVisualArchiveGallery((state) => state.currentGalleryId)
-
-  const setCurrentGallery = useVisualArchiveGallery((state) => state.setCurrentGallery)
+  const currentArchive = useVisualArchiveSelection((state) => state.activeArchive)
+  const setActiveArchive = useVisualArchiveSelection((state) => state.setActiveArchive)
+  const setGalleryIndex = useVisualArchiveGallery((state) => state.setImageIndex)
 
   const handleChangeGallery = (e: React.MouseEvent, id: VisualArchiveGalleryItems) => {
     e.stopPropagation()
-    setCurrentGallery(id)
+    setActiveArchive(id)
+    setGalleryIndex(0)
   }
 
   return (
@@ -28,7 +30,7 @@ export const VisualArchiveSelector = ({ id, archiveTitle }: VisualArchiveSelecto
       <span className='font-montserrat text-right text-2xl leading-none font-extralight tracking-wider whitespace-nowrap'>
         {archiveTitle}
       </span>
-      <VisualArchiveSelectorCheckbox id={id} selected={currentGalleryId === id} />
+      <VisualArchiveSelectorCheckbox id={id} selected={currentArchive === id} />
     </button>
   )
 }

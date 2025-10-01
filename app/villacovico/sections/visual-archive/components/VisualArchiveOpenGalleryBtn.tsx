@@ -1,21 +1,21 @@
 'use client'
 
+import { Button } from '@/app/villacovico/components/ui/Button'
 import { useVisualArchiveGallery } from '../hooks/useVisualArchiveGallery'
+import { useVisualArchiveSelection } from '../hooks/useVisualArchiveSelection'
 
 export const VisualArchiveOpenGalleryBtn = () => {
+  const currentArchive = useVisualArchiveSelection((state) => state.activeArchive)
   const openGallery = useVisualArchiveGallery((state) => state.openGallery)
 
   const handleOpenGallery = (e: React.MouseEvent) => {
     e.stopPropagation()
-    openGallery('photos')
+    openGallery(currentArchive)
   }
 
   return (
-    <button
-      onClick={handleOpenGallery}
-      className='bg-covico-foreground hover:bg-covico-background hover:text-covico-foreground font-montserrat text-covico-background absolute right-8 bottom-8 cursor-pointer rounded-md px-6 py-2 text-xl transition-colors duration-300'
-    >
+    <Button onClick={handleOpenGallery} className='absolute right-8 bottom-8'>
       Abrir Galería
-    </button>
+    </Button>
   )
 }

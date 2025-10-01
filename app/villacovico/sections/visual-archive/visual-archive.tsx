@@ -3,6 +3,8 @@ import { VisualArchiveSelector } from './components/VisualArchiveSelector'
 import { VisualArchivePoster } from './components/VisualArchivePoster'
 import { VISUAL_ARCHIVE } from './content'
 import { getGallery } from '@/covico/features/gallery/utils/getGallery'
+import { Title } from '../../components/ui/Title'
+import { Paragraph } from '../../components/ui/Paragraph'
 
 export const VisualArchive = () => {
   const completeGallery = getGallery(VISUAL_ARCHIVE.cards, 'gallery')
@@ -10,12 +12,10 @@ export const VisualArchive = () => {
   return (
     <article id={VISUAL_ARCHIVE.id} className='relative grid w-full grid-cols-2 gap-x-8'>
       <section className='flex flex-col items-end justify-center gap-4'>
-        <h2 className='text-covico-foreground font-roboto max-w-prose text-right text-8xl font-semibold tracking-wide'>
+        <Title heading='h2' size='xl' weight='semibold' className='text-right'>
           {VISUAL_ARCHIVE.title}
-        </h2>
-        <p className='text-montserrat mr-2 max-w-[250px] text-right text-2xl leading-none font-light'>
-          {VISUAL_ARCHIVE.subTitle}
-        </p>
+        </Title>
+        <Paragraph className='max-w-[250px] text-right'>{VISUAL_ARCHIVE.subTitle}</Paragraph>
       </section>
 
       <section className='relative'>
