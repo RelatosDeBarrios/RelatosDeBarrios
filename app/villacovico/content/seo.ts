@@ -19,7 +19,7 @@ export const SEO: SEOContent = {
     'Chile',
   ],
   url: 'https://relatosdebarrios.cl/villacovico',
-  icons: '/villacovico/favicon.png',
+  icons: '/villacovico/logo.png',
   openGraph: {
     title: 'Villa Covico',
     description:
