@@ -183,7 +183,38 @@ export const VISUAL_ARCHIVE = {
     'aerial-images': {
       id: 'aerial-images',
       title: 'Imágenes Aéreas',
-      gallery: [],
+      gallery: [
+        {
+          src: '/villacovico/sections/visual-archive/aerial-images/FOTOS OK RDB FEBRERO-01.webp',
+          alt: '',
+          width: 1440,
+          height: 810,
+        },
+        {
+          src: '/villacovico/sections/visual-archive/aerial-images/FOTOS OK RDB FEBRERO-02.webp',
+          alt: '',
+          width: 1440,
+          height: 810,
+        },
+        {
+          src: '/villacovico/sections/visual-archive/aerial-images/FOTOS OK RDB FEBRERO-42.webp',
+          alt: '',
+          width: 1440,
+          height: 809,
+        },
+        {
+          src: '/villacovico/sections/visual-archive/aerial-images/RDB FOTOS ENERO 2025-01.webp',
+          alt: '',
+          width: 1440,
+          height: 809,
+        },
+        {
+          src: '/villacovico/sections/visual-archive/aerial-images/RDB FOTOS ENERO 2025-08.webp',
+          alt: '',
+          width: 1440,
+          height: 809,
+        },
+      ],
     },
 
     illustrations: {
