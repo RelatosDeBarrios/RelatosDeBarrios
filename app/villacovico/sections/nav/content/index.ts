@@ -14,7 +14,7 @@ export const NAV = {
     { href: 'top', label: 'Inicio' },
     { href: '#visual-archive', label: 'Archivo Visual' },
     { href: '#plans', label: 'Planimetrías' },
-    { href: '#3d', label: 'Recorridos' },
+    { href: '#virtual-tour', label: 'Recorridos' },
     { href: '#book-documental', label: 'Libro / Documental' },
   ],
 } satisfies Nav

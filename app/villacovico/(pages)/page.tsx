@@ -3,6 +3,8 @@ import { VisualArchive } from '@/covico/sections/visual-archive/visual-archive'
 import { Footer } from '@/covico/sections/footer/footer'
 import { Quote } from '../sections/quote/quote'
 import { Plans } from '../sections/plans/plans'
+import { VirtualTour } from '../sections/virtual-tour/virtual-tour'
+import { BookDocumental } from '../sections/book-documental/book-documental'
 
 export default function Home() {
   return (
@@ -13,12 +15,9 @@ export default function Home() {
         <Quote position={1} />
         <Plans />
         <Quote position={2} />
-        {/* 3D */}
-        <div className='h-screen w-full bg-red-200'></div>
+        <VirtualTour />
         <Quote position={1} />
-        {/* Book & Documental */}
-        <div className='h-screen w-full bg-blue-200'></div>
-        {/* <PhotoArchive /> */}
+        <BookDocumental />
       </main>
       <Footer />
     </>
