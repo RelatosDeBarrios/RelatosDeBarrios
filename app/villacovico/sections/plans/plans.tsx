@@ -11,7 +11,7 @@ export function Plans() {
 
   return (
     <section id={id} className='h-screen w-full'>
-      <div className='grid h-full grid-cols-2 gap-10 py-20'>
+      <div className='grid h-full grid-rows-2 gap-6 xl:grid-cols-2 xl:grid-rows-1 xl:gap-10 xl:py-20'>
         <PlansCard
           orientation='left'
           id={isometrics.id}

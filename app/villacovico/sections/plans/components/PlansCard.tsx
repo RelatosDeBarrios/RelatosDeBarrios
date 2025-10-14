@@ -18,9 +18,9 @@ interface PlansCardProps {
 }
 
 const orientationBasedStyles = {
-  left: '[&>header]:text-right [&>header]:items-end [&>section]:justify-self-start [&>section>nav]:right-8',
+  left: '[&>header]:text-right [&>header]:items-end [&>section]:justify-self-start [&>section>nav]:right-4 md:[&>section>nav]:right-8',
   right:
-    '[&>header]:text-left [&>header]:items-start [&>section]:justify-self-end [&>header]:order-1 [&>section>nav>a]:order-1 [&>section>nav]:left-8',
+    '[&>header]:text-left [&>header]:items-start [&>section]:justify-self-end [&>header]:order-1 [&>section>nav>a]:order-1 [&>section>nav]:left-4 md:[&>section>nav]:left-8',
 }
 
 export function PlansCard({
@@ -35,9 +35,12 @@ export function PlansCard({
   return (
     <article
       id={id}
-      className={cn('grid h-full w-full grid-cols-2 gap-4', orientationBasedStyles[orientation])}
+      className={cn(
+        'grid h-full w-full grid-rows-3 gap-4 md:grid-cols-2 md:grid-rows-1',
+        orientationBasedStyles[orientation]
+      )}
     >
-      <header className='flex flex-col gap-4 self-center'>
+      <header className='row-span-1 flex flex-col gap-4 self-center'>
         <div>
           <Title heading='h2' size='lg' weight='semibold'>
             {title}
@@ -46,7 +49,7 @@ export function PlansCard({
         </div>
         <Paragraph className='max-w-[250px]'>{description}</Paragraph>
       </header>
-      <section className='relative'>
+      <section className='relative row-span-2 xl:row-span-1'>
         <Image
           src={bg.src}
           alt={bg.alt}
@@ -55,7 +58,7 @@ export function PlansCard({
           className='h-full rounded-2xl object-cover grayscale'
         />
 
-        <nav className='absolute bottom-8 flex gap-4'>
+        <nav className='absolute bottom-4 flex flex-col gap-4 md:bottom-8 lg:flex-row'>
           <Button
             as='a'
             variant='secondary'
