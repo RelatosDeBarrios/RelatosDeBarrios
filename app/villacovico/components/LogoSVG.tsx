@@ -8,7 +8,14 @@ interface LogoSVGProps {
   children?: React.ReactNode
 }
 
-export const LogoSVG = ({ className: customClass, id, size = 40, strokeWidth, children, ...props }: LogoSVGProps) => {
+export const LogoSVG = ({
+  className: customClass,
+  id,
+  size = 40,
+  strokeWidth,
+  children,
+  ...props
+}: LogoSVGProps) => {
   return (
     <svg viewBox='0 0 39 39' width={size} height={size}>
       <path
