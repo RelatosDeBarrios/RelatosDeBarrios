@@ -21,6 +21,16 @@ export const QUOTES = {
       age: 85,
     },
   },
+  3: {
+    id: 'quote-3',
+    title: 'HERENCIA FERROVIARIA ENTRE GENERACIONES',
+    description:
+      'Ferrocarriles fue el motor de la economía en su tiempo. Deberíamos tener un museo de la memoria, con elementos ferroviarios, para que las nuevas generaciones conozcan esta historia',
+    author: {
+      name: 'JUAN CARLOS VALENCIA',
+      age: 73,
+    },
+  },
 } satisfies Record<
   number,
   CovicoSection & {
