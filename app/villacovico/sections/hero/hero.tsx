@@ -6,7 +6,7 @@ export function Hero() {
   const { id, title, utilityImages, description } = HERO
 
   return (
-    <article id={id} className='relative pt-60'>
+    <article id={id} className='relative pt-32 xl:pt-60'>
       {/* Sticky title component */}
       <HeroTitle containerID={id} title={title} />
 

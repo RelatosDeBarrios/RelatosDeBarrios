@@ -19,7 +19,7 @@ export function HeroTitle({ title, containerID }: HeroTitleProps) {
     if (!titleRef.current) return
 
     gsap.to(titleRef.current, {
-      opacity: 0.4,
+      opacity: 0.3,
       scrollTrigger: {
         trigger: `#${containerID}`,
         start: 'top top',
@@ -32,10 +32,10 @@ export function HeroTitle({ title, containerID }: HeroTitleProps) {
   })
 
   return (
-    <div className='text-covico-foreground relative z-1 mix-blend-color-dodge'>
+    <div className='text-covico-foreground relative z-1 mx-auto w-fit'>
       <h1
         ref={titleRef}
-        className='font-instrument text-fluid bg-[url("/villacovico/noise.png")] bg-clip-text text-center font-black text-transparent lowercase will-change-transform'
+        className='font-instrument text-fluid text-covico-foregroun text-center font-black whitespace-nowrap lowercase will-change-transform'
       >
         {title}
       </h1>

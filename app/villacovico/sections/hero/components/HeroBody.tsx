@@ -44,20 +44,20 @@ export const HeroBody = ({ images: { over, under }, description }: HeroBodyProps
   return (
     <section
       ref={parentRef}
-      className='parent relative flex aspect-square size-full items-center justify-center'
+      className='parent relative flex h-[var(--hero-height)] w-full items-center justify-center [--hero-height:125vh] landscape:aspect-square landscape:h-auto'
     >
       {/* Parallax container for images */}
       <div className='relative size-full overflow-hidden rounded-xl'>
         <div
           aria-hidden
-          className='to-covico-foreground/60 absolute z-3 aspect-square w-full bg-gradient-to-b from-transparent'
+          className='to-covico-foreground/60 absolute z-3 w-full bg-gradient-to-b from-transparent landscape:aspect-square'
         />
         <Image
           src={under.src}
           alt={under.alt}
           width={under.width}
           height={under.height}
-          className='absolute z-2 aspect-square w-full'
+          className='absolute z-2 aspect-square h-[var(--hero-height)] w-full object-cover landscape:h-auto'
           priority
         />
         <Image
@@ -65,7 +65,7 @@ export const HeroBody = ({ images: { over, under }, description }: HeroBodyProps
           alt={over.alt}
           width={over.width}
           height={over.height}
-          className='absolute z-0 aspect-square w-full'
+          className='absolute z-0 aspect-square h-[var(--hero-height)] w-full object-cover landscape:h-auto'
           priority
         />
       </div>
@@ -73,7 +73,7 @@ export const HeroBody = ({ images: { over, under }, description }: HeroBodyProps
       {/* Animated description text */}
       <p
         ref={textRef}
-        className='text font-roboto text-covico-background absolute z-4 max-w-prose text-center text-4xl leading-snug font-semibold'
+        className='text font-roboto text-covico-background absolute z-4 max-w-prose px-4 text-center leading-tight font-semibold md:px-8 md:text-2xl xl:text-4xl xl:leading-snug'
       >
         {description}
       </p>
