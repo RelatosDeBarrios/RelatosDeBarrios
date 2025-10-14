@@ -26,22 +26,41 @@ export function BookDocumentalCard({
   bg,
 }: BookDocumentalCardProps) {
   return (
-    <a href={href} className='relative'>
-      <article id={id} className='grid aspect-square grid-cols-1 gap-6 md:grid-cols-2'>
+    <a
+      href={href}
+      className='group relative block aspect-square h-full w-full overflow-hidden rounded-2xl'
+    >
+      <article id={id} className='grid h-full place-content-center gap-6 p-10'>
         <header>
           <div>
-            <Title heading='h2' size='xl' weight='semibold'>
+            <Title
+              heading='h2'
+              size='xl'
+              weight='semibold'
+              className='group-hover:text-covico-background'
+            >
               {title}
             </Title>
-            <h3>{subTitle}</h3>
+            <h3 className='font-roboto group-hover:text-covico-background text-4xl font-medium'>
+              {subTitle}
+            </h3>
           </div>
-          <Paragraph>{description}</Paragraph>
+          <Paragraph className='group-hover:text-covico-background max-w-2xl'>
+            {description}
+          </Paragraph>
         </header>
         <section>
           <Button as='button'>Ver</Button>
         </section>
-        <Image src={bg.src} alt={bg.alt} width={bg.width} height={bg.height} />
       </article>
+
+      <Image
+        src={bg.src}
+        alt={bg.alt}
+        width={bg.width}
+        height={bg.height}
+        className='absolute top-0 -z-10 aspect-auto size-full object-cover object-center opacity-50 mix-blend-darken grayscale transition-all duration-500 group-hover:scale-105 group-hover:opacity-100'
+      />
     </a>
   )
 }
