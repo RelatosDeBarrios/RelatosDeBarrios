@@ -8,8 +8,7 @@ import { verifyUploadProof, createCorrelationId } from '../../lib/crypto'
 // Configuration constants
 const PROOF_COOKIE_NAME = 'hub_upload_proof'
 const ALLOWED_ORIGINS = (
-  process.env.HUB_ALLOWED_ORIGINS ||
-  'http://localhost:3000,https://relatosdebarrios.cl,https://www.relatosdebarrios.cl'
+  process.env.HUB_ALLOWED_ORIGINS || 'http://localhost:3000,https://relatosdebarrios.cl,https://www.relatosdebarrios.cl'
 )
   .split(',')
   .map((o) => o.trim())
@@ -17,25 +16,18 @@ const TOKEN_EXPIRY_SECS = Number(process.env.HUB_BLOB_TOKEN_EXPIRY || 180) // 3 
 
 export async function POST(request: Request): Promise<NextResponse> {
   // Extract or create correlation ID
-  const correlationId = createCorrelationId(
-    request.headers.get('x-correlation-id') || undefined
-  )
+  const correlationId = createCorrelationId(request.headers.get('x-correlation-id') || undefined)
 
   try {
     // Verify same-origin to prevent cross-origin requests
     const origin = request.headers.get('origin')
 
     // Enforce https in production and allowlist origin
-    const isHttpsOk =
-      process.env.NODE_ENV !== 'production' ||
-      (origin?.startsWith('https://') ?? false)
+    const isHttpsOk = process.env.NODE_ENV !== 'production' || (origin?.startsWith('https://') ?? false)
 
     // Only allow requests from our own origin
     if (!origin || !ALLOWED_ORIGINS.includes(origin) || !isHttpsOk) {
-      console.error(
-        `Blocked upload request from unauthorized origin: ${origin || 'unknown'}`,
-        { correlationId }
-      )
+      console.error(`Blocked upload request from unauthorized origin: ${origin || 'unknown'}`, { correlationId })
       return NextResponse.json(
         { error: 'Unauthorized origin' },
         {
@@ -49,15 +41,10 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     // Extract IP for rate limiting and verification
     const ip =
-      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-      request.headers.get('x-real-ip') ||
-      'unknown'
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || 'unknown'
 
     if (ip === 'unknown') {
-      console.error(
-        'Could not determine client IP for blob upload authorization',
-        { correlationId }
-      )
+      console.error('Could not determine client IP for blob upload authorization', { correlationId })
       return NextResponse.json(
         { error: 'Could not verify client' },
         {
@@ -200,15 +187,12 @@ export async function POST(request: Request): Promise<NextResponse> {
         const blobUrl = new URL(blob.url)
         const isVercelBlob = blobUrl.hostname === 'blob.vercel-storage.com'
 
-        console.log(
-          `Blob upload completed: ${isVercelBlob ? blob.url : '[invalid-host]'}`,
-          {
-            correlationId: payload.correlationId || correlationId,
-            ipHashPrefix: payload.ipHash || 'unknown',
-            timestamp: payload.timestamp || new Date().toISOString(),
-            size: blob.url?.length || 0,
-          }
-        )
+        console.log(`Blob upload completed: ${isVercelBlob ? blob.url : '[invalid-host]'}`, {
+          correlationId: payload.correlationId || correlationId,
+          ipHashPrefix: payload.ipHash || 'unknown',
+          timestamp: payload.timestamp || new Date().toISOString(),
+          size: blob.url?.length || 0,
+        })
       },
     })
 

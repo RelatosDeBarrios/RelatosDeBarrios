@@ -8,11 +8,7 @@ export const Footer = () => {
       <p className='text-sm'>{new Date().getFullYear()} Relatos de Barrios.</p>
       <nav className='flex items-center justify-center gap-2'>
         {/* Instagram */}
-        <Link
-          href={BRAND.social.instagram}
-          target='_blank'
-          rel='noopener noreferrer'
-        >
+        <Link href={BRAND.social.instagram} target='_blank' rel='noopener noreferrer'>
           <Instagram size={20} strokeWidth={1.75} />
         </Link>
 

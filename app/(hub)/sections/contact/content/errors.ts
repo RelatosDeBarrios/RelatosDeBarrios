@@ -14,8 +14,7 @@ export const formErrors = {
   CommentaryRequired: 'Por favor ingresa un mensaje',
 
   // Cross-field client-side rule
-  ContributionRequiresAttachment:
-    'Adjunta al menos un archivo o deja "Sin material para aportar".',
+  ContributionRequiresAttachment: 'Adjunta al menos un archivo o deja "Sin material para aportar".',
 
   UploadValidationNeeded: 'Valida el envío antes de subir archivos.',
   UploadExpired: 'La validación expiró. Actualiza e inténtalo de nuevo.',

@@ -61,8 +61,7 @@ export function validateFileConstraints(files: File[]): {
     if (
       !FILE_CONSTRAINTS.acceptedTypes.includes(file.type) &&
       !FILE_CONSTRAINTS.acceptedTypes.some(
-        (type) =>
-          type.endsWith('/*') && file.type.startsWith(type.replace('/*', ''))
+        (type) => type.endsWith('/*') && file.type.startsWith(type.replace('/*', ''))
       )
     ) {
       invalidTypeFiles.push(file.name)

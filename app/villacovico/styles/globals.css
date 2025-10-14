@@ -1,1 +1,30 @@
-@import '@/styles/globals.css';
+@import 'tailwindcss';
+
+@theme inline {
+  --color-covico-red: #995d59;
+  --color-covico-primary: #4f677f;
+  --color-covico-secondary: #3d687e;
+  --color-covico-yellow: #bfa647;
+  --color-covico-brown: #8c6e59;
+  --color-covico-green: #29736a;
+  --color-covico-background: #fffcf8;
+  --color-covico-foreground: #2f2f2f;
+
+  --p-covico-outside: 1rem;
+
+  --font-roboto: 'Roboto Serif', serif;
+  --font-instrument: 'Instrument Sans', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+}
+
+.text-fluid {
+  font-size: calc(50px + (340 - 50) * ((100vw - 320px) / (1920 - 320)));
+  line-height: 0.8;
+}
+
+.text-noise-clip {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}

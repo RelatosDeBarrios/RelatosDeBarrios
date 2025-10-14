@@ -7,12 +7,8 @@ export const MemberCard = ({ name, description, role }: TeamMember) => {
       data-animate='member-card'
     >
       <header className='w-full'>
-        <h3 className='text-hub-primary mb-1 text-center text-lg font-bold'>
-          {name}
-        </h3>
-        <h4 className='text-hub-secondary mb-2 text-center text-sm font-medium'>
-          {role}
-        </h4>
+        <h3 className='text-hub-primary mb-1 text-center text-lg font-bold'>{name}</h3>
+        <h4 className='text-hub-secondary mb-2 text-center text-sm font-medium'>{role}</h4>
       </header>
       <p className='text-hub-text text-center text-sm'>{description}</p>
     </li>

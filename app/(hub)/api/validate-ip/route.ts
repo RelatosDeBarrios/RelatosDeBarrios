@@ -16,15 +16,11 @@ export async function POST(request: Request): Promise<
   }>
 > {
   // Extract correlation ID for request tracing or create a new one
-  const correlationId = await createCorrelationId(
-    request.headers.get('x-correlation-id') || undefined
-  )
+  const correlationId = await createCorrelationId(request.headers.get('x-correlation-id') || undefined)
 
   // Extract IP address with improved extraction handling
   const ip =
-    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    request.headers.get('x-real-ip') ||
-    'unknown'
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || 'unknown'
 
   if (ip === 'unknown') {
     console.warn('Could not determine client IP address for rate limiting', {
@@ -52,13 +48,7 @@ export async function POST(request: Request): Promise<
     const key = `rate:ip:${ipHash}`
 
     // Use the centralized rate limit function
-    const result = await rateLimit(
-      key,
-      RATE_LIMIT,
-      WINDOW_SECONDS,
-      'validate-ip',
-      correlationId
-    )
+    const result = await rateLimit(key, RATE_LIMIT, WINDOW_SECONDS, 'validate-ip', correlationId)
 
     if (!result.allowed) {
       return NextResponse.json(

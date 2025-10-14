@@ -4,15 +4,8 @@ import { HeroTitleAction } from './HeroTitleAction'
 
 export const HeroSection = () => {
   return (
-    <header
-      id={heroContent.id}
-      className='relative h-screen landscape:h-[160dvh]'
-    >
-      <HeroTitleAction
-        title={heroContent.title}
-        subTitle={heroContent.subTitle}
-        actions={heroContent.actions}
-      />
+    <header id={heroContent.id} className='relative h-screen landscape:h-[160dvh]'>
+      <HeroTitleAction title={heroContent.title} subTitle={heroContent.subTitle} actions={heroContent.actions} />
 
       <video
         loop={heroContent.video.loop}

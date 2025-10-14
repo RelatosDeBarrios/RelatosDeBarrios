@@ -14,9 +14,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export const sendEmail: SendEmailAction = async (_, formData) => {
   // Extract or create a correlation ID for request tracing
-  const correlationId = await createCorrelationId(
-    (formData.get('correlationId') as string) || undefined
-  )
+  const correlationId = await createCorrelationId((formData.get('correlationId') as string) || undefined)
 
   try {
     const form = {
@@ -54,14 +52,11 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
     } = validation.data
 
     // Handle the contribution case with a default label when undefined/not selected
-    const projectContribution = contribution
-      ? BRAND.projects[contribution as ProjectsId]
-      : 'Sin material para aportar'
+    const projectContribution = contribution ? BRAND.projects[contribution as ProjectsId] : 'Sin material para aportar'
 
     // Process attachments (which are blob URLs) if they exist
     const attachmentUrls: Attachment[] = []
-    const haveAttachments =
-      attachments && attachments.length > 0 && Array.isArray(attachments)
+    const haveAttachments = attachments && attachments.length > 0 && Array.isArray(attachments)
 
     if (haveAttachments) {
       try {
@@ -107,11 +102,7 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
       const { error } = await resend.emails.send({
         from: `Relatos de Barrios <web@contacto.relatosdebarrios.cl>`,
         replyTo: String(email),
-        to: [
-          isEnv('prod')
-            ? BRAND.contact_email
-            : 'web.relatosdebarrios@gmail.com',
-        ],
+        to: [isEnv('prod') ? BRAND.contact_email : 'web.relatosdebarrios@gmail.com'],
         subject: `Contacto desde el sitio web - ${String(name)}`,
         text: `${String(name)} (${String(email)}) envió: ${String(commentary)}`,
         react: EmailTemplate({
@@ -181,23 +172,18 @@ export const sendEmail: SendEmailAction = async (_, formData) => {
 async function cleanupAttachments(urls: string[], correlationId?: string) {
   try {
     // Call our cleanup API route
-    const response = await fetch(
-      `${process.env.SITE_URL || ''}/api/cleanup-blobs`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-internal-secret': String(
-            process.env.INTERNAL_CLEANUP_SECRET || ''
-          ),
-          'X-Correlation-Id': correlationId || '',
-        },
-        body: JSON.stringify({
-          urls: urls.filter((url) => url.includes('blob.vercel-storage.com')),
-          correlationId,
-        }),
-      }
-    )
+    const response = await fetch(`${process.env.SITE_URL || ''}/api/cleanup-blobs`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-internal-secret': String(process.env.INTERNAL_CLEANUP_SECRET || ''),
+        'X-Correlation-Id': correlationId || '',
+      },
+      body: JSON.stringify({
+        urls: urls.filter((url) => url.includes('blob.vercel-storage.com')),
+        correlationId,
+      }),
+    })
 
     if (!response.ok) {
       console.error('Failed to clean up attachments', {
@@ -206,12 +192,9 @@ async function cleanupAttachments(urls: string[], correlationId?: string) {
       })
     } else {
       const result = await response.json()
-      console.log(
-        `Cleaned up ${result.deleted} of ${result.total} attachments`,
-        {
-          correlationId,
-        }
-      )
+      console.log(`Cleaned up ${result.deleted} of ${result.total} attachments`, {
+        correlationId,
+      })
     }
   } catch (error) {
     console.error('Error during attachment cleanup', { correlationId, error })

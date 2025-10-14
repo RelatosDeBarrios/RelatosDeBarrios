@@ -32,9 +32,7 @@ export const Navigation = () => {
           className={cn(
             'flex h-full items-center justify-between rounded-2xl px-8 transition-all duration-300',
             isScrolled && 'shadow-2xl',
-            isScrolled
-              ? 'bg-rengifo-azul/70 backdrop-blur-2xl'
-              : 'bg-transparent'
+            isScrolled ? 'bg-rengifo-azul/70 backdrop-blur-2xl' : 'bg-transparent'
           )}
         >
           <NavLogo />

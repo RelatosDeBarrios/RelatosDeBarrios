@@ -22,9 +22,7 @@ export function useFileAttachments(attachments: AttachmentsType) {
         // Process files for preview
         const processedFiles = await Promise.all(
           acceptedFiles.map((file) =>
-            file.type.startsWith('image/')
-              ? processImageFile(file)
-              : Promise.resolve(processNonImageFile(file))
+            file.type.startsWith('image/') ? processImageFile(file) : Promise.resolve(processNonImageFile(file))
           )
         )
 

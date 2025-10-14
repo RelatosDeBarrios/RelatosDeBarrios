@@ -10,10 +10,7 @@ interface FormAttachmentsProps {
   attachments: AttachmentsType
 }
 
-export const FormContribution = ({
-  contribution,
-  attachments,
-}: FormAttachmentsProps) => {
+export const FormContribution = ({ contribution, attachments }: FormAttachmentsProps) => {
   const {
     register,
     watch,

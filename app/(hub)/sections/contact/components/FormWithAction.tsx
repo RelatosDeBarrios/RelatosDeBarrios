@@ -4,11 +4,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SendEmailAction } from '../types/action'
 import { ContactForm } from '../types/form'
-import {
-  ClientFormSchema,
-  ClientFormValues,
-  FIELD_IDS,
-} from '../schemas/formSchema'
+import { ClientFormSchema, ClientFormValues, FIELD_IDS } from '../schemas/formSchema'
 import { FormContribution } from './FormContribution'
 import { FormInput } from './FormInput'
 import { FormSubmitButton } from './FormSubmitButton'
@@ -76,10 +72,7 @@ export const FormWithAction = ({ action, data }: FormProps) => {
             <FormInput inputContent={data.commentary} />
 
             {/* Material contribution */}
-            <FormContribution
-              contribution={data.contribution}
-              attachments={data.attachments}
-            />
+            <FormContribution contribution={data.contribution} attachments={data.attachments} />
           </>
         )}
 

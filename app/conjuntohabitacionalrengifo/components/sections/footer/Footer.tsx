@@ -18,10 +18,7 @@ const ICONS: IconMap = {
 
 export const Footer = () => {
   return (
-    <footer
-      id={footerContent.id}
-      className='relative -mt-3 w-full overflow-clip'
-    >
+    <footer id={footerContent.id} className='relative -mt-3 w-full overflow-clip'>
       <div
         aria-hidden
         className='to-rengifo-azul-darker absolute top-0 z-1 size-full bg-gradient-to-b from-transparent'
@@ -38,19 +35,17 @@ export const Footer = () => {
         <Logo className='text-rengifo-pastel mx-auto w-fit max-w-lg' />
         {/* Collaborators */}
         <ul className='flex flex-wrap items-center justify-center'>
-          {footerContent.credits.collaborators.map(
-            ({ src, alt, width, height }) => (
-              <li key={src} className='size-fit'>
-                <Image
-                  src={src}
-                  alt={alt}
-                  height={height}
-                  width={width}
-                  className='aspect-auto max-h-16 w-fit md:max-h-24'
-                />
-              </li>
-            )
-          )}
+          {footerContent.credits.collaborators.map(({ src, alt, width, height }) => (
+            <li key={src} className='size-fit'>
+              <Image
+                src={src}
+                alt={alt}
+                height={height}
+                width={width}
+                className='aspect-auto max-h-16 w-fit md:max-h-24'
+              />
+            </li>
+          ))}
         </ul>
         {/* Text */}
         <div className='text-center text-sm leading-tight text-white md:text-base'>

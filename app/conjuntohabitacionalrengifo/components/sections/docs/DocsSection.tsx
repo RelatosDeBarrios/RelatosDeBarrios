@@ -39,12 +39,7 @@ export const DocsSection = () => {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     node?: any
                   }
-                ) => (
-                  <p
-                    className='leading-tight font-light text-white md:text-lg'
-                    {...props}
-                  ></p>
-                ),
+                ) => <p className='leading-tight font-light text-white md:text-lg' {...props}></p>,
               }}
             >
               {docsContent.description}
@@ -57,12 +52,7 @@ export const DocsSection = () => {
               title={planimetries.title}
               subTitle={planimetries.subTitle}
             />
-            <OpenGalleryCard
-              id={survey.id}
-              bg={survey.bg}
-              title={survey.title}
-              subTitle={survey.subTitle}
-            />
+            <OpenGalleryCard id={survey.id} bg={survey.bg} title={survey.title} subTitle={survey.subTitle} />
           </section>
         </section>
       </section>

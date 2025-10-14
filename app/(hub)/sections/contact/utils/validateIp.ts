@@ -27,8 +27,7 @@ export async function validateIp(validateIpUrl: string): Promise<{
     })
 
     // Keep the correlation ID from the response headers if provided
-    const responseCorrelationId =
-      response.headers.get('X-Correlation-Id') || correlationId
+    const responseCorrelationId = response.headers.get('X-Correlation-Id') || correlationId
 
     const result = await response.json()
 
@@ -38,8 +37,7 @@ export async function validateIp(validateIpUrl: string): Promise<{
         error: result.error,
         message: result.error || null,
         correlationId: responseCorrelationId,
-        retryAfter:
-          typeof result.retryAfter === 'number' ? result.retryAfter : undefined,
+        retryAfter: typeof result.retryAfter === 'number' ? result.retryAfter : undefined,
       }
     }
 

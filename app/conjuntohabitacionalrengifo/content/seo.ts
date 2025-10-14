@@ -11,15 +11,7 @@ export const seoContent: SEOContent = {
   title: 'Relatos de Barrios | Conjunto Habitacional Rengifo',
   description:
     'Relatos de Barrios busca difundir el valor patrimonial e histórico de éste y otros barrios de La Serena ligados al patrimonio industrial, destacando la experiencia social y patrimonial detrás de la vida de sus habitantes.',
-  keywords: [
-    'patrimonio',
-    'la serena',
-    'arquitectura',
-    'rengifo',
-    'conjunto habitacional',
-    'barrio',
-    'chile',
-  ],
+  keywords: ['patrimonio', 'la serena', 'arquitectura', 'rengifo', 'conjunto habitacional', 'barrio', 'chile'],
   url: 'https://relatosdebarrios.cl/rengifo',
   icons: formatPath(`${BRAND.paths.rengifo}/icons/favicon.png`),
   openGraph: {

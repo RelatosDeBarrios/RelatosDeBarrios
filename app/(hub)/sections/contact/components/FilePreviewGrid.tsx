@@ -7,10 +7,7 @@ interface FilePreviewGridProps {
   removeFile: (index: number) => void
 }
 
-export const FilePreviewGrid = ({
-  files,
-  removeFile,
-}: FilePreviewGridProps) => (
+export const FilePreviewGrid = ({ files, removeFile }: FilePreviewGridProps) => (
   <div className='mt-4 flex flex-wrap justify-center gap-2'>
     {files.map((file, index) => (
       <FilePreviewItem

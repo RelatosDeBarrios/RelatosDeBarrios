@@ -1,11 +1,10 @@
 import { BRAND } from '@/content/brand'
 import { HeroSection } from '../types'
 
-export const HERO: HeroSection = {
+export const HERO = {
   id: 'home',
   title: 'Relatos de Barrios | Villa Covico',
-  description:
-    'Voces que construyen identidad en los barrios de la Región de Coquimbo.',
+  description: 'Voces que construyen identidad en los barrios de la Región de Coquimbo.',
   utilityImages: {
     logo: {
       src: '/hub/images/hero-blue.png',
@@ -19,18 +18,19 @@ export const HERO: HeroSection = {
       id: 'covico',
       title: '## Villa **Covico**',
       href: BRAND.paths.covico,
-      disabled: true,
+      disabled: false,
       bg: {
-        src: '/hub/images/placeholder.png',
-        alt: 'Placeholder image for Villa Covico',
-        width: 300,
-        height: 300,
+        src: '/hub/images/portada_villacovico.webp',
+        alt: 'Ir a Relatos de Barrios: Villa Covico',
+        width: 800,
+        height: 612,
       },
     },
     rengifo: {
       id: 'rengifo',
       title: '## Conjunto Habitacional **Rengifo**',
       href: BRAND.paths.rengifo,
+      disabled: false,
       bg: {
         src: '/hub/videos/rengifo-teaser.mp4',
         autoplay: true,
@@ -40,4 +40,4 @@ export const HERO: HeroSection = {
       },
     },
   },
-} as const
+} satisfies HeroSection

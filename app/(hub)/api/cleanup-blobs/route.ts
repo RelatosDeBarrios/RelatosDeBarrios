@@ -3,11 +3,7 @@ import { del, list } from '@vercel/blob'
 
 // Security options
 const INTERNAL_SECRET = process.env.INTERNAL_CLEANUP_SECRET
-const ALLOWED_ORIGINS = [
-  'http://localhost:3000',
-  'https://relatosdebarrios.cl',
-  'https://www.relatosdebarrios.cl',
-]
+const ALLOWED_ORIGINS = ['http://localhost:3000', 'https://relatosdebarrios.cl', 'https://www.relatosdebarrios.cl']
 
 /**
  * API route for cleaning up all blobs - can be triggered by cron
@@ -23,8 +19,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     const { blobs } = await list()
     const blobsToDelete = blobs.map((b) => b.url)
 
-    if (blobsToDelete.length === 0)
-      return new NextResponse(null, { status: 204 })
+    if (blobsToDelete.length === 0) return new NextResponse(null, { status: 204 })
 
     await del(blobsToDelete)
 
@@ -50,19 +45,12 @@ export async function POST(request: Request): Promise<NextResponse> {
     // Verify same-origin for security
     const origin = request.headers.get('origin')
     if (!origin || !ALLOWED_ORIGINS.includes(origin)) {
-      return NextResponse.json(
-        { error: 'Unauthorized origin' },
-        { status: 403 }
-      )
+      return NextResponse.json({ error: 'Unauthorized origin' }, { status: 403 })
     }
 
     // Verify internal secret for double security
     const authHeader = request.headers.get('x-internal-secret')
-    if (
-      !INTERNAL_SECRET ||
-      INTERNAL_SECRET === 'change-me-in-production' ||
-      authHeader !== INTERNAL_SECRET
-    ) {
+    if (!INTERNAL_SECRET || INTERNAL_SECRET === 'change-me-in-production' || authHeader !== INTERNAL_SECRET) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 

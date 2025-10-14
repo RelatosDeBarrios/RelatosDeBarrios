@@ -1,6 +1,6 @@
 import { photosContent } from '../content/photos'
 import { docsContent } from '../content/docs'
-import { GalleryImage } from '../store/galleryStore'
+import { GalleryImage } from '@/types/general'
 
 /**
  * Content sources to search for gallery collections
@@ -18,9 +18,7 @@ export function getImagesById(id: string): GalleryImage[] {
   for (const source of CONTENT_SOURCES) {
     if (!source.gallery) continue
 
-    const collection = Object.values(source.gallery).find(
-      (collection) => collection.id === id
-    )
+    const collection = Object.values(source.gallery).find((collection) => collection.id === id)
 
     if (collection) {
       return collection.images

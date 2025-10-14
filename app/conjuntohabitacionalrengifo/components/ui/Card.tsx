@@ -10,11 +10,9 @@ interface BaseCardProps extends Omit<CardType<''>, 'id' | 'href'> {
   bg: ImageType
 }
 
-type CardButtonProps = BaseCardProps &
-  React.ButtonHTMLAttributes<HTMLButtonElement> & { variant: 'button' }
+type CardButtonProps = BaseCardProps & React.ButtonHTMLAttributes<HTMLButtonElement> & { variant: 'button' }
 
-type CardLinkProps = BaseCardProps &
-  ComponentProps<typeof Link> & { variant: 'link' }
+type CardLinkProps = BaseCardProps & ComponentProps<typeof Link> & { variant: 'link' }
 
 export type CardProps = CardButtonProps | CardLinkProps
 
@@ -49,9 +47,7 @@ const CardContent = ({ title, subTitle, bg, disabled }: BaseCardProps) => (
     {/* Disabled Overlay */}
     {disabled && (
       <div className='bg-rengifo-azul/20 absolute inset-0 z-20 hidden size-full place-items-center backdrop-blur-xs group-hover:grid'>
-        <p className='text-4xl font-bold text-white'>
-          {UI.messages.not_available}
-        </p>
+        <p className='text-4xl font-bold text-white'>{UI.messages.not_available}</p>
       </div>
     )}
 
@@ -84,12 +80,7 @@ const CardButton = ({ variant, ...buttonProps }: CardButtonProps) => {
 
   return (
     <button className={getCardStyles(className)} disabled={disabled} {...rest}>
-      <CardContent
-        title={title}
-        subTitle={subTitle}
-        bg={bg}
-        disabled={disabled}
-      />
+      <CardContent title={title} subTitle={subTitle} bg={bg} disabled={disabled} />
     </button>
   )
 }
@@ -99,17 +90,8 @@ const CardLink = ({ variant, ...linkProps }: CardLinkProps) => {
   const { className, disabled, bg, title, subTitle, ...rest } = linkProps
 
   return (
-    <Link
-      aria-disabled={disabled}
-      className={getCardStyles(className)}
-      {...rest}
-    >
-      <CardContent
-        title={title}
-        subTitle={subTitle}
-        bg={bg}
-        disabled={disabled}
-      />
+    <Link aria-disabled={disabled} className={getCardStyles(className)} {...rest}>
+      <CardContent title={title} subTitle={subTitle} bg={bg} disabled={disabled} />
     </Link>
   )
 }
