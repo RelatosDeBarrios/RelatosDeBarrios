@@ -6,49 +6,41 @@ import Image from 'next/image'
 import { ArrowBigLeft, ArrowBigRight, Minimize2 } from 'lucide-react'
 import { cn } from '@/utils/css'
 import { getImagesById } from '@/rengifo/utils/galleryUtils'
-import { useGallery, type GalleryAdapter } from '@/hooks/useGallery'
+import { GalleryImage } from '@/types/general'
 
 export const Gallery = () => {
-  const store = useGalleryStore()
+  const currentGalleryId = useGalleryStore((state) => state.currentGalleryId)
+  const currentIndex = useGalleryStore((state) => state.currentImageIndex)
+  const isOpen = useGalleryStore((state) => state.isGalleryOpen)
+  const navigation = useGalleryStore((state) => state.navigation)
+  const close = useGalleryStore((state) => state.closeGallery)
 
-  // Create adapter for Rengifo store
-  const adapter: GalleryAdapter = {
-    isOpen: store.isOpen,
-    currentIndex: store.currentIndex,
-    currentGalleryId: store.currentGalleryId,
-    getImages: () => getImagesById(store.currentGalleryId),
-    closeGallery: store.closeGallery,
-    setIndex: store.setIndex,
-  }
+  const images = currentGalleryId ? getImagesById(currentGalleryId) : []
 
-  const gallery = useGallery(adapter)
-
-  // Trap focus inside modal
   useEffect(() => {
-    if (!gallery.isOpen) return
+    if (!isOpen) return
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') gallery.close()
-      if (e.key === 'ArrowRight') gallery.navigation.next()
-      if (e.key === 'ArrowLeft') gallery.navigation.prev()
+      if (e.key === 'Escape') close()
+      if (e.key === 'ArrowRight') navigation.next(images.length)
+      if (e.key === 'ArrowLeft') navigation.prev(images.length)
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [gallery])
+  }, [isOpen, close, navigation, images.length])
 
-  if (!gallery.isOpen || gallery.images.length === 0) return null
+  if (!isOpen || images.length === 0) return null
 
-  // Swipe support (basic)
   let startX = 0
   const handleTouchStart = (e: React.TouchEvent) => {
     startX = e.touches[0].clientX
   }
   const handleTouchEnd = (e: React.TouchEvent) => {
     const endX = e.changedTouches[0].clientX
-    if (endX - startX > 50) gallery.navigation.prev()
-    if (startX - endX > 50) gallery.navigation.next()
+    if (endX - startX > 50) navigation.prev(images.length)
+    if (startX - endX > 50) navigation.next(images.length)
   }
 
-  const currentImage = gallery.currentImage!
+  const currentImage = images[currentIndex]
 
   return (
     <div
@@ -56,7 +48,7 @@ export const Gallery = () => {
       aria-modal='true'
       tabIndex={-1}
       className='bg-rengifo-azul/80 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xl'
-      onClick={gallery.close}
+      onClick={close}
     >
       <div
         className='bg-rengifo-pastel relative mx-4 flex w-full max-w-3xl flex-col items-center rounded-lg shadow-xl'
@@ -67,7 +59,7 @@ export const Gallery = () => {
         <button
           aria-label='Cerrar galería'
           className='text-rengifo-pastel hover:text-rengifo-amarillo absolute top-2 right-2 cursor-pointer text-2xl transition-colors'
-          onClick={gallery.close}
+          onClick={close}
         >
           <Minimize2 />
         </button>
@@ -75,7 +67,7 @@ export const Gallery = () => {
           <button
             aria-label='Previous image'
             className='group absolute top-1/2 left-2 -translate-y-1/2 cursor-pointer text-3xl'
-            onClick={gallery.navigation.prev}
+            onClick={() => navigation.prev(images.length)}
           >
             <ArrowBigLeft
               size={42}
@@ -94,7 +86,7 @@ export const Gallery = () => {
           <button
             aria-label='Next image'
             className='group absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer text-3xl'
-            onClick={gallery.navigation.next}
+            onClick={() => navigation.next(images.length)}
           >
             <ArrowBigRight
               size={42}
@@ -104,15 +96,15 @@ export const Gallery = () => {
           </button>
         </div>
         <div className='flex justify-center gap-2 py-4'>
-          {gallery.images.map((_, idx) => (
+          {images.map((_: GalleryImage, idx: number) => (
             <button
               key={idx}
               aria-label={`Go to image ${idx + 1}`}
               className={cn([
                 'border-rengifo-gris hover:bg-rengifo-amarillo/50 h-3 w-3 cursor-pointer rounded-full border',
-                idx === gallery.currentIndex ? 'bg-rengifo-azul-darker' : 'bg-rengifo-azul/20',
+                idx === currentIndex ? 'bg-rengifo-azul-darker' : 'bg-rengifo-azul/20',
               ])}
-              onClick={() => gallery.navigation.goTo(idx)}
+              onClick={() => navigation.goTo(idx)}
             />
           ))}
         </div>

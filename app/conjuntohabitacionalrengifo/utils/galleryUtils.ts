@@ -1,6 +1,6 @@
 import { photosContent } from '../content/photos'
 import { docsContent } from '../content/docs'
-import { GalleryImage } from '../store/galleryStore'
+import { GalleryImage } from '@/types/general'
 
 /**
  * Content sources to search for gallery collections
