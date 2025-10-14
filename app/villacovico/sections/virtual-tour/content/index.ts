@@ -9,7 +9,7 @@ export const VIRTUAL_TOUR = {
       title: 'Recorrido 3D',
       subTitle: 'Exterior',
       description: '',
-      href: 'https://my.matterport.com/show/?m=GzYjv6gk3bS',
+      href: 'https://app.cloudpano.com/tours/EieASvgq8',
       bg: {
         src: '/villacovico/sections/virtual-tour/outside.webp',
         alt: '',
@@ -22,7 +22,7 @@ export const VIRTUAL_TOUR = {
       title: 'Recorrido 3D',
       subTitle: 'Interior',
       description: '',
-      href: 'https://my.matterport.com/show/?m=GzYjv6gk3bS',
+      href: 'https://app.cloudpano.com/tours/rHmDzjHtr?sceneId=h1gLeY0Nzh7',
       bg: {
         src: '/villacovico/sections/virtual-tour/inside.webp',
         alt: '',
