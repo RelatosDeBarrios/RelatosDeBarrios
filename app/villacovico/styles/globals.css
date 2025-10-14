@@ -18,7 +18,7 @@
 }
 
 .text-fluid {
-  font-size: calc(24px + (340 - 24) * ((100vw - 320px) / (1920 - 320)));
+  font-size: calc(50px + (340 - 50) * ((100vw - 320px) / (1920 - 320)));
   line-height: 0.8;
 }
 
