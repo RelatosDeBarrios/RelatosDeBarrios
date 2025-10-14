@@ -17,8 +17,8 @@ interface VirtualTourCardProps {
 }
 
 const positionBasedStyles = {
-  top: '[&>header]:order-1 [&>section]:order-2 [&>section>nav]:right-8 [&>header>div>h3]:order-1 [&>header>div>h2]:order-2',
-  bottom: '[&>header]:order-2 [&>section]:order-1 [&>section>nav]:left-8 ',
+  top: '[&>header]:order-1 [&>section]:order-2 [&>section>nav]:right-4 md:[&>section>nav]:right-8 [&>header>div>h3]:order-1 [&>header>div>h2]:order-2',
+  bottom: '[&>header]:order-2 [&>section]:order-1 md:[&>section>nav]:left-8 [&>section>nav]:left-4',
 }
 
 export function VirtualTourCard({
@@ -55,7 +55,7 @@ export function VirtualTourCard({
           height={bg.height}
           className='w-full object-cover object-center transition-transform duration-500 group-hover:scale-105'
         />
-        <nav className='absolute bottom-8'>
+        <nav className='absolute bottom-4'>
           <Button as='a' href={href} className='text-lg'>
             Mira el recorrido
           </Button>
