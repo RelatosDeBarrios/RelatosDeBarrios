@@ -10,7 +10,7 @@ export const NavMobilePanel = ({ isMenuOpen, navItems, handleScrollTo }: NavMobi
   if (!isMenuOpen) return null
 
   return (
-    <div className='md:hidden'>
+    <div className='lg:hidden'>
       <div className='bg-background/95 border-border space-y-1 border-t px-2 pt-2 pb-3 backdrop-blur-md sm:px-3'>
         {navItems.map((item) => (
           <button

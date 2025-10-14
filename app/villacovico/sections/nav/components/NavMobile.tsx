@@ -7,7 +7,7 @@ interface NavMobileProps {
 
 export const NavMobile = ({ toggleMenu, isMenuOpen }: NavMobileProps) => {
   return (
-    <div className='md:hidden'>
+    <div className='lg:hidden'>
       <button onClick={toggleMenu} className={`transition-colors duration-300`}>
         {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
