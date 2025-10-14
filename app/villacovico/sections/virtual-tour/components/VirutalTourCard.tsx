@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ImageType } from '@/types/general'
 import { Button } from '@/app/villacovico/components/ui/Button'
 import { cn } from '@/utils/css'
+
 interface VirtualTourCardProps {
   id: VirtualTourType
   title: string
@@ -16,8 +17,8 @@ interface VirtualTourCardProps {
 }
 
 const positionBasedStyles = {
-  top: '[&>header]:order-1 [&>section]:order-2',
-  bottom: '[&>header]:order-2 [&>section]:order-1',
+  top: '[&>header]:order-1 [&>section]:order-2 [&>section>nav]:right-8 [&>header>div>h3]:order-1 [&>header>div>h2]:order-2',
+  bottom: '[&>header]:order-2 [&>section]:order-1 [&>section>nav]:left-8 ',
 }
 
 export function VirtualTourCard({
@@ -32,27 +33,30 @@ export function VirtualTourCard({
   return (
     <article
       id={id}
-      className={cn('grid h-full w-full grid-rows-2 gap-4', positionBasedStyles[position])}
+      className={cn(
+        'flex h-full w-full flex-col justify-center gap-4',
+        positionBasedStyles[position]
+      )}
     >
       <header className='flex flex-col gap-4'>
-        <div>
+        <div className='grid'>
           <Title heading='h2' size='xl' weight='semibold'>
             {title}
           </Title>
           <h3 className='font-roboto text-4xl font-medium'>{subTitle}</h3>
         </div>
-        <Paragraph className='max-w-[250px]'>{description}</Paragraph>
+        {!!description && <Paragraph className='max-w-[250px]'>{description}</Paragraph>}
       </header>
-      <section className='relative'>
+      <section className='group relative aspect-video w-full overflow-hidden rounded-2xl'>
         <Image
           src={bg.src}
           alt={bg.alt}
           width={bg.width}
           height={bg.height}
-          className='w-full rounded-2xl object-cover'
+          className='w-full object-cover object-center transition-transform duration-500 group-hover:scale-105'
         />
         <nav className='absolute bottom-8'>
-          <Button as='a' href={href} className=''>
+          <Button as='a' href={href} className='text-lg'>
             Mira el recorrido
           </Button>
         </nav>

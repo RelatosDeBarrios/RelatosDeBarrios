@@ -7,8 +7,8 @@ export const VIRTUAL_TOUR = {
     outside: {
       id: 'outside',
       title: 'Recorrido 3D',
-      subTitle: 'Interior',
-      description: 'Experimenta en primera persona la Villa Covico',
+      subTitle: 'Exterior',
+      description: '',
       href: 'https://my.matterport.com/show/?m=GzYjv6gk3bS',
       bg: {
         src: '/villacovico/sections/virtual-tour/outside.webp',
@@ -20,8 +20,8 @@ export const VIRTUAL_TOUR = {
     inside: {
       id: 'inside',
       title: 'Recorrido 3D',
-      subTitle: 'Exteriorr',
-      description: 'Recorre el barrio en primera persona y experimenta su entorno',
+      subTitle: 'Interior',
+      description: '',
       href: 'https://my.matterport.com/show/?m=GzYjv6gk3bS',
       bg: {
         src: '/villacovico/sections/virtual-tour/inside.webp',
