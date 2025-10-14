@@ -14,7 +14,10 @@ export const VisualArchiveOpenGalleryBtn = () => {
   }
 
   return (
-    <Button onClick={handleOpenGallery} className='absolute right-8 bottom-8'>
+    <Button
+      onClick={handleOpenGallery}
+      className='absolute right-4 bottom-4 md:right-8 md:bottom-8'
+    >
       Abrir Galería
     </Button>
   )

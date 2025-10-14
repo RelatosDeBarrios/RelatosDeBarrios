@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cn } from '@/utils/css'
 
 import type { ImageType } from '@/types/general'
@@ -21,19 +21,25 @@ const IMAGE_CHANGE_RATE = 5 // time in seconds
 export const VisualArchivePoster = ({ gallery }: VisualArchivePosterProps) => {
   const [hovered, setHovered] = useState(false)
 
-  // Get current gallery and image index from the store
   const currentArchive = useVisualArchiveSelection((state) => state.activeArchive)
   const currentGallery = gallery[currentArchive]
 
   const openGallery = useVisualArchiveGallery((state) => state.openGallery)
   const isGalleryOpen = useVisualArchiveGallery((state) => state.isGalleryOpen)
 
-  const { containerRef, imageA, imageB, imageAIndex, imageBIndex } = useVisualArchiveCrossfade({
-    crossfadeDuration: 1,
-    intervalDuration: IMAGE_CHANGE_RATE,
-    listLength: currentGallery.length - 1,
-    disabled: hovered || isGalleryOpen,
-  })
+  const { containerRef, imageA, imageB, imageAIndex, imageBIndex, resetIndices } =
+    useVisualArchiveCrossfade({
+      crossfadeDuration: 1,
+      intervalDuration: IMAGE_CHANGE_RATE,
+      listLength: currentGallery.length - 1,
+      disabled: hovered || isGalleryOpen,
+    })
+
+  const setResetCrossfade = useVisualArchiveSelection((state) => state.setResetCrossfade)
+
+  useEffect(() => {
+    setResetCrossfade(resetIndices)
+  }, [resetIndices, setResetCrossfade])
 
   const handleOpenGallery = (e: React.MouseEvent) => {
     e.stopPropagation()
