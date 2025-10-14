@@ -12,8 +12,8 @@ const TitleVariant = {
   size: {
     sm: 'text-2xl',
     md: 'text-4xl',
-    lg: 'text-6xl',
-    xl: 'text-8xl',
+    lg: 'text-2xl xl:text-6xl md:text-5xl ',
+    xl: 'text-4xl md:text-6xl xl:text-8xl',
   },
   weight: {
     light: 'font-light',
