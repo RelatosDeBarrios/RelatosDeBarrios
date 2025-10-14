@@ -40,7 +40,7 @@ export const Footer = () => {
               height={3300}
             />
           </div>
-          <p className='text-covico-background max-w-sm text-center xl:max-w-full xl:pt-20'>
+          <p className='text-covico-background max-w-sm px-4 text-center xl:max-w-full xl:pt-20'>
             Relatos de Barrios 2025 | Desarrollado por StrocsDev
           </p>
         </div>
