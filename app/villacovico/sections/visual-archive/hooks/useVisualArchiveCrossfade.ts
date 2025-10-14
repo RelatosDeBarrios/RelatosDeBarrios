@@ -1,6 +1,6 @@
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { getNextIndex } from '@/utils/circular'
 
 gsap.registerPlugin(useGSAP)
@@ -44,6 +44,16 @@ export const useVisualArchiveCrossfade = ({
     gsap.set(imageA.current, { opacity: 1 })
     gsap.set(imageB.current, { opacity: 0 })
   })
+
+  const resetIndices = useCallback(() => {
+    setActiveBufferIndex(0)
+    setVisibleIndex(0)
+    setNextIndex(0)
+    if (imageA.current && imageB.current) {
+      gsap.set(imageA.current, { opacity: 1 })
+      gsap.set(imageB.current, { opacity: 0 })
+    }
+  }, [])
 
   const performCrossfade = contextSafe(() => {
     const images = [imageA.current, imageB.current]
@@ -103,5 +113,6 @@ export const useVisualArchiveCrossfade = ({
     imageB,
     ...getBufferIndices(activeBufferIndex, visibleIndex, nextIndex),
     activeBuffer,
+    resetIndices,
   }
 }
