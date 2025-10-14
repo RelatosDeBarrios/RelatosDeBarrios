@@ -1,5 +1,5 @@
 import { useGSAP } from '@gsap/react'
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { GalleryNavigation } from './GalleryNavigation'
 import { ImageType } from '@/types/general'
 import { GalleryImage } from './GalleryImage'
@@ -21,6 +21,11 @@ export const GalleryMainView = ({
   onNext,
 }: GalleryMainViewProps) => {
   const mainImageRef = useRef<HTMLImageElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
+
+  const minSwipeDistance = 50
 
   useGSAP(() => {
     if (mainImageRef.current) {
@@ -28,8 +33,49 @@ export const GalleryMainView = ({
     }
   }, [currentIndex])
 
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const onTouchStart = (e: TouchEvent) => {
+      setTouchEnd(null)
+      setTouchStart(e.targetTouches[0].clientX)
+    }
+
+    const onTouchMove = (e: TouchEvent) => {
+      setTouchEnd(e.targetTouches[0].clientX)
+    }
+
+    const onTouchEnd = () => {
+      if (!touchStart || !touchEnd) return
+
+      const distance = touchStart - touchEnd
+      const isLeftSwipe = distance > minSwipeDistance
+      const isRightSwipe = distance < -minSwipeDistance
+
+      if (isLeftSwipe) {
+        onNext()
+      } else if (isRightSwipe) {
+        onPrevious()
+      }
+    }
+
+    container.addEventListener('touchstart', onTouchStart)
+    container.addEventListener('touchmove', onTouchMove)
+    container.addEventListener('touchend', onTouchEnd)
+
+    return () => {
+      container.removeEventListener('touchstart', onTouchStart)
+      container.removeEventListener('touchmove', onTouchMove)
+      container.removeEventListener('touchend', onTouchEnd)
+    }
+  }, [touchStart, touchEnd, onNext, onPrevious])
+
   return (
-    <div className='grid min-h-[80vh] grid-cols-1 items-center justify-items-center gap-4 px-4 md:grid-cols-4'>
+    <div
+      ref={containerRef}
+      className='grid min-h-[80vh] grid-cols-1 items-center justify-items-center gap-4 px-4 md:grid-cols-4'
+    >
       <GalleryNavigation
         gallery={gallery}
         currentIndex={currentIndex}

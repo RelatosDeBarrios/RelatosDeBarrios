@@ -83,7 +83,7 @@ export const Gallery = <T extends string>({ galleries }: GalleryProps<T>) => {
       {/* Close Button */}
       <button
         onClick={close}
-        className='text-covico-background absolute top-4 right-4 z-10 transition-opacity hover:opacity-80'
+        className='text-covico-background absolute top-4 right-4 z-10 cursor-pointer transition-opacity hover:opacity-80'
       >
         <X size={40} />
       </button>
