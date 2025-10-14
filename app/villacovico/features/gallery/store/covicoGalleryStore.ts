@@ -35,10 +35,13 @@ export function createCovicoGallery<TGalleryItems extends string = string>() {
       currentGalleryId: TGalleryItems | null
       currentImageIndex: number
       isGalleryOpen: boolean
-      setCurrentGallery: (galleryId: TGalleryItems) => void
       setImageIndex: (index: number) => void
       openGallery: (galleryId: TGalleryItems, startIndex?: number) => void
       closeGallery: () => void
+      navigation: {
+        next: (length: number) => void
+        prev: (length: number) => void
+      }
     }>
   >
 }
