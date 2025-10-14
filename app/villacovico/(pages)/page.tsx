@@ -9,14 +9,14 @@ import { BookDocumental } from '../sections/book-documental/book-documental'
 export default function Home() {
   return (
     <>
-      <main className='flex min-h-screen flex-col gap-26 px-10 pb-10'>
+      <main className='flex min-h-screen flex-col gap-10 px-4 pb-10 md:gap-14 md:px-6 xl:gap-26 xl:px-10'>
         <Hero />
         <VisualArchive />
         <Quote position={1} />
         <Plans />
         <Quote position={2} />
         <VirtualTour />
-        <Quote position={1} />
+        <Quote position={3} />
         <BookDocumental />
       </main>
       <Footer />
