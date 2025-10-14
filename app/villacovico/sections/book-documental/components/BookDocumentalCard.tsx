@@ -59,7 +59,7 @@ export function BookDocumentalCard({
         alt={bg.alt}
         width={bg.width}
         height={bg.height}
-        className='absolute top-0 -z-10 aspect-auto size-full object-cover object-center opacity-50 mix-blend-darken grayscale transition-all duration-500 group-hover:scale-105 group-hover:opacity-100'
+        className='absolute top-0 -z-10 aspect-auto size-full object-cover object-center opacity-50 grayscale transition-all duration-500 group-hover:scale-105 group-hover:opacity-100'
       />
     </a>
   )
