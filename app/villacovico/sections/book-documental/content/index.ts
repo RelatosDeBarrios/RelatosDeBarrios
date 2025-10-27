@@ -10,7 +10,7 @@ export const BOOK_DOCUMENTAL = {
       subTitle: 'Villa Covico',
       description:
         'Un recorrido visual y narrativo por la historia, arquitectura y cultura de Villa Covico.',
-      href: 'https://www.libreriacultura.com/libro-villa-covico-9789878393030',
+      href: '/villacovico/Relatosdebarrio-villacovico-final.pdf',
       bg: {
         src: '/hub/images/portada_villacovico.webp',
         alt: 'Portada del libro Villa Covico',
